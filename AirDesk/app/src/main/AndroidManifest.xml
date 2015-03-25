@@ -16,6 +16,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Login"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".OwnedWorkspace"
+            android:label="@string/title_activity_owned_workspace"
+            android:parentActivityName=".WorkspaceList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
+        </activity>
+        <activity
+            android:name=".ForeignWorkspace"
+            android:label="@string/title_activity_foreign_workspace"
+            android:parentActivityName=".WorkspaceList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
+        </activity>
+        <activity
+            android:name=".WorkspaceSetup"
+            android:label="@string/title_activity_workspace_setup"
+            android:parentActivityName=".WorkspaceList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
+        </activity>
     </application>
 
 </manifest>
