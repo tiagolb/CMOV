@@ -44,6 +44,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
         </activity>
+        <activity
+            android:name=".ViewFile"
+            android:label="@string/title_activity_view_file" >
+        </activity>
+        <activity
+            android:name=".EditFile"
+            android:label="@string/title_activity_edit_file" >
+        </activity>
     </application>
 
 </manifest>

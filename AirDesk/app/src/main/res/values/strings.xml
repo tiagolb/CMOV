@@ -20,9 +20,13 @@
     <string name="quota">Quota</string>
     <string name="create">Create</string>
     <string name="privacy_setting">Privacy Setting</string>
+
     <string-array name="privacy_options">
         <item>Public</item>
         <item>Private</item>
     </string-array>
+
+    <string name="title_activity_view_file">ViewFile</string>
+    <string name="title_activity_edit_file">EditFile</string>
 
 </resources>
