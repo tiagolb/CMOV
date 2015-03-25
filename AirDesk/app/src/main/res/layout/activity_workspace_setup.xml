@@ -36,23 +36,27 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/workspace_name"/>
+                android:hint="@string/workspace_name"
+                android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/quota"/>
+                android:hint="@string/quota"
+                android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/privacy_options"
-                android:prompt="@string/privacy_setting"/>
+                android:prompt="@string/privacy_setting"
+                android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/create"/>
+                android:text="@string/create"
+                android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
         </LinearLayout>
     </LinearLayout>
