@@ -34,24 +34,28 @@
             android:gravity="center">
 
             <EditText
+                android:id="@+id/et_workspace_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/workspace_name"
                 android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
             <EditText
+                android:id="@+id/et_quota_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/quota"
                 android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
             <EditText
+                android:id="@+id/et_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/tag"
                 android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
 
             <Spinner
+                android:id="@+id/sp_privacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/privacy_options"

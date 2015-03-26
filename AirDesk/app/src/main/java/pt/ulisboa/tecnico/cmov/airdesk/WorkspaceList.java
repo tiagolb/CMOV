@@ -9,8 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
+
 
 public class WorkspaceList extends ActionBarActivity {
+
+    private List<WorkspaceCore> workspaceList;
 
     public void setupNewWorkspace(View view) {
         Intent intent = new Intent(this, WorkspaceSetup.class);

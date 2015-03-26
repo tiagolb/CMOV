@@ -6,13 +6,50 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 
 public class WorkspaceSetup extends ActionBarActivity {
 
     public void createNewWorkspace(View view) {
-        Intent intent = new Intent(this, OwnedWorkspace.class);
-        startActivity(intent);
+        EditText workspace_name = (EditText) findViewById(R.id.et_workspace_name);
+        EditText quota_value = (EditText) findViewById(R.id.et_quota_value);
+        EditText tag_value = (EditText) findViewById(R.id.et_tag);
+        Spinner privacy_spinner = (Spinner) findViewById(R.id.sp_privacy);
+
+        String name = workspace_name.getText().toString().trim();
+        String quota_string = quota_value.getText().toString().trim();
+        String tag = tag_value.getText().toString().trim();
+        String privacy_setting = privacy_spinner.getSelectedItem().toString();
+
+        if(name.equals("")) {
+            Util.toast_warning(getApplicationContext(), "\"Workspace Name\" field is empty");
+
+        } else if(quota_string.equals("")) {
+            Util.toast_warning(getApplicationContext(), "\"Quota\" field is empty");
+
+        } else if (tag.equals("")) {
+                Util.toast_warning(getApplicationContext(), "\"TAG\" field is empty");
+
+        } else {
+
+            int quota = 0;
+            try {
+                quota = Integer.parseInt(quota_string);
+            } catch (Exception e) {
+                Util.toast_warning(getApplicationContext(), "\"Quota\" must be a number");
+                return;
+            }
+
+            boolean isPublic = privacy_setting.equals("Public");
+            //TODO: Add to the ListView in the previous activity (I dont know how to do this)
+            //WorkspaceCore workspace = new OwnedWorkspaceCore(name, quota, tag, "", isPublic); // TODO: owner email
+
+            Intent intent = new Intent(this, OwnedWorkspace.class);
+            startActivity(intent);
+        }
     }
 
     @Override

@@ -39,13 +39,15 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/foreign_workspace_file_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
-
-        </LinearLayout>
+            android:layout_marginLeft="@dimen/small_workspace_file_margin"
+            android:layout_marginRight="@dimen/small_workspace_file_margin"
+            android:layout_marginBottom="@dimen/small_workspace_file_margin"
+            android:background="@android:color/white">
+        </ListView>
     </LinearLayout>
 
 </LinearLayout>
