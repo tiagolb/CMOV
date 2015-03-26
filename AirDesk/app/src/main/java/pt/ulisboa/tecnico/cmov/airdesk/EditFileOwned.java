@@ -6,12 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class EditFile extends ActionBarActivity {
+public class EditFileOwned extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_file);
+        setContentView(R.layout.activity_edit_file_owned);
     }
 
 

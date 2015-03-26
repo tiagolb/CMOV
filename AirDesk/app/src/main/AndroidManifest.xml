@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".WorkspaceList"
+            android:name=".Login"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Login"
-            android:label="@string/title_activity_login" >
+            android:name=".WorkspaceList"
+            android:label="@string/title_activity_workspace_list" >
+            android:parentActivityName=".Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.Login" />
         </activity>
         <activity
             android:name=".OwnedWorkspace"
@@ -45,12 +49,36 @@
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
         </activity>
         <activity
-            android:name=".ViewFile"
-            android:label="@string/title_activity_view_file" >
+            android:name=".ViewFileOwned"
+            android:label="@string/title_activity_view_file_owned" >
+            android:parentActivityName=".OwnedWorkspace" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace" />
         </activity>
         <activity
-            android:name=".EditFile"
-            android:label="@string/title_activity_edit_file" >
+            android:name=".EditFileOwned"
+            android:label="@string/title_activity_edit_file_owned" >
+            android:parentActivityName=".OwnedWorkspace" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace" />
+        </activity>
+        <activity
+            android:name=".EditFileForeign"
+            android:label="@string/title_activity_edit_file_foreign"
+            android:parentActivityName=".ForeignWorkspace" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
+        </activity>
+        <activity
+            android:name=".ViewFileForeign"
+            android:label="@string/title_activity_view_file_foreign"
+            android:parentActivityName=".ForeignWorkspace" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
         </activity>
     </application>
 

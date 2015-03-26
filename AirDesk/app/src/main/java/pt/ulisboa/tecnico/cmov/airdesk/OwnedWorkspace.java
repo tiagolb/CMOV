@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class OwnedWorkspace extends Workspace {
+public class OwnedWorkspace extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

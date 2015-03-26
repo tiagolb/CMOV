@@ -26,7 +26,12 @@
         <item>Private</item>
     </string-array>
 
-    <string name="title_activity_view_file">ViewFile</string>
-    <string name="title_activity_edit_file">EditFile</string>
+    <string name="title_activity_view_file_owned">ViewFileOwned</string>
+    <string name="title_activity_edit_file_owned">EditFileOwned</string>
+    <string name="title_activity_workspace_list">WorkspaceList</string>
+    <string name="edit_button">Edit</string>
+    <string name="save_button">Save</string>
+    <string name="title_activity_edit_file_foreign">EditFileForeign</string>
+    <string name="title_activity_view_file_foreign">ViewFileForeign</string>
 
 </resources>
