@@ -1,12 +1,19 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class WorkspaceSetup extends ActionBarActivity {
+
+    public void createNewWorkspace(View view) {
+        Intent intent = new Intent(this, OwnedWorkspace.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

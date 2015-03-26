@@ -33,5 +33,6 @@
     <string name="save_button">Save</string>
     <string name="title_activity_edit_file_foreign">EditFileForeign</string>
     <string name="title_activity_view_file_foreign">ViewFileForeign</string>
+    <string name="tag">Tag</string>
 
 </resources>
