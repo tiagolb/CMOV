@@ -58,12 +58,6 @@ public class WorkspaceList extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_list);
-
-        if(OWNER_NICKNAME == null && OWNER_EMAIL == null) {
-            Intent intent = getIntent();
-            OWNER_NICKNAME = intent.getExtras().getString("ownerNickname");
-            OWNER_EMAIL = intent.getExtras().getString("ownerEmail");
-        }
     }
 
     @Override

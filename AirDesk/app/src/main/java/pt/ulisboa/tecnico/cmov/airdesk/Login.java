@@ -14,9 +14,13 @@ public class Login extends ActionBarActivity {
     public void loginToWorkspaceList(View view) {
         EditText ownerNickname = (EditText) findViewById(R.id.owner_nickname);
         EditText ownerEmail = (EditText) findViewById(R.id.owner_email);
+
+        WorkspaceList.OWNER_NICKNAME = ownerNickname.getText().toString().trim();
+        WorkspaceList.OWNER_EMAIL = ownerEmail.getText().toString().trim();
+
         Intent intent = new Intent(this, WorkspaceList.class);
-        intent.putExtra("ownerNickname", ownerNickname.toString().trim());
-        intent.putExtra("ownerEmail", ownerEmail.toString().trim());
+        //intent.putExtra("ownerNickname", ownerNickname.toString().trim());
+        //intent.putExtra("ownerEmail", ownerEmail.toString().trim());
         startActivity(intent);
     }
 
