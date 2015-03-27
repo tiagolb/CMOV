@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
@@ -16,7 +19,9 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceList extends ActionBarActivity {
 
-    private List<WorkspaceCore> workspaceList;
+    public static List<WorkspaceCore> WORKSPACE_LIST = new ArrayList<WorkspaceCore>();
+    public static String OWNER_NICKNAME;
+    public static String OWNER_EMAIL;
 
     public void setupNewWorkspace(View view) {
         Intent intent = new Intent(this, WorkspaceSetup.class);
@@ -36,14 +41,30 @@ public class WorkspaceList extends ActionBarActivity {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         }
+
+        // populate the ListView each time we go to this activity
+        // should this be done in the onCreate method?
+        List<String> workspaceNames = new ArrayList<String>();
+        for(WorkspaceCore w : WORKSPACE_LIST) {
+            workspaceNames.add(w.getName());
+        }
+        ListView list = (ListView) findViewById(R.id.owned_workspace_list);
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
+        list.setAdapter(listAdapter);
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_list);
-    }
 
+        if(OWNER_NICKNAME == null && OWNER_EMAIL == null) {
+            Intent intent = getIntent();
+            OWNER_NICKNAME = intent.getExtras().getString("ownerNickname");
+            OWNER_EMAIL = intent.getExtras().getString("ownerEmail");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

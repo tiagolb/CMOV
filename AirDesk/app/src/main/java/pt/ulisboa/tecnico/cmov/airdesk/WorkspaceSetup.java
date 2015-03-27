@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceSetup extends ActionBarActivity {
 
@@ -44,9 +45,10 @@ public class WorkspaceSetup extends ActionBarActivity {
             }
 
             boolean isPublic = privacy_setting.equals("Public");
-            //TODO: Add to the ListView in the previous activity (I dont know how to do this)
-            //WorkspaceCore workspace = new OwnedWorkspaceCore(name, quota, tag, "", isPublic); // TODO: owner email
 
+            //TODO: get this saved in the context
+            WorkspaceCore workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
+            WorkspaceList.WORKSPACE_LIST.add(workspace);
             Intent intent = new Intent(this, OwnedWorkspace.class);
             startActivity(intent);
         }

@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
 public class Login extends ActionBarActivity {
 
     public void loginToWorkspaceList(View view) {
+        EditText ownerNickname = (EditText) findViewById(R.id.owner_nickname);
+        EditText ownerEmail = (EditText) findViewById(R.id.owner_email);
         Intent intent = new Intent(this, WorkspaceList.class);
+        intent.putExtra("ownerNickname", ownerNickname.toString().trim());
+        intent.putExtra("ownerEmail", ownerEmail.toString().trim());
         startActivity(intent);
     }
 

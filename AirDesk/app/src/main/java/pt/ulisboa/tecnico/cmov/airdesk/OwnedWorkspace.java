@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,12 @@ import android.view.MenuItem;
 
 
 public class OwnedWorkspace extends ActionBarActivity {
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, WorkspaceList.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
