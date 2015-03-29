@@ -32,6 +32,16 @@ public class WorkspaceList extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        String nick = prefs.getString("nick", "");
+        String email = prefs.getString("email", "");
+
+        if (nick.equals("") || email.equals("")) {
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        }
+
+        /*
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
         if(!previouslyStarted) {
             SharedPreferences.Editor edit = prefs.edit();
@@ -41,6 +51,7 @@ public class WorkspaceList extends ActionBarActivity {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         }
+        */
 
         // populate the ListView each time we go to this activity
         // should this be done in the onCreate method?
@@ -74,11 +85,11 @@ public class WorkspaceList extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_change_login:
+                startActivity(new Intent(this, Login.class));
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

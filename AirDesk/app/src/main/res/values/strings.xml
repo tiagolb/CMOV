@@ -36,5 +36,6 @@
     <string name="tag">Tag</string>
     <string name="pref_previously_started">PreviouslyStarted</string>
     <string name="delete_button">Del</string>
+    <string name="change_login">Change Login</string>
 
 </resources>
