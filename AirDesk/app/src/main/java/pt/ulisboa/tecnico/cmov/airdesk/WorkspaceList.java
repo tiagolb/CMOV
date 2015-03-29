@@ -14,12 +14,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
 public class WorkspaceList extends ActionBarActivity {
 
-    public static List<WorkspaceCore> WORKSPACE_LIST = new ArrayList<WorkspaceCore>();
     public static String OWNER_NICKNAME;
     public static String OWNER_EMAIL;
 
@@ -55,14 +55,20 @@ public class WorkspaceList extends ActionBarActivity {
 
         // populate the ListView each time we go to this activity
         // should this be done in the onCreate method?
+        try {
+        OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
         List<String> workspaceNames = new ArrayList<String>();
-        for(WorkspaceCore w : WORKSPACE_LIST) {
+        for (WorkspaceCore w : OwnedWorkspaceCore.workspaces) {
             workspaceNames.add(w.getName());
         }
         ListView list = (ListView) findViewById(R.id.owned_workspace_list);
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
         list.setAdapter(listAdapter);
-
+        }
+        catch (Exception e) {
+            Util.toast_warning(getApplicationContext(), e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -46,9 +46,10 @@ public class WorkspaceSetup extends ActionBarActivity {
 
             boolean isPublic = privacy_setting.equals("Public");
 
-            //TODO: get this saved in the context
-            WorkspaceCore workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
-            WorkspaceList.WORKSPACE_LIST.add(workspace);
+            OwnedWorkspaceCore workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
+            OwnedWorkspaceCore.workspaces.add(workspace);
+            OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+
             Intent intent = new Intent(this, OwnedWorkspace.class);
             startActivity(intent);
         }
