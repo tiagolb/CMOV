@@ -138,9 +138,11 @@ public class WorkspaceList extends ActionBarActivity {
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
                 ListView list = (ListView) info.targetView.getParent();
-                WorkspaceCore workspace = (WorkspaceCore) list.getAdapter().getItem(info.position);
+                ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
+                WorkspaceCore workspace = (WorkspaceCore) adapter.getItem(info.position);
 
                 OwnedWorkspaceCore.workspaces.remove(workspace);
+                adapter.notifyDataSetChanged();
                 OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 Util.toast_warning(getApplicationContext(), "Deleted workspace " + workspace.getName());
 
