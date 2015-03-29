@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.airdesk.core.ForeignWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
@@ -55,19 +57,25 @@ public class WorkspaceList extends ActionBarActivity {
 
         // populate the ListView each time we go to this activity
         // should this be done in the onCreate method?
-        try {
-        OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
-        List<String> workspaceNames = new ArrayList<String>();
-        for (WorkspaceCore w : OwnedWorkspaceCore.workspaces) {
-            workspaceNames.add(w.getName());
+        {
+            OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
+            List<String> workspaceNames = new ArrayList<String>();
+            for (WorkspaceCore w : OwnedWorkspaceCore.workspaces) {
+                workspaceNames.add(w.getName());
+            }
+            ListView list = (ListView) findViewById(R.id.owned_workspace_list);
+            ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
+            list.setAdapter(listAdapter);
         }
-        ListView list = (ListView) findViewById(R.id.owned_workspace_list);
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
-        list.setAdapter(listAdapter);
-        }
-        catch (Exception e) {
-            Util.toast_warning(getApplicationContext(), e.getMessage());
-            e.printStackTrace();
+        {
+            ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
+            List<String> workspaceNames = new ArrayList<String>();
+            for (WorkspaceCore w : ForeignWorkspaceCore.workspaces) {
+                workspaceNames.add(w.getName());
+            }
+            ListView list = (ListView) findViewById(R.id.foreign_workspace_list);
+            ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
+            list.setAdapter(listAdapter);
         }
     }
 
@@ -75,6 +83,18 @@ public class WorkspaceList extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_list);
+
+        ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
+        ownedWorkspacesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                String entry = (String) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(WorkspaceList.this, OwnedWorkspace.class);
+                intent.putExtra("workspace", entry);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

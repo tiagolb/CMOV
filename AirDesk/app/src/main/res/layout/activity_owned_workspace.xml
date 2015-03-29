@@ -9,41 +9,43 @@
     android:orientation="vertical"
     tools:context="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace">
 
+    <!--
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_red_light"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_red_light"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:layout_weight="0.6"
+            android:paddingTop="@dimen/abc_text_size_body_1_material"
+            android:paddingBottom="@dimen/abc_text_size_body_1_material"
+            android:paddingLeft="@dimen/abc_text_size_body_1_material"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:layout_weight="0.6"
-                android:paddingTop="@dimen/abc_text_size_body_1_material"
-                android:paddingBottom="@dimen/abc_text_size_body_1_material"
-                android:paddingLeft="@dimen/abc_text_size_body_1_material"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="@string/invite"/>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="@string/invite"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="@string/new_button"/>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="@string/new_button"/>
-
-        </LinearLayout>
+    </LinearLayout>
+    -->
 
         <ListView
             android:id="@+id/owned_workspace_file_list"
@@ -54,6 +56,6 @@
             android:layout_marginBottom="@dimen/small_workspace_file_margin"
             android:background="@android:color/white">
         </ListView>
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 </LinearLayout>
