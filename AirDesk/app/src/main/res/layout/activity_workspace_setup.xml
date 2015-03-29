@@ -45,7 +45,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/quota"
-                android:layout_marginTop="@dimen/abc_text_size_body_1_material"/>
+                android:layout_marginTop="@dimen/abc_text_size_body_1_material"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/et_tag"
