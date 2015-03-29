@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -34,12 +36,11 @@ public class WorkspaceSetup extends ActionBarActivity {
         } else if(quota_string.equals("")) {
             Util.toast_warning(getApplicationContext(), "\"Quota\" field is empty");
 
-        } else if (tag.equals("")) {
-                Util.toast_warning(getApplicationContext(), "\"TAG\" field is empty");
-
+//        } else if (tag.equals("")) {
+//                Util.toast_warning(getApplicationContext(), "\"TAG\" field is empty");
         } else {
 
-            int quota = 0;
+            int quota;
             try {
                 quota = Integer.parseInt(quota_string);
             } catch (Exception e) {
@@ -66,7 +67,6 @@ public class WorkspaceSetup extends ActionBarActivity {
 
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-
     }
 
 

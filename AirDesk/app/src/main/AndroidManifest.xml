@@ -39,6 +39,7 @@
         <activity
             android:name=".WorkspaceSetup"
             android:label="@string/title_activity_workspace_setup"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:parentActivityName=".WorkspaceList" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

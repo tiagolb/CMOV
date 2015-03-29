@@ -17,7 +17,7 @@
     <string name="title_activity_workspace_setup">Create Workspace</string>
     <string name="workspace_setup">Workspace Setup</string>
     <string name="workspace_name">Workspace Name</string>
-    <string name="quota">Quota</string>
+    <string name="quota">Quota (MB)</string>
     <string name="create">Create</string>
     <string name="privacy_setting">Privacy Setting</string>
 
