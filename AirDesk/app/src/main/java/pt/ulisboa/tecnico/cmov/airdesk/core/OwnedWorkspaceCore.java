@@ -19,7 +19,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace;
  */
 public class OwnedWorkspaceCore extends WorkspaceCore {
 
-    public static ArrayList<OwnedWorkspaceCore> workspaces = null;
+    public static ArrayList<WorkspaceCore> workspaces = null;
 
     private boolean isPublic;
 
@@ -31,7 +31,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
     public static void loadWorkspaces(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String workspacesJSONString = prefs.getString("ownedWorkspaces", "");
-        if (workspacesJSONString.equals("")) OwnedWorkspaceCore.workspaces = new ArrayList<OwnedWorkspaceCore>();
+        if (workspacesJSONString.equals("")) OwnedWorkspaceCore.workspaces = new ArrayList<WorkspaceCore>();
         else {
             Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>(){}.getType();
             OwnedWorkspaceCore.workspaces = new Gson().fromJson(workspacesJSONString, type);

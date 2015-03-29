@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:text="@string/new_button"
+                android:textColor="@android:color/white"
                 android:onClick="setupNewWorkspace"/>
 
         </LinearLayout>
@@ -46,7 +47,7 @@
         <ListView
             android:id="@+id/owned_workspace_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/small_workspace_file_margin"
             android:layout_marginRight="@dimen/small_workspace_file_margin"
             android:layout_marginBottom="@dimen/small_workspace_file_margin"
@@ -83,6 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
+                android:textColor="@android:color/white"
                 android:text="@string/subscribe"/>
 
         </LinearLayout>
@@ -90,7 +92,7 @@
         <ListView
             android:id="@+id/foreign_workspace_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/small_workspace_file_margin"
             android:layout_marginRight="@dimen/small_workspace_file_margin"
             android:layout_marginBottom="@dimen/small_workspace_file_margin"

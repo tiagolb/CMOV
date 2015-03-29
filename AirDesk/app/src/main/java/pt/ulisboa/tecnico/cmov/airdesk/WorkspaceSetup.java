@@ -1,6 +1,9 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,6 +54,7 @@ public class WorkspaceSetup extends ActionBarActivity {
             OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
 
             Intent intent = new Intent(this, OwnedWorkspace.class);
+            intent.putExtra("workspace", workspace.getName());
             startActivity(intent);
         }
     }
@@ -59,6 +63,10 @@ public class WorkspaceSetup extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_setup);
+
+        ActionBar bar = getSupportActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
+
     }
 
 

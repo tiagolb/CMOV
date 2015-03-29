@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class ForeignWorkspaceCore extends WorkspaceCore {
 
-    public static ArrayList<ForeignWorkspaceCore> workspaces = null;
+    public static ArrayList<WorkspaceCore> workspaces = null;
 
     private boolean isPublic;
 
@@ -28,7 +28,7 @@ public class ForeignWorkspaceCore extends WorkspaceCore {
     public static void loadWorkspaces(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String workspacesJSONString = prefs.getString("foreignWorkspaces", "");
-        if (workspacesJSONString.equals("")) ForeignWorkspaceCore.workspaces = new ArrayList<ForeignWorkspaceCore>();
+        if (workspacesJSONString.equals("")) ForeignWorkspaceCore.workspaces = new ArrayList<WorkspaceCore>();
         else {
             Type type = new TypeToken<ArrayList<ForeignWorkspaceCore>>(){}.getType();
             ForeignWorkspaceCore.workspaces = new Gson().fromJson(workspacesJSONString, type);

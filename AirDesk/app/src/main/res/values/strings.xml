@@ -14,7 +14,7 @@
     <string name="invite">Invite</string>
     <string name="new_button">New</string>
     <string name="title_activity_foreign_workspace">Foreign Workspace</string>
-    <string name="title_activity_workspace_setup">Workspace Setup</string>
+    <string name="title_activity_workspace_setup">Create Workspace</string>
     <string name="workspace_setup">Workspace Setup</string>
     <string name="workspace_name">Workspace Name</string>
     <string name="quota">Quota</string>

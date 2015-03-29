@@ -15,6 +15,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.ForeignWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
@@ -55,28 +56,7 @@ public class WorkspaceList extends ActionBarActivity {
         }
         */
 
-        // populate the ListView each time we go to this activity
-        // should this be done in the onCreate method?
-        {
-            OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
-            List<String> workspaceNames = new ArrayList<String>();
-            for (WorkspaceCore w : OwnedWorkspaceCore.workspaces) {
-                workspaceNames.add(w.getName());
-            }
-            ListView list = (ListView) findViewById(R.id.owned_workspace_list);
-            ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
-            list.setAdapter(listAdapter);
-        }
-        {
-            ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
-            List<String> workspaceNames = new ArrayList<String>();
-            for (WorkspaceCore w : ForeignWorkspaceCore.workspaces) {
-                workspaceNames.add(w.getName());
-            }
-            ListView list = (ListView) findViewById(R.id.foreign_workspace_list);
-            ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.workspace_list_item, workspaceNames);
-            list.setAdapter(listAdapter);
-        }
+
     }
 
     @Override
@@ -89,12 +69,22 @@ public class WorkspaceList extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                String entry = (String) parent.getAdapter().getItem(position);
+                WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(WorkspaceList.this, OwnedWorkspace.class);
-                intent.putExtra("workspace", entry);
+                intent.putExtra("workspace", workspace.getName());
                 startActivity(intent);
             }
         });
+
+        // populate the ListView
+        OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
+        ListView onwedWorkspaceList = (ListView) findViewById(R.id.owned_workspace_list);
+        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, OwnedWorkspaceCore.workspaces);
+        onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
+        ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
+        ListView foreignWorkspaceList = (ListView) findViewById(R.id.foreign_workspace_list);
+        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, ForeignWorkspaceCore.workspaces);
+        foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
     }
 
     @Override

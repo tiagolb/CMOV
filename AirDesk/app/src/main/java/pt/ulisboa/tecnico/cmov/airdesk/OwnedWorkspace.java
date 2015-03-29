@@ -24,8 +24,7 @@ public class OwnedWorkspace extends ActionBarActivity {
         setContentView(R.layout.activity_owned_workspace);
 
         Bundle bundle = getIntent().getExtras();
-
-        String workspaceName = bundle.getString("workspace");
+        String workspaceName = bundle.getString("workspace"); // it must always be defined
 
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
