@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,11 +78,14 @@ public class WorkspaceList extends ActionBarActivity {
             }
         });
 
+
         // populate the ListView
         OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
         ListView onwedWorkspaceList = (ListView) findViewById(R.id.owned_workspace_list);
         WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, OwnedWorkspaceCore.workspaces);
         onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
+        registerForContextMenu(onwedWorkspaceList);
+
         ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
         ListView foreignWorkspaceList = (ListView) findViewById(R.id.foreign_workspace_list);
         WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, ForeignWorkspaceCore.workspaces);
@@ -107,5 +112,41 @@ public class WorkspaceList extends ActionBarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.owned_workspace_list) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+            ListView list = (ListView)v;
+            WorkspaceCore workspace = (WorkspaceCore) list.getAdapter().getItem(info.position);
+
+            menu.setHeaderTitle(workspace.getName());
+            String[] menuItems = {"Delete"};
+            for (int i = 0; i < menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 0:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+                ListView list = (ListView) info.targetView.getParent();
+                WorkspaceCore workspace = (WorkspaceCore) list.getAdapter().getItem(info.position);
+
+                OwnedWorkspaceCore.workspaces.remove(workspace);
+                OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                Util.toast_warning(getApplicationContext(), "Deleted workspace " + workspace.getName());
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
