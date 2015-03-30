@@ -25,7 +25,7 @@ public class WorkspaceFileCore {
     }
 
     //sets the content of the file in disk
-    public boolean setContent(String data, Context context) {
+    public boolean setContent(Context context, String data) {
         FileOutputStream fos = null;
         try {
             fos = context.openFileOutput(workspace + "_" + name, Context.MODE_PRIVATE);
