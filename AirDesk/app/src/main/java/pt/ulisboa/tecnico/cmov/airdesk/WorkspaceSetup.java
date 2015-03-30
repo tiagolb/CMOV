@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 public class WorkspaceSetup extends ActionBarActivity {
 
     public WorkspaceCore workspace;
+    private AirDeskContext context;
 
     public void createNewWorkspace(View view) {
         EditText workspace_name = (EditText) findViewById(R.id.et_workspace_name);
@@ -51,8 +51,11 @@ public class WorkspaceSetup extends ActionBarActivity {
             boolean isPublic = privacy_setting.equals("Public");
 
             workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
-            OwnedWorkspaceCore.workspaces.add(workspace);
-            OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+            //OwnedWorkspaceCore.workspaces.add(workspace);
+            //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+            context = (AirDeskContext) getApplicationContext();
+
+            context.addWorkspace(workspace);
 
             Util.launchOwnedWorkspace(WorkspaceSetup.this, OwnedWorkspace.class, workspace);
         }

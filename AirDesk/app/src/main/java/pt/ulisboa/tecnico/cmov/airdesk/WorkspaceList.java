@@ -13,9 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
-import pt.ulisboa.tecnico.cmov.airdesk.core.ForeignWorkspaceCore;
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
@@ -23,6 +23,7 @@ public class WorkspaceList extends ActionBarActivity {
 
     public static String OWNER_NICKNAME;
     public static String OWNER_EMAIL;
+    private AirDeskContext context;
 
     public void setupNewWorkspace(View view) {
         Intent intent = new Intent(this, WorkspaceSetup.class);
@@ -67,6 +68,7 @@ public class WorkspaceList extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
+                // Does this work?
                 WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Util.launchOwnedWorkspace(WorkspaceList.this, OwnedWorkspace.class, workspace);
             }
@@ -74,16 +76,22 @@ public class WorkspaceList extends ActionBarActivity {
 
 
         // populate the ListView
-        OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
+        //OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
+        context = (AirDeskContext) getApplicationContext();
         ListView onwedWorkspaceList = (ListView) findViewById(R.id.owned_workspace_list);
-        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, OwnedWorkspaceCore.workspaces);
+        //WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, OwnedWorkspaceCore.workspaces);
+        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, (ArrayList) context.getWorkspaces());
+
         onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
         registerForContextMenu(onwedWorkspaceList);
 
-        ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
+        // TODO: We have to receive this workspaces from somewhere
+        //ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
         ListView foreignWorkspaceList = (ListView) findViewById(R.id.foreign_workspace_list);
-        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, ForeignWorkspaceCore.workspaces);
+        // TODO: Using context workspaces...
+        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, (ArrayList) context.getWorkspaces());
         foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
+
     }
 
     @Override
@@ -135,9 +143,10 @@ public class WorkspaceList extends ActionBarActivity {
                 ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
                 WorkspaceCore workspace = (WorkspaceCore) adapter.getItem(info.position);
 
-                OwnedWorkspaceCore.workspaces.remove(workspace);
+                //OwnedWorkspaceCore.workspaces.remove(workspace);
+                context.removeWorkspace(workspace.getName());
                 adapter.notifyDataSetChanged();
-                OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 Util.toast_warning(getApplicationContext(), "Deleted workspace " + workspace.getName());
 
                 return true;

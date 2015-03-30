@@ -13,22 +13,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
-import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
 public class OwnedWorkspace extends ActionBarActivity {
 
-    public WorkspaceCore workspace = null;
+    private WorkspaceCore workspace = null;
+    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +35,14 @@ public class OwnedWorkspace extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
+        context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
-            workspace = OwnedWorkspaceCore.workspaces.get(bundle.getInt("workspaceIndex"));
+            //workspace = OwnedWorkspaceCore.workspaces.get(bundle.getInt("workspaceIndex"));
+            workspace = context.getWorkspace(bundle.getString("workspaceName"));
         }
-        else if (savedInstanceState != null) { //FIXME: it's always null
+        /*else if (savedInstanceState != null) { //FIXME: it's always null
             workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
-        }
+        }*/
         if (workspace != null) {
             bar.setTitle(workspace.getName());
 
@@ -55,14 +53,15 @@ public class OwnedWorkspace extends ActionBarActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
                     Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
+                    //intent.putExtra("file", (String) parent.getAdapter().getItem(position));
                     intent.putExtra("file", (String) parent.getAdapter().getItem(position));
-                    intent.putExtra("workspace", workspace.getId());
+                    intent.putExtra("workspace", workspace.getName());
                     startActivity(intent);
                 }
             });
 
             //populate file list
-            FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.files);
+            FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.getFiles());
             fileList.setAdapter(adapter);
         }
     }
@@ -77,10 +76,11 @@ public class OwnedWorkspace extends ActionBarActivity {
         adapter.notifyDataSetChanged();
     }
 
+    // TODO
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString("workspace", workspace.getId());
+        //savedInstanceState.putString("workspace", workspace.getId());
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 /**
@@ -19,7 +18,8 @@ public class Util {
 
     public static void launchOwnedWorkspace(Context context, Class<?> cls, WorkspaceCore workspace) {
         Intent intent = new Intent(context, cls);
-        intent.putExtra("workspaceIndex", OwnedWorkspaceCore.workspaces.indexOf(workspace));
+        //intent.putExtra("workspaceIndex", OwnedWorkspaceCore.workspaces.indexOf(workspace));
+        intent.putExtra("workspaceName", workspace.getName());
         context.startActivity(intent);
     }
 }

@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 
@@ -19,6 +17,7 @@ public class EditFileOwned extends ActionBarActivity {
 
     private WorkspaceCore workspace;
     private WorkspaceFileCore file;
+    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +26,12 @@ public class EditFileOwned extends ActionBarActivity {
 
         //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
-        workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
-        file = workspace.getFile(bundle.getString("file"));
+        //workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
+        context = (AirDeskContext) getApplicationContext();
+        String workspaceName = bundle.getString("workspace");
+        workspace = context.getWorkspace(workspaceName);
+        String fileName = bundle.getString("file");
+        file = new WorkspaceFileCore(fileName, workspaceName);
 
         //set action-bar's title and background color
         ActionBar bar = getSupportActionBar();
