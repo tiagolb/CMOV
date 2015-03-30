@@ -16,6 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
+import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
@@ -73,13 +74,11 @@ public class WorkspaceList extends ActionBarActivity {
         onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
         registerForContextMenu(onwedWorkspaceList);
 
-        // TODO: We have to receive this workspaces from somewhere
-        //ForeignWorkspaceCore.loadWorkspaces(getApplicationContext());
         ListView foreignWorkspaceList = (ListView) findViewById(R.id.foreign_workspace_list);
-        // TODO: Using context workspaces...
-        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, (ArrayList) context.getWorkspaces());
+        ArrayAdapter<String> foreignWorkspaceAdapter = new ArrayAdapter<String>(this,
+                R.layout.workspace_list_item,
+                (ArrayList) Client.getMountedWorkspaces(getApplicationContext()));
         foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
-
     }
 
     @Override
