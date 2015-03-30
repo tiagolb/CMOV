@@ -21,6 +21,10 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
+
+
+
+
 public class WorkspaceList extends ActionBarActivity {
 
     public static String OWNER_NICKNAME;
