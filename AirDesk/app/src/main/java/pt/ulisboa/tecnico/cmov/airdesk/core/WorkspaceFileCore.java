@@ -26,9 +26,9 @@ public class WorkspaceFileCore {
 
     //sets the content of the file in disk
     public boolean setContent(Context context, String data) {
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
-            fos = context.openFileOutput(workspace + "_" + name, Context.MODE_PRIVATE);
+            fos = context.openFileOutput(toString(), Context.MODE_PRIVATE);
             fos.write(data.getBytes());
         } catch (FileNotFoundException e) {
             Log.e("WorkspaceFileCore", "File not found");
@@ -46,10 +46,11 @@ public class WorkspaceFileCore {
         Scanner scanner = null;
         StringBuilder sb = new StringBuilder();
         try {
-            fis = context.openFileInput(this.workspace + "_" + this.name);
+            fis = context.openFileInput(toString());
             scanner = new Scanner(fis);
             while (scanner.hasNextLine()) {
-                sb.append(scanner.nextLine() + LINE_SEP);
+                String lineToAppend = scanner.nextLine() + LINE_SEP;
+                sb.append(lineToAppend);
             }
             return sb.toString();
         } catch (FileNotFoundException e) {
@@ -71,8 +72,15 @@ public class WorkspaceFileCore {
     }
 
     public String getName() {
-        return this.name;
+       return this.name;
     }
 
-    //TODO: remove file
+    public void removeFile(Context context) {
+        context.deleteFile(toString());
+    }
+
+    @Override
+    public String toString(){
+        return this.workspace + "_" + this.name;
+    }
 }
