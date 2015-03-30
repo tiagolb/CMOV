@@ -68,9 +68,7 @@ public class WorkspaceList extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(WorkspaceList.this, OwnedWorkspace.class);
-                intent.putExtra("workspaceIndex", OwnedWorkspaceCore.workspaces.indexOf(workspace));
-                startActivity(intent);
+                Util.launchOwnedWorkspace(WorkspaceList.this, OwnedWorkspace.class, workspace);
             }
         });
 

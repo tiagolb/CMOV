@@ -54,9 +54,7 @@ public class WorkspaceSetup extends ActionBarActivity {
             OwnedWorkspaceCore.workspaces.add(workspace);
             OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
 
-            Intent intent = new Intent(this, OwnedWorkspace.class);
-            intent.putExtra("workspaceIndex", OwnedWorkspaceCore.workspaces.indexOf(workspace));
-            startActivity(intent);
+            Util.launchOwnedWorkspace(WorkspaceSetup.this, OwnedWorkspace.class, workspace);
         }
     }
 

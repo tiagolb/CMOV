@@ -9,7 +9,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListView;
 
+import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
@@ -61,6 +63,17 @@ public class ViewFileOwned extends ActionBarActivity {
                 intent.putExtra("file", file.getName());
                 intent.putExtra("workspace", workspace.getId());
                 startActivity(intent);
+                return true;
+            case R.id.action_remove_file:
+                //remove file from workspace
+                workspace.removeFile(file.getName());
+                //save changes
+                OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                //remove file from disk
+                file.removeFile(getApplicationContext());
+
+                Util.toast_warning(getApplicationContext(), "File removed");
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

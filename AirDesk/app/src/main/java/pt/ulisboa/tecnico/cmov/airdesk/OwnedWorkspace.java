@@ -68,6 +68,16 @@ public class OwnedWorkspace extends ActionBarActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        //update view
+        ListView fileList = (ListView) findViewById(R.id.owned_workspace_file_list);
+        FileListAdapter adapter = (FileListAdapter) fileList.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("workspace", workspace.getId());

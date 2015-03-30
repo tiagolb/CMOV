@@ -51,7 +51,7 @@
             android:parentActivityName=".OwnedWorkspace" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace" />
+                android:value=".OwnedWorkspace" />
         </activity>
         <activity
             android:name=".EditFileOwned"
