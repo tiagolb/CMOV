@@ -25,6 +25,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         this.isPublic = isPublic;
     }
 
+    //load the workspaces
     public static void loadWorkspaces(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String workspacesJSONString = prefs.getString("ownedWorkspaces", "");
@@ -35,6 +36,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         }
     }
 
+    //store the workspaces
     public static void saveWorkspaces(Context context) {
         if (OwnedWorkspaceCore.workspaces != null) {
             Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>(){}.getType();
@@ -42,5 +44,12 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             prefs.edit().putString("ownedWorkspaces", workspacesJSONString).apply();
         }
+    }
+
+    //get workspace by id
+    public static WorkspaceCore getWorkspaceById(String id) {
+        for (WorkspaceCore w : OwnedWorkspaceCore.workspaces)
+            if (w.getId().equals(id)) return w;
+        return null;
     }
 }

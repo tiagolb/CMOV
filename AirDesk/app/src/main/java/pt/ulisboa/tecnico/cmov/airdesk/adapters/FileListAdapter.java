@@ -12,9 +12,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeMap;
 
 import pt.ulisboa.tecnico.cmov.airdesk.R;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 
 /**
  * Created by dinis_000 on 29/03/2015.
@@ -23,11 +25,11 @@ public class FileListAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
     private int layoutResourceId;
-    private HashSet<String> files;
+    private TreeMap<String, WorkspaceFileCore> files;
 
     private static final String LOG_TAG = "WorkspaceAdapter";
 
-    public FileListAdapter(Context context, int textViewResourceId, HashSet<String> files) {
+    public FileListAdapter(Context context, int textViewResourceId, TreeMap<String, WorkspaceFileCore> files) {
         this.mInflater = LayoutInflater.from(context);
         this.layoutResourceId = textViewResourceId;
         this.files = files;
@@ -54,7 +56,7 @@ public class FileListAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return files.toArray()[position]; //FIXME: hashset has no order, it might not work
+        return files.keySet().toArray()[position]; //FIXME: hashset has no order, it might not work
     }
 
     public int getCount() {

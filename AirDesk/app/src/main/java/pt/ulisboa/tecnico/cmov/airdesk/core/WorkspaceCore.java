@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -17,7 +18,7 @@ public class WorkspaceCore {
     private String tag;
 
     private String owner;
-    public HashSet<String> files;
+    public TreeMap<String, WorkspaceFileCore> files;
 
     /*public static abstract class WorkspaceCoreEntry implements BaseColumns {
         public static final String TABLE_NAME = "workspace";
@@ -34,20 +35,24 @@ public class WorkspaceCore {
         this.quota = quota;
         this.tag = tag;
         this.owner = owner;
-        this.files = new HashSet<>();
+        this.files = new TreeMap<>();
     }
 
     public String getName() {
         return name;
     }
 
-    public void addFile(String file) {
-        this.files.add(file);
+    public String getId() { return id; }
+
+    public void addFile(String fileName) {
+        this.files.put(fileName, new WorkspaceFileCore(fileName, this.getId()));
     }
-    public Boolean hasFile(String file) {
-        return this.files.contains(file);
+    public Boolean hasFile(String fileName) {
+        return this.files.containsKey(fileName);
     }
-    public void removeFile(String file) {
-        this.files.remove(file);
+    public WorkspaceFileCore getFile(String fileName) { return this.files.get(fileName); }
+    public void removeFile(String fileName) {
+        this.files.remove(fileName);
     }
+
 }

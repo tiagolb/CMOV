@@ -56,7 +56,8 @@ public class OwnedWorkspace extends ActionBarActivity {
                                     long id) {
                 //WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
-                //intent.putExtra("fileName", OwnedWorkspaceCore.workspaces.indexOf(workspace));
+                intent.putExtra("file", (String) parent.getAdapter().getItem(position));
+                intent.putExtra("workspace", workspace.getId());
                 startActivity(intent);
             }
         });

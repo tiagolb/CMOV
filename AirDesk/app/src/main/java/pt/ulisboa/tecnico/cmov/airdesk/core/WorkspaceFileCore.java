@@ -12,71 +12,67 @@ import java.util.Scanner;
 /**
  * Created by Francisco on 29-03-2015.
  */
-public class WorkspaceFile {
+public class WorkspaceFileCore {
 
     private static final String LINE_SEP = System.getProperty("line.separator");
 
     private String name;
-    private String text;
-    private String workspaceName;
-    private Context context;
+    private String workspace;
 
-    public WorkspaceFile(String name, String workspaceName, Context context) {
+    public WorkspaceFileCore(String name, String workspace) {
         this.name = name;
-        this.workspaceName = workspaceName;
-        this.context = context;
-        readFile(name, workspaceName);
+        this.workspace = workspace;
     }
 
-    public WorkspaceFile(String name, String text, String workspaceName, Context context) {
-        this.name = name;
-        this. text = text;
-        this.workspaceName = workspaceName;
-        this.context = context;
-    }
-
-    public boolean writeFile(){
+    //sets the content of the file in disk
+    public boolean setContent(String data, Context context) {
         FileOutputStream fos = null;
         try {
-            fos = context.openFileOutput(workspaceName + "_" + name, Context.MODE_PRIVATE);
-            fos.write(this.text.getBytes());
+            fos = context.openFileOutput(workspace + "_" + name, Context.MODE_PRIVATE);
+            fos.write(data.getBytes());
         } catch (FileNotFoundException e) {
-            Log.e("WorkspaceFile", "File not found");
+            Log.e("WorkspaceFileCore", "File not found");
             return false;
         } catch (IOException e) {
-            Log.e("WorkspaceFile", "write problem");
+            Log.e("WorkspaceFileCore", "write problem");
             return false;
         }
         return true;
     }
 
-    public boolean readFile(String name, String workspaceName) {
+    //retrieves the content of the file from disk
+    public String getContent(Context context) {
         FileInputStream fis = null;
         Scanner scanner = null;
         StringBuilder sb = new StringBuilder();
         try {
-            fis = context.openFileInput(workspaceName + "_" + name);
+            fis = context.openFileInput(this.workspace + "_" + this.name);
             scanner = new Scanner(fis);
             while (scanner.hasNextLine()) {
                 sb.append(scanner.nextLine() + LINE_SEP);
             }
+            return sb.toString();
         } catch (FileNotFoundException e) {
-            Log.e("WorkspaceFile", "File not found");
-            return false;
+            Log.e("WorkspaceFileCore", "File not found");
+            return "Empty File...";
         } finally {
             if (fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    Log.e("WorkspaceFile", "close problem");
-                    return false;
+                    Log.e("WorkspaceFileCore", "close problem");
+                    return null;
                 }
             }
             if(scanner != null) {
                 scanner.close();
             }
-            this.text = sb.toString();
         }
-        return true;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    //TODO: remove file
 }
