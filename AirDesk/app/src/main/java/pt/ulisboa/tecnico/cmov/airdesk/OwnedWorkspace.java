@@ -28,44 +28,50 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class OwnedWorkspace extends ActionBarActivity {
 
-    public WorkspaceCore workspace;
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, WorkspaceList.class);
-        startActivity(intent);
-    }
+    public WorkspaceCore workspace = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owned_workspace);
 
-        Bundle bundle = getIntent().getExtras();
-        int workspaceIndex = bundle.getInt("workspaceIndex");
-        workspace = OwnedWorkspaceCore.workspaces.get(workspaceIndex);
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-        bar.setTitle(workspace.getName());
 
-        //file click handler
-        ListView fileList = (ListView) findViewById(R.id.owned_workspace_file_list);
-        fileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
-                intent.putExtra("file", (String) parent.getAdapter().getItem(position));
-                intent.putExtra("workspace", workspace.getId());
-                startActivity(intent);
-            }
-        });
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            workspace = OwnedWorkspaceCore.workspaces.get(bundle.getInt("workspaceIndex"));
+        }
+        else if (savedInstanceState != null) { //FIXME: it's always null
+            workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
+        }
+        if (workspace != null) {
+            bar.setTitle(workspace.getName());
 
-        //populate file list
-        FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.files);
-        fileList.setAdapter(adapter);
+            //file click handler
+            ListView fileList = (ListView) findViewById(R.id.owned_workspace_file_list);
+            fileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position,
+                                        long id) {
+                    Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
+                    intent.putExtra("file", (String) parent.getAdapter().getItem(position));
+                    intent.putExtra("workspace", workspace.getId());
+                    startActivity(intent);
+                }
+            });
+
+            //populate file list
+            FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.files);
+            fileList.setAdapter(adapter);
+        }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("workspace", workspace.getId());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
