@@ -1,24 +1,20 @@
 package pt.ulisboa.tecnico.cmov.airdesk.core;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.UUID;
 
 /**
  * Created by tiago on 26-03-2015.
  */
 public class WorkspaceCore {
 
-    private String id;
+    //private String id;
     private String name;
     private int quota;
-    private String tag;
-
+    private List<String> tags;
     private String owner;
-    public TreeMap<String, WorkspaceFileCore> files;
+    private List<String> files;
+    private List<String> clients;
 
     /*public static abstract class WorkspaceCoreEntry implements BaseColumns {
         public static final String TABLE_NAME = "workspace";
@@ -29,28 +25,57 @@ public class WorkspaceCore {
         public static final String COLUMN_NAME_FILE = "file_name";
     }*/
 
+    // TODO: Remove tag or receice list
     public WorkspaceCore(String name, int quota, String tag, String owner) {
-        this.id = UUID.randomUUID().toString();
+        //this.id = UUID.randomUUID().toString();
         this.name = name;
         this.quota = quota;
-        this.tag = tag;
+        this.tags = new ArrayList<>();
         this.owner = owner;
-        this.files = new TreeMap<>();
+        this.files = new ArrayList<>();
+        this.clients = new ArrayList<>();
+    }
+
+    public int getQuota() {
+        return quota;
+    }
+    // TODO: Return unmodifiable Collection
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    // TODO: Return unmodifiable Collection
+    public List<String> getFiles() {
+        return files;
+    }
+
+    // TODO: Return unmodifiable Collection
+    public List<String> getClients() {
+        return clients;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getId() { return id; }
+    //public String getId() { return id; }
 
     public void addFile(String fileName) {
-        this.files.put(fileName, new WorkspaceFileCore(fileName, this.getId()));
+        //this.files.put(fileName, new WorkspaceFileCore(fileName, this.getId()));
+        this.files.add(fileName);
     }
     public Boolean hasFile(String fileName) {
-        return this.files.containsKey(fileName);
+       //return this.files.containsKey(fileName);
+        return this.files.contains(fileName);
     }
-    public WorkspaceFileCore getFile(String fileName) { return this.files.get(fileName); }
+    public WorkspaceFileCore getFile(String fileName) {
+        //return this.files.get(fileName);
+        return new WorkspaceFileCore(fileName, getName());
+    }
     public void removeFile(String fileName) {
         this.files.remove(fileName);
     }
