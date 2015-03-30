@@ -16,6 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
@@ -40,22 +41,9 @@ public class WorkspaceList extends ActionBarActivity {
 
         if (nick.equals("") || email.equals("")) {
             Intent intent = new Intent(this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
-
-        /*
-        boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
-        if(!previouslyStarted) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.pref_previously_started), Boolean.TRUE);
-            edit.commit();
-
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-        }
-        */
-
-
     }
 
     @Override
@@ -68,7 +56,7 @@ public class WorkspaceList extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                // Does this work?
+                // Does this work? sim, é quando clicas num workspace, ele abre o workspace
                 WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Util.launchOwnedWorkspace(WorkspaceList.this, OwnedWorkspace.class, workspace);
             }

@@ -33,8 +33,7 @@ public class Login extends ActionBarActivity {
         prefs.edit().putString("email", email).apply();
 
         Intent intent = new Intent(this, WorkspaceList.class);
-        //intent.putExtra("ownerNickname", ownerNickname.toString().trim());
-        //intent.putExtra("ownerEmail", ownerEmail.toString().trim());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

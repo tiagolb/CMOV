@@ -11,6 +11,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
+
 /**
  * Created by tiago on 26-03-2015.
  */

@@ -54,7 +54,6 @@ public class WorkspaceSetup extends ActionBarActivity {
             //OwnedWorkspaceCore.workspaces.add(workspace);
             //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
             context = (AirDeskContext) getApplicationContext();
-
             context.addWorkspace(workspace);
 
             Util.launchOwnedWorkspace(WorkspaceSetup.this, OwnedWorkspace.class, workspace);
