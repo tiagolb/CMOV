@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk.core;
 
-import android.provider.BaseColumns;
-
 import java.util.ArrayList;
 import java.util.List;
 
