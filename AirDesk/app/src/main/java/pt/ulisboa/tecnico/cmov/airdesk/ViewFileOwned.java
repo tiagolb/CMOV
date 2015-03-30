@@ -34,6 +34,11 @@ public class ViewFileOwned extends ActionBarActivity {
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
         bar.setTitle("View " + file.getName());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         //display file content
         ((EditText) findViewById(R.id.view_file_owned_text)).setText(file.getContent(getApplicationContext()));
