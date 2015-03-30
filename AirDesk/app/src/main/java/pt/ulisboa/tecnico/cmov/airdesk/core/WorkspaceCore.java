@@ -58,6 +58,14 @@ public class WorkspaceCore {
         return clients;
     }
 
+    public Boolean isClient(String client) {
+        return this.clients.contains(client);
+    }
+
+    public void addClient(String client) {
+        this.clients.add(client);
+    }
+
     public String getName() {
         return name;
     }
