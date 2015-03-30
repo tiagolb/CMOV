@@ -36,7 +36,14 @@ public class EditFileForeign extends ActionBarActivity {
             file = workspace.getFile(bundle.getString("file"));
         }
         if (file != null) {
-            bar.setTitle("Edit " + file.getName());
+            //FIXME: retrieve correct lock status
+            if (!file.editLock()) {
+                Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
+                finish();
+            }
+            else {
+                bar.setTitle("Edit " + file.getName());
+            }
         }
     }
 

@@ -23,4 +23,17 @@ public class Client {
         //for now we get it locally
         return Server.getWorkspace("", workspace);
     }
+
+    public static boolean setFileContent(String owner, String workspace, String file, String data) {
+        return getWorkspace(owner, workspace).getFile(file).setContent(Server.context, data);
+    }
+
+    public static String getFileContent(String owner, String workspace, String file) {
+        return getWorkspace(owner, workspace).getFile(file).getContent(Server.context);
+    }
+
+    public static void removeFile(String owner, String workspace, String file) {
+        getWorkspace(owner, workspace).removeFile(file);
+        Server.removeFile("", workspace, file);
+    }
 }

@@ -10,10 +10,24 @@ import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 public class Server {
     public static AirDeskContext context;
 
-    public static WorkspaceCore getWorkspace(String client, String workspace) {
+    private static boolean hasAccess(String client, WorkspaceCore workspace) {
         //TODO: verify if client belong to clients
+        return true;
+    }
+
+    public static WorkspaceCore getWorkspace(String client, String workspace) {
         ArrayList<WorkspaceCore> workspaces = (ArrayList) context.getWorkspaces();
-        for (WorkspaceCore w : workspaces) if (w.getName().equals(workspace)) return w;
+        for (WorkspaceCore w : workspaces)
+            if (w.getName().equals(workspace)) return hasAccess(client, w) ? w : null;
         return null;
+    }
+
+    public static boolean removeFile(String client, String workspace, String file) {
+        WorkspaceCore w = getWorkspace(client, workspace);
+        if (workspace != null) {
+            w.removeFile(file);
+            return true;
+        }
+        return false;
     }
 }

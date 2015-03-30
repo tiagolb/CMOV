@@ -33,13 +33,20 @@ public class EditFileOwned extends ActionBarActivity {
         String fileName = bundle.getString("file");
         file = new WorkspaceFileCore(fileName, workspaceName);
 
-        //set action-bar's title and background color
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-        bar.setTitle("Edit " + file.getName());
+        //FIXME: retrieve correct lock status
+        if (!file.editLock()) {
+            Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
+            finish();
+        }
+        else {
+            //set action-bar's title and background color
+            ActionBar bar = getSupportActionBar();
+            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
+            bar.setTitle("Edit " + file.getName());
 
-        //display file content
-        ((EditText) findViewById(R.id.edit_file_owned_text)).setText(file.getContent(getApplicationContext()));
+            //display file content
+            ((EditText) findViewById(R.id.edit_file_owned_text)).setText(file.getContent(getApplicationContext()));
+        }
     }
 
 

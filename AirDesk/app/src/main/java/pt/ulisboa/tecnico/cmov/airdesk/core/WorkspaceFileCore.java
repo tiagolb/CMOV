@@ -18,6 +18,7 @@ public class WorkspaceFileCore {
 
     private String name;
     private String workspace;
+    private boolean editLock = false;
 
     public WorkspaceFileCore(String name, String workspace) {
         this.name = name;
@@ -73,6 +74,15 @@ public class WorkspaceFileCore {
 
     public String getName() {
        return this.name;
+    }
+
+    public boolean editLock() {
+        if (editLock) return false;
+        return editLock = true;
+    }
+
+    public void editUnlock() {
+        editLock = false;
     }
 
     public void removeFile(Context context) {
