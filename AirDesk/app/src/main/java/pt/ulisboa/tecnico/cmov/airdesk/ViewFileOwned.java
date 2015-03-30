@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +17,9 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 
 public class ViewFileOwned extends ActionBarActivity {
 
+    private WorkspaceCore workspace;
+    private WorkspaceFileCore file;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +27,13 @@ public class ViewFileOwned extends ActionBarActivity {
 
         //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
-        WorkspaceCore workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
-        WorkspaceFileCore file = workspace.getFile(bundle.getString("file"));
+        workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
+        file = workspace.getFile(bundle.getString("file"));
 
         //set action-bar's title and background color
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-        bar.setTitle(file.getName());
+        bar.setTitle("View " + file.getName());
 
         //display file content
         ((EditText) findViewById(R.id.view_file_owned_text)).setText(file.getContent(getApplicationContext()));
@@ -45,16 +49,16 @@ public class ViewFileOwned extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_edit_file:
+                Intent intent = new Intent(ViewFileOwned.this, EditFileOwned.class);
+                intent.putExtra("file", file.getName());
+                intent.putExtra("workspace", workspace.getId());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

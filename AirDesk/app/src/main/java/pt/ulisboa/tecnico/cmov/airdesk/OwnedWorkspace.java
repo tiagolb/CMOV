@@ -54,7 +54,6 @@ public class OwnedWorkspace extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                //WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
                 intent.putExtra("file", (String) parent.getAdapter().getItem(position));
                 intent.putExtra("workspace", workspace.getId());
