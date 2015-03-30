@@ -81,7 +81,6 @@ public class ViewFileOwned extends ActionBarActivity {
                 finish();
                 return true;
             default:
-                Log.d("teste", "seta atras");
                 return super.onOptionsItemSelected(item);
         }
     }

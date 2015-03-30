@@ -18,12 +18,8 @@ import java.util.ArrayList;
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.Server;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
-
-
-
-
-
 
 public class WorkspaceList extends ActionBarActivity {
 
@@ -56,6 +52,8 @@ public class WorkspaceList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_list);
 
+        Server.context = (AirDeskContext) getApplicationContext();
+
         ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
         ownedWorkspacesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,11 +76,29 @@ public class WorkspaceList extends ActionBarActivity {
         onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
         registerForContextMenu(onwedWorkspaceList);
 
+        //foreign workspace list
         ListView foreignWorkspaceList = (ListView) findViewById(R.id.foreign_workspace_list);
-        ArrayAdapter<String> foreignWorkspaceAdapter = new ArrayAdapter<String>(this,
+
+        //when user clicks foreign workspace
+        foreignWorkspaceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(WorkspaceList.this, ForeignWorkspace.class);
+                intent.putExtra("workspace", workspace.getName());
+                intent.putExtra("owner", workspace.getOwner());
+                startActivity(intent);
+            }
+        });
+
+        //populate foreign workspace list
+        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this,
                 R.layout.workspace_list_item,
                 (ArrayList) Client.getMountedWorkspaces(getApplicationContext()));
         foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
+
+        registerForContextMenu(foreignWorkspaceList);
     }
 
     @Override
