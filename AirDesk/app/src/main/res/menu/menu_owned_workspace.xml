@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace">
     <item android:id="@+id/action_invite"
-        android:icon="@mipmap/invite"
+        android:icon="@drawable/invite"
         android:title="@string/invite"
         app:showAsAction="always" />
     <item android:id="@+id/action_new_file"
-        android:icon="@mipmap/new_file"
+        android:icon="@drawable/new_file"
         android:title="@string/new_button"
         app:showAsAction="always" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
