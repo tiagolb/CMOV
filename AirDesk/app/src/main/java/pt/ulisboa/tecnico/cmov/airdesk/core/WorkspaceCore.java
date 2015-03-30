@@ -66,6 +66,10 @@ public class WorkspaceCore {
         this.clients.add(client);
     }
 
+    public void removeClient(String client) {
+        this.clients.remove(client);
+    }
+
     public String getName() {
         return name;
     }

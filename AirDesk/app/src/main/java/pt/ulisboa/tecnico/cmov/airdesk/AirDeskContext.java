@@ -5,6 +5,7 @@ import android.app.Application;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 /**
@@ -29,6 +30,14 @@ public class AirDeskContext extends Application {
     public List<WorkspaceCore> getWorkspaces() {
         if (workspaces == null) {
             workspaces = new ArrayList<WorkspaceCore>();
+            //first time, let's populate with an example
+            OwnedWorkspaceCore workspace = new OwnedWorkspaceCore("Example Workspace", 1, "", "self", true);
+            workspace.addClient("joao@tecnico.ulisboa.pt");
+            workspace.addClient("luis@tecnico.ulisboa.pt");
+            workspace.addClient("ana@tecnico.ulisboa.pt");
+            workspace.addFile("Notas.txt");
+            workspace.addFile("Exemplo.txt");
+            workspaces.add(workspace);
         }
         return workspaces;
     }

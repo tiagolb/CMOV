@@ -100,6 +100,10 @@ public class OwnedWorkspace extends ActionBarActivity {
             case R.id.action_new_file:
                 newFile();
                 return true;
+            case R.id.action_client_list:
+                Intent intent = new Intent(OwnedWorkspace.this, WorkspaceClientList.class);
+                intent.putExtra("workspace", workspace.getName());
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -156,7 +160,9 @@ public class OwnedWorkspace extends ActionBarActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                Util.toast_warning(getApplicationContext(), "Inviting " + value + "...");
+                workspace.addClient(value);
+                OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                Util.toast_warning(getApplicationContext(), value + " added to clients list.");
             }
         });
 

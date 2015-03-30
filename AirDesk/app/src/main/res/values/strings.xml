@@ -39,5 +39,7 @@
     <string name="change_login">Change Login</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
+    <string name="title_activity_workspace_client_list">workspaceClientList</string>
+    <string name="manage_clients">Manage Clients</string>
 
 </resources>

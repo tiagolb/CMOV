@@ -40,8 +40,8 @@
         <activity
             android:name=".WorkspaceSetup"
             android:label="@string/title_activity_workspace_setup"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:parentActivityName=".WorkspaceList" >
+            android:parentActivityName=".WorkspaceList"
+            android:windowSoftInputMode="stateVisible|adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
@@ -77,6 +77,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
+        </activity>
+        <activity
+            android:name=".WorkspaceClientList"
+            android:label="@string/title_activity_workspace_client_list" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnedWorkspace" />
         </activity>
     </application>
 
