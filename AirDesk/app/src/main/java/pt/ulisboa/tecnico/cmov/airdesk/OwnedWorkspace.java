@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -46,9 +48,20 @@ public class OwnedWorkspace extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
         bar.setTitle(workspace.getName());
 
+        //file click handler
+        ListView fileList = (ListView) findViewById(R.id.owned_workspace_file_list);
+        fileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                //WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
+                //intent.putExtra("fileName", OwnedWorkspaceCore.workspaces.indexOf(workspace));
+                startActivity(intent);
+            }
+        });
 
         //populate file list
-        ListView fileList = (ListView) findViewById(R.id.owned_workspace_file_list);
         FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.files);
         fileList.setAdapter(adapter);
     }
