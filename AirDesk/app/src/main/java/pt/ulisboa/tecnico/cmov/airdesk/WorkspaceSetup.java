@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceSetup extends ActionBarActivity {
+
+    public WorkspaceCore workspace;
 
     public void createNewWorkspace(View view) {
         EditText workspace_name = (EditText) findViewById(R.id.et_workspace_name);
@@ -47,12 +50,12 @@ public class WorkspaceSetup extends ActionBarActivity {
 
             boolean isPublic = privacy_setting.equals("Public");
 
-            OwnedWorkspaceCore workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
+            workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
             OwnedWorkspaceCore.workspaces.add(workspace);
             OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
 
             Intent intent = new Intent(this, OwnedWorkspace.class);
-            intent.putExtra("workspace", workspace.getName());
+            intent.putExtra("workspaceIndex", OwnedWorkspaceCore.workspaces.indexOf(workspace));
             startActivity(intent);
         }
     }

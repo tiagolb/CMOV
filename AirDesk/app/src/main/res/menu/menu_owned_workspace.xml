@@ -5,11 +5,11 @@
     <item android:id="@+id/action_invite"
         android:icon="@drawable/invite"
         android:title="@string/invite"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/action_new_file"
         android:icon="@drawable/new_file"
         android:title="@string/new_button"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

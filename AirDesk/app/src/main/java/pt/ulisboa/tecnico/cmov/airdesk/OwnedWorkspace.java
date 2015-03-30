@@ -11,10 +11,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
+import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
 public class OwnedWorkspace extends ActionBarActivity {
+
+    public WorkspaceCore workspace;
 
     @Override
     public void onBackPressed() {
@@ -28,13 +40,17 @@ public class OwnedWorkspace extends ActionBarActivity {
         setContentView(R.layout.activity_owned_workspace);
 
         Bundle bundle = getIntent().getExtras();
-        String workspaceName = bundle.getString("workspace"); // it must always be defined
-
+        int workspaceIndex = bundle.getInt("workspaceIndex");
+        workspace = OwnedWorkspaceCore.workspaces.get(workspaceIndex);
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-        if (workspaceName != null) {
-            bar.setTitle(workspaceName);
-        }
+        bar.setTitle(workspace.getName());
+
+
+        //populate file list
+        ListView fileList = (ListView) findViewById(R.id.owned_workspace_file_list);
+        FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.files);
+        fileList.setAdapter(adapter);
     }
 
 
@@ -73,7 +89,18 @@ public class OwnedWorkspace extends ActionBarActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                Util.toast_warning(getApplicationContext(), "Creating file " + value + "...");
+
+                if (value.equals("")) {
+                    Util.toast_warning(getApplicationContext(), "You have to enter a filename.");
+                }
+                else if (workspace.hasFile(value)) {
+                    Util.toast_warning(getApplicationContext(), "That file already exists.");
+                }
+                else {
+                    Util.toast_warning(getApplicationContext(), "Creating file " + value + "...");
+                    workspace.addFile(value);
+                    OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                }
             }
         });
 

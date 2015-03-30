@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/workspace_file_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/abc_text_size_title_material"
+    android:paddingTop="@dimen/abc_text_size_body_1_material"
+    android:paddingBottom="@dimen/abc_text_size_body_1_material"
+    android:paddingLeft="@dimen/abc_text_size_body_1_material">
+</TextView>

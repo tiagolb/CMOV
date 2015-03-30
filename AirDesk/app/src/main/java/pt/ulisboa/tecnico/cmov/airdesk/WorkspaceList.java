@@ -69,7 +69,7 @@ public class WorkspaceList extends ActionBarActivity {
                                     long id) {
                 WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(WorkspaceList.this, OwnedWorkspace.class);
-                intent.putExtra("workspace", workspace.getName());
+                intent.putExtra("workspaceIndex", OwnedWorkspaceCore.workspaces.indexOf(workspace));
                 startActivity(intent);
             }
         });
