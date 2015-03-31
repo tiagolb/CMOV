@@ -20,8 +20,8 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
 
     private boolean isPublic;
 
-    public OwnedWorkspaceCore(String name, int quota, String tag, String owner_email, boolean isPublic) {
-        super(name, quota, tag, owner_email);
+    public OwnedWorkspaceCore(String name, int quota, String tags, String owner_email, boolean isPublic) {
+        super(name, quota, tags, owner_email);
         this.isPublic = isPublic;
     }
 

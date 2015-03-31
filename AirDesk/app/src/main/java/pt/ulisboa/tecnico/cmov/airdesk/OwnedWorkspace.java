@@ -221,6 +221,29 @@ public class OwnedWorkspace extends ActionBarActivity {
 
     //TODO: we could have an activity for this
     public void manageTagList() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+        alert.setTitle("Manage tags");
+        alert.setMessage("Enter the workspace's tags:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setText(workspace.getTagsString());
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString().trim();
+                workspace.setTags(value);
+                Util.toast_warning(getApplicationContext(), "Tags saved.");
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+        alert.show();
     }
 }

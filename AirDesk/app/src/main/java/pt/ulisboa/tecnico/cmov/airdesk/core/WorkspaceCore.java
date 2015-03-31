@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.cmov.airdesk.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by tiago on 26-03-2015.
@@ -26,14 +27,14 @@ public class WorkspaceCore {
     }*/
 
     // TODO: Remove tag or receive list
-    public WorkspaceCore(String name, int quota, String tag, String owner) {
+    public WorkspaceCore(String name, int quota, String tags, String owner) {
         //this.id = UUID.randomUUID().toString();
         this.name = name;
         this.quota = quota; //bytes
-        this.tags = new ArrayList<>();
         this.owner = owner;
         this.files = new ArrayList<>();
         this.clients = new ArrayList<>();
+        setTags(tags);
     }
 
     public int getQuota() {
@@ -110,6 +111,19 @@ public class WorkspaceCore {
 
     public void setQuota(int quota) {
         this.quota = quota;
+    }
+
+    public void setTags(String tags) {
+        this.tags = new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(tags);
+        while (st.hasMoreTokens()) this.tags.add(st.nextToken());
+    }
+
+    public String getTagsString() {
+        StringBuilder sb = new StringBuilder();
+        for (String tag : this.tags)
+            sb.append(tag + " ");
+        return sb.toString().trim();
     }
 
 }

@@ -20,37 +20,27 @@ public class WorkspaceSetup extends ActionBarActivity {
     private AirDeskContext context;
 
     public void createNewWorkspace(View view) {
-        EditText workspace_name = (EditText) findViewById(R.id.et_workspace_name);
-        EditText quota_value = (EditText) findViewById(R.id.et_quota_value);
-        EditText tag_value = (EditText) findViewById(R.id.et_tag);
-        Spinner privacy_spinner = (Spinner) findViewById(R.id.sp_privacy);
+        String workspaceName = ((EditText) findViewById(R.id.et_workspace_name)).getText().toString().trim();
+        String quotaString = ((EditText) findViewById(R.id.et_quota_value)).getText().toString().trim();
+        String tags = ((EditText) findViewById(R.id.et_tag)).getText().toString().trim();
+        String privacy = ((Spinner) findViewById(R.id.sp_privacy)).getSelectedItem().toString();
 
-        String name = workspace_name.getText().toString().trim();
-        String quota_string = quota_value.getText().toString().trim();
-        String tag = tag_value.getText().toString().trim();
-        String privacy_setting = privacy_spinner.getSelectedItem().toString();
-
-        if (name.equals("")) {
-            Util.toast_warning(getApplicationContext(), "\"Workspace Name\" field is empty");
-
-        } else if (quota_string.equals("")) {
-            Util.toast_warning(getApplicationContext(), "\"Quota\" field is empty");
-
-//        } else if (tag.equals("")) {
-//                Util.toast_warning(getApplicationContext(), "\"TAG\" field is empty");
+        if (workspaceName.equals("")) {
+            Util.toast_warning(getApplicationContext(), "Enter a workspace name.");
+        } else if (quotaString.equals("")) {
+            Util.toast_warning(getApplicationContext(), "Enter the quota value.");
         } else {
-
             int quota;
             try {
-                quota = Integer.parseInt(quota_string) * 1048576; //quota is stored in bytes
-            } catch (Exception e) {
-                Util.toast_warning(getApplicationContext(), "\"Quota\" must be a number");
+                quota = Integer.parseInt(quotaString) * 1048576; //quota is stored in bytes
+            } catch (Exception NumberFormatException) {
+                Util.toast_warning(getApplicationContext(), "Quota must be a number");
                 return;
             }
 
-            boolean isPublic = privacy_setting.equals("Public");
+            boolean isPublic = privacy.equals("Public");
 
-            workspace = new OwnedWorkspaceCore(name, quota, tag, WorkspaceList.OWNER_EMAIL, isPublic);
+            workspace = new OwnedWorkspaceCore(workspaceName, quota, tags, WorkspaceList.OWNER_EMAIL, isPublic);
             //OwnedWorkspaceCore.workspaces.add(workspace);
             //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
             context = (AirDeskContext) getApplicationContext();
