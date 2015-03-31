@@ -126,4 +126,8 @@ public class WorkspaceCore {
         return sb.toString().trim();
     }
 
+    public boolean isPublic() {
+        return this.isPublic;
+    }
+
 }

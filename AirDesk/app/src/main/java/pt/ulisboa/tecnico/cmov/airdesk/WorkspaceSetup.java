@@ -16,7 +16,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceSetup extends ActionBarActivity {
 
-    public WorkspaceCore workspace;
+    private WorkspaceCore workspace;
 
     public void createNewWorkspace(View view) {
         String workspaceName = ((EditText) findViewById(R.id.et_workspace_name)).getText().toString().trim();

@@ -24,7 +24,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String workspacesJSONString = prefs.getString("ownedWorkspaces", "");
         if (workspacesJSONString.equals(""))
-            OwnedWorkspaceCore.workspaces = new ArrayList<WorkspaceCore>();
+            OwnedWorkspaceCore.workspaces = new ArrayList<>();
         else {
             Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>() {
             }.getType();

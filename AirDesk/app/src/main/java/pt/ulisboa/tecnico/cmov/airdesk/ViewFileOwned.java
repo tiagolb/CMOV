@@ -17,7 +17,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 public class ViewFileOwned extends ActionBarActivity {
 
     private WorkspaceCore workspace;
-    WorkspaceFileCore file;
+    private WorkspaceFileCore file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

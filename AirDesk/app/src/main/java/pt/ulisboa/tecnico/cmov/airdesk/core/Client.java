@@ -12,7 +12,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
  * Low level network methods may be implemented somewhere else.
  */
 public class Client {
-    public static ArrayList<WorkspaceCore> mountedWorkspaces;
+    private static ArrayList<WorkspaceCore> mountedWorkspaces;
 
     public static ArrayList<WorkspaceCore> getMountedWorkspaces(Context context) {
         //for now we return local workspaces

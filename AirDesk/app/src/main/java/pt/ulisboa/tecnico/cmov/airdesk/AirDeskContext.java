@@ -13,20 +13,20 @@ public class AirDeskContext extends Application {
 
     public void initContext() {
         if (workspaces == null) {
-            workspaces = new ArrayList<WorkspaceCore>();
+            workspaces = new ArrayList<>();
         }
     }
 
     public void addWorkspace(WorkspaceCore workspace) {
         if (workspaces == null) {
-            workspaces = new ArrayList<WorkspaceCore>();
+            workspaces = new ArrayList<>();
         }
         workspaces.add(workspace);
     }
 
     public List<WorkspaceCore> getWorkspaces() {
         if (workspaces == null) {
-            workspaces = new ArrayList<WorkspaceCore>();
+            workspaces = new ArrayList<>();
             //first time, let's populate with an example
             OwnedWorkspaceCore workspace = new OwnedWorkspaceCore("Example Workspace", 16, "", "self", true);
             workspace.addClient("joao@tecnico.ulisboa.pt");
