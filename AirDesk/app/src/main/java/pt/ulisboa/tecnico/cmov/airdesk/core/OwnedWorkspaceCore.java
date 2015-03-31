@@ -15,11 +15,8 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
 
     public static ArrayList<WorkspaceCore> workspaces = null;
 
-    private boolean isPublic;
-
-    public OwnedWorkspaceCore(String name, int quota, String tags, String owner_email, boolean isPublic) {
-        super(name, quota, tags, owner_email);
-        this.isPublic = isPublic;
+    public OwnedWorkspaceCore(String name, int quota, String tags, String owner, boolean isPublic) {
+        super(name, quota, tags, owner, isPublic);
     }
 
     //load the workspaces

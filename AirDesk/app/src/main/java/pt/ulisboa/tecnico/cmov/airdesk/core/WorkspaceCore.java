@@ -18,6 +18,7 @@ public class WorkspaceCore {
     private String owner;
     private List<String> files;
     private List<String> clients;
+    private boolean isPublic;
 
     /*public static abstract class WorkspaceCoreEntry implements BaseColumns {
         public static final String TABLE_NAME = "workspace";
@@ -29,13 +30,14 @@ public class WorkspaceCore {
     }*/
 
     // TODO: Remove tag or receive list
-    public WorkspaceCore(String name, int quota, String tags, String owner) {
+    public WorkspaceCore(String name, int quota, String tags, String owner, boolean isPublic) {
         //this.id = UUID.randomUUID().toString();
         this.name = name;
         this.quota = quota; //bytes
         this.owner = owner;
         this.files = new ArrayList<>();
         this.clients = new ArrayList<>();
+        this.isPublic = isPublic;
         setTags(tags);
     }
 

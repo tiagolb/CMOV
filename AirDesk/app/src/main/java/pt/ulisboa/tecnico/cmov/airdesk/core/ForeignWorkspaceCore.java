@@ -6,11 +6,8 @@ public class ForeignWorkspaceCore extends WorkspaceCore {
 
     public static ArrayList<WorkspaceCore> workspaces = null;
 
-    private boolean isPublic;
-
     public ForeignWorkspaceCore(String name, int quota, String tags, String owner, boolean isPublic) {
-        super(name, quota, tags, owner);
-        this.isPublic = isPublic;
+        super(name, quota, tags, owner, isPublic);
     }
 
     /*
