@@ -25,7 +25,6 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 public class ForeignWorkspace extends ActionBarActivity {
 
     private WorkspaceCore workspace = null;
-    private AirDeskContext context;
 
     @Override
     public void onBackPressed() {
@@ -42,7 +41,6 @@ public class ForeignWorkspace extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff0099cc"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
-        context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
             workspace = Client.getWorkspace(bundle.getString("owner"), bundle.getString("workspace"));
         }

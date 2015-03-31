@@ -9,42 +9,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 
 public class EditFileOwned extends ActionBarActivity {
 
-    private WorkspaceCore workspace;
     private WorkspaceFileCore file;
-    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_file_owned);
 
-        //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
-        //workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
-        context = (AirDeskContext) getApplicationContext();
-        String workspaceName = bundle.getString("workspace");
-        workspace = context.getWorkspace(workspaceName);
-        String fileName = bundle.getString("file");
-        file = new WorkspaceFileCore(fileName, workspaceName);
 
-        if (!file.editLock()) {
-            Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
-            finish();
-        } else {
-            //set action-bar's title and background color
-            ActionBar bar = getSupportActionBar();
-            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-            bar.setTitle("Edit " + file.getName());
+        if (bundle != null) {
+            String workspaceName = bundle.getString("workspace");
+            String fileName = bundle.getString("file");
 
-            //display file content
-            ((EditText) findViewById(R.id.edit_file_owned_text)).setText(file.getContent(getApplicationContext()));
+            file = new WorkspaceFileCore(fileName, workspaceName);
+
+            if (!file.editLock()) {
+                Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
+                finish();
+            } else {
+                //set action-bar's title and background color
+                ActionBar bar = getSupportActionBar();
+                bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
+                bar.setTitle("Edit " + file.getName());
+
+                //display file content
+                ((EditText) findViewById(R.id.edit_file_owned_text)).setText(file.getContent(getApplicationContext()));
+            }
         }
     }
 

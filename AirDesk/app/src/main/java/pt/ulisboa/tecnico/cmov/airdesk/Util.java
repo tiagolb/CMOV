@@ -7,9 +7,6 @@ import android.widget.Toast;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
-/**
- * Created by tiago on 26-03-2015.
- */
 public class Util {
 
     public static void toast_warning(Context context, String warning) {

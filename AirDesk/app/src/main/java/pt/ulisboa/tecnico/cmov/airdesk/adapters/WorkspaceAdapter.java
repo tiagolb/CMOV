@@ -13,21 +13,15 @@ import java.util.ArrayList;
 import pt.ulisboa.tecnico.cmov.airdesk.R;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
-/**
- * Created by dinis_000 on 29/03/2015.
- */
 public class WorkspaceAdapter extends ArrayAdapter<WorkspaceCore> {
 
-
     private int layoutResourceId;
-    private ArrayList<WorkspaceCore> workspaces;
 
     private static final String LOG_TAG = "WorkspaceAdapter";
 
     public WorkspaceAdapter(Context context, int textViewResourceId, ArrayList<WorkspaceCore> workspaces) {
         super(context, textViewResourceId, workspaces);
         this.layoutResourceId = textViewResourceId;
-        this.workspaces = workspaces;
     }
 
 
@@ -35,7 +29,7 @@ public class WorkspaceAdapter extends ArrayAdapter<WorkspaceCore> {
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
             WorkspaceCore item = getItem(position);
-            View v = null;
+            View v;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inflater.inflate(layoutResourceId, null);

@@ -13,9 +13,6 @@ import java.util.Scanner;
 import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
-/**
- * Created by Francisco on 29-03-2015.
- */
 public class WorkspaceFileCore {
 
     private static final String LINE_SEP = System.getProperty("line.separator");
@@ -77,12 +74,9 @@ public class WorkspaceFileCore {
                     fis.close();
                 } catch (IOException e) {
                     Log.e("WorkspaceFileCore", "close problem");
-                    return null;
                 }
             }
-            if (scanner != null) {
-                scanner.close();
-            }
+            if (scanner != null) scanner.close();
         }
     }
 
@@ -92,8 +86,7 @@ public class WorkspaceFileCore {
 
     //TODO: must be synchronized
     public boolean editLock() {
-        if (editLock) return false;
-        return editLock = true;
+        return !editLock && (editLock = true);
     }
 
     public void editUnlock() {

@@ -15,11 +15,9 @@ import android.widget.ListView;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
-//kgjdfoijdsapifjpoidsa foiçdj fi dsajp
 public class WorkspaceClientList extends ActionBarActivity {
 
     private WorkspaceCore workspace = null;
-    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +28,8 @@ public class WorkspaceClientList extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
-        context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
+            AirDeskContext context = (AirDeskContext) getApplicationContext();
             workspace = context.getWorkspace(bundle.getString("workspace"));
         }
 

@@ -11,9 +11,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-/**
- * Created by tiago on 26-03-2015.
- */
 public class OwnedWorkspaceCore extends WorkspaceCore {
 
     public static ArrayList<WorkspaceCore> workspaces = null;

@@ -25,7 +25,6 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 public class OwnedWorkspace extends ActionBarActivity {
 
     private WorkspaceCore workspace = null;
-    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +35,8 @@ public class OwnedWorkspace extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
-        context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
-            //workspace = OwnedWorkspaceCore.workspaces.get(bundle.getInt("workspaceIndex"));
+            AirDeskContext context = (AirDeskContext) getApplicationContext();
             workspace = context.getWorkspace(bundle.getString("workspaceName"));
         }
         /*else if (savedInstanceState != null) { //FIXME: it's always null

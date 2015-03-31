@@ -4,9 +4,6 @@ import android.content.Context;
 
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
-/**
- * Created by Francisco on 29-03-2015.
- */
 public class ForeignFileCore extends WorkspaceFileCore {
 
     private static final String LINE_SEP = System.getProperty("line.separator");

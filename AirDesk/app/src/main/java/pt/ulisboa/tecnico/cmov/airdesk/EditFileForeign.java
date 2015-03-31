@@ -17,14 +17,14 @@ import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 public class EditFileForeign extends ActionBarActivity {
 
-    private WorkspaceCore workspace;
     private WorkspaceFileCore file;
-    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_file_foreign);
+
+        WorkspaceCore workspace;
 
         //set action-bar's title and background color
         ActionBar bar = getSupportActionBar();

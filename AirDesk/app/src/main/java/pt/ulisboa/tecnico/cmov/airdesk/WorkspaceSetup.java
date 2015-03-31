@@ -17,7 +17,6 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 public class WorkspaceSetup extends ActionBarActivity {
 
     public WorkspaceCore workspace;
-    private AirDeskContext context;
 
     public void createNewWorkspace(View view) {
         String workspaceName = ((EditText) findViewById(R.id.et_workspace_name)).getText().toString().trim();
@@ -41,9 +40,7 @@ public class WorkspaceSetup extends ActionBarActivity {
             boolean isPublic = privacy.equals("Public");
 
             workspace = new OwnedWorkspaceCore(workspaceName, quota, tags, WorkspaceList.OWNER_EMAIL, isPublic);
-            //OwnedWorkspaceCore.workspaces.add(workspace);
-            //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
-            context = (AirDeskContext) getApplicationContext();
+            AirDeskContext context = (AirDeskContext) getApplicationContext();
             context.addWorkspace(workspace);
 
             Util.launchOwnedWorkspace(WorkspaceSetup.this, OwnedWorkspace.class, workspace);

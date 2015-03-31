@@ -11,9 +11,6 @@ import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.R;
 
-/**
- * Created by dinis_000 on 29/03/2015.
- */
 public class FileListAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;

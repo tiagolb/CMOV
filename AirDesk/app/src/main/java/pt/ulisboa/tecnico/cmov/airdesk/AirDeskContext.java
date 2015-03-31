@@ -8,9 +8,6 @@ import java.util.List;
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
-/**
- * Created by Francisco on 29-03-2015.
- */
 public class AirDeskContext extends Application {
     private List<WorkspaceCore> workspaces = null;
 

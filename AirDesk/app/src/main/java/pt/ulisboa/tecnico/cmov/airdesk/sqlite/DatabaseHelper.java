@@ -7,9 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 
-/**
- * Created by Francisco on 30-03-2015.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database
     private static final int DATABASE_VERSION = 1;

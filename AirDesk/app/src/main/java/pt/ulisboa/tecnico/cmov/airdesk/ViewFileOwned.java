@@ -17,29 +17,28 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 public class ViewFileOwned extends ActionBarActivity {
 
     private WorkspaceCore workspace;
-    private String file;
-    private AirDeskContext context;
-    WorkspaceFileCore workspaceFile;
+    WorkspaceFileCore file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_file_owned);
 
-        //get workspace and file objects
-        Bundle bundle = getIntent().getExtras();
-        //workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
-        context = (AirDeskContext) getApplicationContext();
-        String workspaceName = bundle.getString("workspace");
-        workspace = context.getWorkspace(workspaceName);
-        file = bundle.getString("file");
-        workspaceFile = new WorkspaceFileCore(file, workspaceName);
-
-
         //set action-bar's title and background color
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
-        bar.setTitle("View " + file);
+
+        //get workspace and file objects
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String workspace = bundle.getString("workspace");
+            AirDeskContext context = (AirDeskContext) getApplicationContext();
+            this.workspace = context.getWorkspace(workspace);
+            String file = bundle.getString("file");
+            this.file = new WorkspaceFileCore(file, workspace);
+            bar.setTitle("View " + file);
+
+        }
     }
 
     @Override
@@ -47,7 +46,7 @@ public class ViewFileOwned extends ActionBarActivity {
         super.onResume();
 
         //display file content
-        ((EditText) findViewById(R.id.view_file_owned_text)).setText(workspaceFile.getContent(getApplicationContext()));
+        ((EditText) findViewById(R.id.view_file_owned_text)).setText(file.getContent(getApplicationContext()));
     }
 
 
@@ -64,17 +63,17 @@ public class ViewFileOwned extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_edit_file:
                 Intent intent = new Intent(ViewFileOwned.this, EditFileOwned.class);
-                intent.putExtra("file", workspaceFile.getName());
+                intent.putExtra("file", file.getName());
                 intent.putExtra("workspace", workspace.getName());
                 startActivity(intent);
                 return true;
             case R.id.action_remove_file:
                 //remove file from workspace
-                workspace.removeFile(workspaceFile.getName());
+                workspace.removeFile(file.getName());
                 //save changes
                 //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 //remove file from disk
-                workspaceFile.removeFile(getApplicationContext());
+                file.removeFile(getApplicationContext());
 
                 Util.toast_warning(getApplicationContext(), "File removed");
                 finish();
