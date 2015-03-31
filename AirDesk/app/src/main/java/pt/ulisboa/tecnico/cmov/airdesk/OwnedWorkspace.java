@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -107,6 +108,7 @@ public class OwnedWorkspace extends ActionBarActivity {
                 return true;
             case R.id.action_change_quota:
                 changeQuota();
+                return true;
             case R.id.action_tag_list:
                 manageTagList();
                 return true;
@@ -116,17 +118,33 @@ public class OwnedWorkspace extends ActionBarActivity {
     }
 
     public void newFile() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        alert.setTitle("Create new file");
-        alert.setMessage("Please enter the file name:");
+        builder.setTitle("Create new file");
+        builder.setMessage("Please enter the file name:");
 
-        // Set an EditText view to get user input
         final EditText input = new EditText(this);
-        alert.setView(input);
+        builder.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Create",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String value = input.getText().toString().trim();
 
                 if (value.equals("")) {
@@ -134,89 +152,106 @@ public class OwnedWorkspace extends ActionBarActivity {
                 } else if (workspace.hasFile(value)) {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
                 } else {
-                    Util.toast_warning(getApplicationContext(), "Creating file " + value + "...");
+                    dialog.dismiss();
                     workspace.addFile(value);
+                    Util.toast_warning(getApplicationContext(), "File " + value + " created");
                     OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 }
             }
         });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
     }
 
     public void invite() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        alert.setTitle("Invite client");
-        alert.setMessage("Please enter the client's e-mail address:");
+        builder.setTitle("Invite client");
+        builder.setMessage("Please enter the client's e-mail address:");
 
-        // Set an EditText view to get user input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        alert.setView(input);
+        builder.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Invite",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String value = input.getText().toString().trim();
+
                 if (value.equals("")) {
                     Util.toast_warning(getApplicationContext(), "You have to enter an e-mail address.");
                 } else if (workspace.hasClient(value)) {
                     Util.toast_warning(getApplicationContext(), "That client already has access.");
                 } else {
+                    dialog.dismiss();
                     workspace.addClient(value);
                     OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                     Util.toast_warning(getApplicationContext(), value + " added to clients list.");
                 }
             }
         });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
     }
 
     public void changeQuota() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        alert.setTitle("Change quota");
-        alert.setMessage("Enter the new quota value (MB):");
+        builder.setTitle("Change quota");
+        builder.setMessage("Enter the new quota value (MB):");
 
-        // Set an EditText view to get user input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setText(String.valueOf(workspace.getQuota() / 1048576));
-        alert.setView(input);
+        builder.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Save",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString().trim();
-                int quota = Integer.parseInt(value) * 1048576; //quota is stored in bytes
+            }
+        });
 
-                if (quota < workspace.getQuotaUsed()) {
-                    Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
-                } else {
-                    workspace.setQuota(quota);
-                    Util.toast_warning(getApplicationContext(), "New quota set.");
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String value = input.getText().toString().trim();
+
+                try {
+                    int quota = Integer.parseInt(value) * 1048576; //quota is stored in bytes
+                    if (quota < workspace.getQuotaUsed()) {
+                        Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
+                    } else {
+                        dialog.dismiss();
+                        workspace.setQuota(quota);
+                        Util.toast_warning(getApplicationContext(), "New quota set.");
+                    }
+                } catch (Exception NumberFormatException) {
+                    Util.toast_warning(getApplicationContext(), "You must enter a number.");
                 }
             }
         });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-        alert.show();
     }
 
     //TODO: we could have an activity for this
