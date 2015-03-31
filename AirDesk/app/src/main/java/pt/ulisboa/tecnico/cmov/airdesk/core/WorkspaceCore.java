@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * Created by tiago on 26-03-2015.
- */
+//FIXME: most methods implemented here should be in fact implemented in OwnedWorkspaceCore (with db access)
+// We should also start using ForeignWorkspaceCore, that should implement methods using calls to Client class
+// We're using simple WorkspaceCore almost everywhere, we need to change them to Owned/Foreign.
+// In fact, this class could be Abstract.
+
 public class WorkspaceCore {
 
     //private String id;
@@ -68,10 +70,6 @@ public class WorkspaceCore {
         return clients;
     }
 
-    public Boolean isClient(String client) {
-        return this.clients.contains(client);
-    }
-
     public void addClient(String client) {
         this.clients.add(client);
     }
@@ -122,7 +120,7 @@ public class WorkspaceCore {
     public String getTagsString() {
         StringBuilder sb = new StringBuilder();
         for (String tag : this.tags)
-            sb.append(tag + " ");
+            sb.append(tag).append(" ");
         return sb.toString().trim();
     }
 

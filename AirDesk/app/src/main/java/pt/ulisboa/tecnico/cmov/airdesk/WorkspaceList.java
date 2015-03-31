@@ -160,4 +160,11 @@ public class WorkspaceList extends ActionBarActivity {
                 return super.onContextItemSelected(item);
         }
     }
+
+    public void subscribe(View view) {
+        //we have two options: this button adds a subscription, and we have to add an option to manage subscriptions
+        //or, this button opens a dialog with the list of subscriptions (similar to how we currently manage tags)
+        //we also need to save the subscriptions (a list of tags) somewhere
+        Util.toast_warning(getApplicationContext(), "Not implemented.");
+    }
 }

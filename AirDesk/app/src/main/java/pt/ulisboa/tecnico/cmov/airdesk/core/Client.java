@@ -8,9 +8,9 @@ import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 /**
- * Created by dinis_000 on 30/03/2015.
+ * This class implements all the methods that our application will use to make remote requests.
+ * Low level network methods may be implemented somewhere else.
  */
-//TODO: we should use ForeignWorkspaceCore, so we can override some methods to use remote retrievals instead
 public class Client {
     public static ArrayList<WorkspaceCore> mountedWorkspaces;
 

@@ -85,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:textColor="@android:color/white"
-                android:text="@string/subscribe" />
+                android:text="@string/subscribe"
+                android:onClick="subscribe" />
 
         </LinearLayout>
 

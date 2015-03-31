@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 
 /**
- * Created by dinis_000 on 30/03/2015.
+ * This class implements all the methods that our application will use to handle remote requests.
+ * Low level network methods may be implemented somewhere else.
  */
 public class Server {
     public static AirDeskContext context;
