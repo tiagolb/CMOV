@@ -2,7 +2,6 @@ package pt.ulisboa.tecnico.cmov.airdesk.core;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.EditText;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
-import pt.ulisboa.tecnico.cmov.airdesk.R;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 /**
@@ -36,7 +34,7 @@ public class WorkspaceFileCore {
     //sets the content of the file in disk
     public boolean setContent(Context context, String data) throws QuotaExceededException {
         int quotaIncrease = data.length() - this.getSize();
-        ArrayList<WorkspaceCore> workspaces = (ArrayList) ((AirDeskContext)context).getWorkspaces();
+        ArrayList<WorkspaceCore> workspaces = (ArrayList) ((AirDeskContext) context).getWorkspaces();
 
         //TODO: a method to obtain a workspace by name would be nice, or, have a reference for it in the file
         for (WorkspaceCore w : workspaces)
@@ -82,14 +80,14 @@ public class WorkspaceFileCore {
                     return null;
                 }
             }
-            if(scanner != null) {
+            if (scanner != null) {
                 scanner.close();
             }
         }
     }
 
     public String getName() {
-       return this.name;
+        return this.name;
     }
 
     //TODO: must be synchronized
@@ -111,7 +109,7 @@ public class WorkspaceFileCore {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.workspace + "_" + this.name;
     }
 }

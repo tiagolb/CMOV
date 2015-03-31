@@ -10,7 +10,6 @@
         android:id="@+id/owned_workspace_file_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
-    </ListView>
+        android:background="@android:color/white"></ListView>
 
 </LinearLayout>

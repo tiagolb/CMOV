@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pt.ulisboa.tecnico.cmov.airdesk" >
+    package="pt.ulisboa.tecnico.cmov.airdesk">
 
     <application
         android:name=".AirDeskContext"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Login"
-            android:label="@string/title_activity_login" >
-        </activity>
+            android:label="@string/title_activity_login"></activity>
         <activity
             android:name=".WorkspaceList"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +23,7 @@
         <activity
             android:name=".OwnedWorkspace"
             android:label="@string/title_activity_owned_workspace"
-            android:parentActivityName=".WorkspaceList" >
+            android:parentActivityName=".WorkspaceList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
@@ -32,7 +31,7 @@
         <activity
             android:name=".ForeignWorkspace"
             android:label="@string/title_activity_foreign_workspace"
-            android:parentActivityName=".WorkspaceList" >
+            android:parentActivityName=".WorkspaceList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
@@ -41,14 +40,14 @@
             android:name=".WorkspaceSetup"
             android:label="@string/title_activity_workspace_setup"
             android:parentActivityName=".WorkspaceList"
-            android:windowSoftInputMode="stateVisible|adjustPan" >
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
         </activity>
         <activity
             android:name=".ViewFileOwned"
-            android:label="@string/title_activity_view_file_owned" >
+            android:label="@string/title_activity_view_file_owned">
             android:parentActivityName=".OwnedWorkspace" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -56,7 +55,7 @@
         </activity>
         <activity
             android:name=".EditFileOwned"
-            android:label="@string/title_activity_edit_file_owned" >
+            android:label="@string/title_activity_edit_file_owned">
             android:parentActivityName=".OwnedWorkspace" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,7 +64,7 @@
         <activity
             android:name=".EditFileForeign"
             android:label="@string/title_activity_edit_file_foreign"
-            android:parentActivityName=".ForeignWorkspace" >
+            android:parentActivityName=".ForeignWorkspace">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
@@ -73,14 +72,14 @@
         <activity
             android:name=".ViewFileForeign"
             android:label="@string/title_activity_view_file_foreign"
-            android:parentActivityName=".ForeignWorkspace" >
+            android:parentActivityName=".ForeignWorkspace">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
         </activity>
         <activity
             android:name=".WorkspaceClientList"
-            android:label="@string/title_activity_workspace_client_list" >
+            android:label="@string/title_activity_workspace_client_list">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnedWorkspace" />

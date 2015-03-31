@@ -34,74 +34,74 @@
             android:orientation="vertical"
             android:gravity="center">-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/workspace_name"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/workspace_name"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/et_workspace_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/workspace_name"
-                android:layout_marginBottom="@dimen/abc_text_size_body_1_material"/>
+    <EditText
+        android:id="@+id/et_workspace_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/workspace_name"
+        android:layout_marginBottom="@dimen/abc_text_size_body_1_material" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quota"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quota"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/et_quota_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/quota"
-                android:text="1"
-                android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
-                android:inputType="number"/>
+    <EditText
+        android:id="@+id/et_quota_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/quota"
+        android:text="1"
+        android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
+        android:inputType="number" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tag"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tag"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
 
 
-            <EditText
-                android:id="@+id/et_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/tag"
-                android:layout_marginBottom="@dimen/abc_text_size_body_1_material"/>
+    <EditText
+        android:id="@+id/et_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/tag"
+        android:layout_marginBottom="@dimen/abc_text_size_body_1_material" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/privacy_setting"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/privacy_setting"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
 
-            <Spinner
-                android:id="@+id/sp_privacy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/privacy_options"
-                android:prompt="@string/privacy_setting"
-                android:layout_marginBottom="@dimen/abc_text_size_body_1_material"/>
+    <Spinner
+        android:id="@+id/sp_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/privacy_options"
+        android:prompt="@string/privacy_setting"
+        android:layout_marginBottom="@dimen/abc_text_size_body_1_material" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/create"
-                android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
-                android:onClick="createNewWorkspace"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create"
+        android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
+        android:onClick="createNewWorkspace" />
 
-        <!--</LinearLayout>
-    </LinearLayout>-->
+    <!--</LinearLayout>
+</LinearLayout>-->
 
 </LinearLayout>

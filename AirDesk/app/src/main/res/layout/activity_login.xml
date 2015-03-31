@@ -17,13 +17,13 @@
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="@dimen/airdesk_title_size"
         android:paddingTop="@dimen/abc_action_bar_stacked_max_height"
-        android:paddingBottom="@dimen/abc_action_bar_stacked_max_height"/>
+        android:paddingBottom="@dimen/abc_action_bar_stacked_max_height" />
 
     <EditText
         android:id="@+id/owner_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/nickname"/>
+        android:hint="@string/nickname" />
 
     <EditText
         android:id="@+id/owner_email"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/email"
         android:layout_marginTop="@dimen/abc_text_size_body_1_material"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress" />
 
     <Button
         android:layout_width="wrap_content"
@@ -41,6 +41,6 @@
         android:text="@string/title_activity_login"
         android:visibility="visible"
         android:layout_marginTop="@dimen/abc_text_size_body_1_material"
-        android:onClick="loginToWorkspaceList"/>
+        android:onClick="loginToWorkspaceList" />
 
 </LinearLayout>

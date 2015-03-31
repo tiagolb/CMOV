@@ -40,8 +40,7 @@ public class EditFileForeign extends ActionBarActivity {
             if (!file.editLock()) {
                 Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
                 finish();
-            }
-            else {
+            } else {
                 bar.setTitle("Edit " + file.getName());
             }
         }

@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // TODO: ADD Foreign keys
     private static final String CREATE_TABLE_WORKSPACE =
             "CREATE TABLE " + TABLE_WORKSPACE + "(" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
-            COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER)";
+                    COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER)";
     private static final String CREATE_TABLE_FILE =
             "CREATE TABLE " + TABLE_FILE + "(" + COLUMN_WORKSPACE + " TEXT," +
                     COLUMN_FILE + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE + COLUMN_FILE + "))";
@@ -77,15 +77,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_WORKSPACE, null, values);
 
-        for(String fileName : workspace.getFiles()) {
+        for (String fileName : workspace.getFiles()) {
             addFileToWorkspace(workspaceName, fileName, db);
         }
 
-        for(String tag : workspace.getTags()) {
+        for (String tag : workspace.getTags()) {
             addTagToWorkspace(workspaceName, tag, db);
         }
 
-        for(String client : workspace.getClients()) {
+        for (String client : workspace.getClients()) {
             addTagToWorkspace(workspaceName, client, db);
         }
     }

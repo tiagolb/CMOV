@@ -2,9 +2,9 @@ package pt.ulisboa.tecnico.cmov.airdesk;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,7 +75,7 @@ public class WorkspaceClientList extends ActionBarActivity {
         if (v.getId() == R.id.workspace_client_list) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-            ListView list = (ListView)v;
+            ListView list = (ListView) v;
             String client = (String) list.getAdapter().getItem(info.position);
 
             menu.setHeaderTitle(client);

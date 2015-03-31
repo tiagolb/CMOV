@@ -11,8 +11,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
-
 /**
  * Created by tiago on 26-03-2015.
  */
@@ -31,9 +29,11 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
     public static void loadWorkspaces(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String workspacesJSONString = prefs.getString("ownedWorkspaces", "");
-        if (workspacesJSONString.equals("")) OwnedWorkspaceCore.workspaces = new ArrayList<WorkspaceCore>();
+        if (workspacesJSONString.equals(""))
+            OwnedWorkspaceCore.workspaces = new ArrayList<WorkspaceCore>();
         else {
-            Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>(){}.getType();
+            Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>() {
+            }.getType();
             OwnedWorkspaceCore.workspaces = new Gson().fromJson(workspacesJSONString, type);
         }
     }
@@ -41,7 +41,8 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
     //store the workspaces
     public static void saveWorkspaces(Context context) {
         if (OwnedWorkspaceCore.workspaces != null) {
-            Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>(){}.getType();
+            Type type = new TypeToken<ArrayList<OwnedWorkspaceCore>>() {
+            }.getType();
             String workspacesJSONString = new Gson().toJson(OwnedWorkspaceCore.workspaces, type);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             prefs.edit().putString("ownedWorkspaces", workspacesJSONString).apply();

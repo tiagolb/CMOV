@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Server;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
@@ -129,7 +128,7 @@ public class WorkspaceList extends ActionBarActivity {
         if (v.getId() == R.id.owned_workspace_list) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-            ListView list = (ListView)v;
+            ListView list = (ListView) v;
             WorkspaceCore workspace = (WorkspaceCore) list.getAdapter().getItem(info.position);
 
             menu.setHeaderTitle(workspace.getName());

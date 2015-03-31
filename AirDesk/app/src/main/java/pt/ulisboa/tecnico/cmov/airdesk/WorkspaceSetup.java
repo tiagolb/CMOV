@@ -30,10 +30,10 @@ public class WorkspaceSetup extends ActionBarActivity {
         String tag = tag_value.getText().toString().trim();
         String privacy_setting = privacy_spinner.getSelectedItem().toString();
 
-        if(name.equals("")) {
+        if (name.equals("")) {
             Util.toast_warning(getApplicationContext(), "\"Workspace Name\" field is empty");
 
-        } else if(quota_string.equals("")) {
+        } else if (quota_string.equals("")) {
             Util.toast_warning(getApplicationContext(), "\"Quota\" field is empty");
 
 //        } else if (tag.equals("")) {

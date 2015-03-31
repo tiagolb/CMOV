@@ -14,7 +14,6 @@ import android.widget.ListView;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
-import pt.ulisboa.tecnico.cmov.airdesk.core.Server;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
