@@ -2,12 +2,18 @@ package pt.ulisboa.tecnico.cmov.airdesk.core;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
+import pt.ulisboa.tecnico.cmov.airdesk.R;
+import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 /**
  * Created by Francisco on 29-03-2015.
@@ -19,26 +25,36 @@ public class WorkspaceFileCore {
     private String name;
     private String workspace;
     private boolean editLock = false;
+    private int size = 0;
 
     public WorkspaceFileCore(String name, String workspace) {
         this.name = name;
         this.workspace = workspace;
+        //FIXME: must retrieve remaining fields from database
     }
 
     //sets the content of the file in disk
-    public boolean setContent(Context context, String data) {
+    public boolean setContent(Context context, String data) throws QuotaExceededException {
+        int quotaIncrease = data.length() - this.getSize();
+        ArrayList<WorkspaceCore> workspaces = (ArrayList) ((AirDeskContext)context).getWorkspaces();
+
+        //TODO: a method to obtain a workspace by name would be nice, or, have a reference for it in the file
+        for (WorkspaceCore w : workspaces)
+            if (w.getName().equals(workspace) && quotaIncrease > w.getQuotaAvailable())
+                throw new QuotaExceededException();
+
         FileOutputStream fos;
         try {
             fos = context.openFileOutput(toString(), Context.MODE_PRIVATE);
             fos.write(data.getBytes());
+            this.size = data.length();
+            return true;
         } catch (FileNotFoundException e) {
             Log.e("WorkspaceFileCore", "File not found");
-            return false;
         } catch (IOException e) {
             Log.e("WorkspaceFileCore", "write problem");
-            return false;
         }
-        return true;
+        return false;
     }
 
     //retrieves the content of the file from disk
@@ -76,6 +92,7 @@ public class WorkspaceFileCore {
        return this.name;
     }
 
+    //TODO: must be synchronized
     public boolean editLock() {
         if (editLock) return false;
         return editLock = true;
@@ -87,6 +104,10 @@ public class WorkspaceFileCore {
 
     public void removeFile(Context context) {
         context.deleteFile(toString());
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override

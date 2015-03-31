@@ -48,6 +48,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         }
     }
 
+
     //get workspace by id
     /*public static WorkspaceCore getWorkspaceById(String id) {
         for (WorkspaceCore w : OwnedWorkspaceCore.workspaces)

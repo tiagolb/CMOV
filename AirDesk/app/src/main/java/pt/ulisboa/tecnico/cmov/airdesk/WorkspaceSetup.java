@@ -42,7 +42,7 @@ public class WorkspaceSetup extends ActionBarActivity {
 
             int quota;
             try {
-                quota = Integer.parseInt(quota_string);
+                quota = Integer.parseInt(quota_string) * 1048576; //quota is stored in bytes
             } catch (Exception e) {
                 Util.toast_warning(getApplicationContext(), "\"Quota\" must be a number");
                 return;

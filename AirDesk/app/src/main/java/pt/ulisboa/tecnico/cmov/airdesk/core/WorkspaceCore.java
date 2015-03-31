@@ -25,11 +25,11 @@ public class WorkspaceCore {
         public static final String COLUMN_NAME_FILE = "file_name";
     }*/
 
-    // TODO: Remove tag or receice list
+    // TODO: Remove tag or receive list
     public WorkspaceCore(String name, int quota, String tag, String owner) {
         //this.id = UUID.randomUUID().toString();
         this.name = name;
-        this.quota = quota;
+        this.quota = quota; //bytes
         this.tags = new ArrayList<>();
         this.owner = owner;
         this.files = new ArrayList<>();
@@ -39,6 +39,15 @@ public class WorkspaceCore {
     public int getQuota() {
         return quota;
     }
+
+    public int getQuotaUsed() {
+        return 0; //FIXME: query db for the sum of the files size
+    }
+
+    public int getQuotaAvailable() {
+        return getQuota() - getQuotaUsed();
+    }
+
     // TODO: Return unmodifiable Collection
     public List<String> getTags() {
         return tags;

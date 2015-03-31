@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
+import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 
 public class EditFileOwned extends ActionBarActivity {
@@ -33,7 +34,6 @@ public class EditFileOwned extends ActionBarActivity {
         String fileName = bundle.getString("file");
         file = new WorkspaceFileCore(fileName, workspaceName);
 
-        //FIXME: retrieve correct lock status
         if (!file.editLock()) {
             Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
             finish();
@@ -62,8 +62,13 @@ public class EditFileOwned extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_save_file:
-                file.setContent(getApplicationContext(), ((EditText) findViewById(R.id.edit_file_owned_text)).getText().toString());
-                Util.toast_warning(getApplicationContext(), "File saved");
+                try {
+                    String newContent = ((EditText) findViewById(R.id.edit_file_owned_text)).getText().toString();
+                    file.setContent(getApplicationContext(), newContent);
+                    Util.toast_warning(getApplicationContext(), "File saved");
+                } catch (QuotaExceededException e) {
+                    Util.toast_warning(getApplicationContext(), "Cannot save file, quota exceeded.");
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

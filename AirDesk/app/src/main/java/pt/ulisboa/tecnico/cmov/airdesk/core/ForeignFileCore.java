@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
+import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
+
 /**
  * Created by Francisco on 29-03-2015.
  */
@@ -26,7 +28,7 @@ public class ForeignFileCore extends WorkspaceFileCore {
         this.workspace = workspace;
     }
 
-    public boolean setContent(Context context, String data) {
+    public boolean setContent(Context context, String data) throws QuotaExceededException {
         return Client.setFileContent(owner, workspace, name, data);
     }
 

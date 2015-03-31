@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
+import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 /**
  * Created by dinis_000 on 30/03/2015.
@@ -24,7 +25,8 @@ public class Client {
         return Server.getWorkspace("", workspace);
     }
 
-    public static boolean setFileContent(String owner, String workspace, String file, String data) {
+    public static boolean setFileContent(String owner, String workspace, String file, String data)
+            throws QuotaExceededException {
         return getWorkspace(owner, workspace).getFile(file).setContent(Server.context, data);
     }
 
