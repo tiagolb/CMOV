@@ -89,16 +89,27 @@ public class WorkspaceCore {
         //this.files.put(fileName, new WorkspaceFileCore(fileName, this.getId()));
         this.files.add(fileName);
     }
+
     public Boolean hasFile(String fileName) {
-       //return this.files.containsKey(fileName);
+        //return this.files.containsKey(fileName);
         return this.files.contains(fileName);
     }
+
+    public Boolean hasClient(String client) {
+        return this.clients.contains(client);
+    }
+
     public WorkspaceFileCore getFile(String fileName) {
         //return this.files.get(fileName);
         return new WorkspaceFileCore(fileName, getName());
     }
+
     public void removeFile(String fileName) {
         this.files.remove(fileName);
+    }
+
+    public void setQuota(int quota) {
+        this.quota = quota;
     }
 
 }

@@ -104,6 +104,12 @@ public class OwnedWorkspace extends ActionBarActivity {
                 Intent intent = new Intent(OwnedWorkspace.this, WorkspaceClientList.class);
                 intent.putExtra("workspace", workspace.getName());
                 startActivity(intent);
+                return true;
+            case R.id.action_change_quota:
+                changeQuota();
+            case R.id.action_tag_list:
+                manageTagList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -121,15 +127,13 @@ public class OwnedWorkspace extends ActionBarActivity {
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
+                String value = input.getText().toString().trim();
 
                 if (value.equals("")) {
                     Util.toast_warning(getApplicationContext(), "You have to enter a filename.");
-                }
-                else if (workspace.hasFile(value)) {
+                } else if (workspace.hasFile(value)) {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
-                }
-                else {
+                } else {
                     Util.toast_warning(getApplicationContext(), "Creating file " + value + "...");
                     workspace.addFile(value);
                     OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
@@ -159,10 +163,16 @@ public class OwnedWorkspace extends ActionBarActivity {
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                workspace.addClient(value);
-                OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
-                Util.toast_warning(getApplicationContext(), value + " added to clients list.");
+                String value = input.getText().toString().trim();
+                if (value.equals("")) {
+                    Util.toast_warning(getApplicationContext(), "You have to enter an e-mail address.");
+                } else if (workspace.hasClient(value)) {
+                    Util.toast_warning(getApplicationContext(), "That client already has access.");
+                } else {
+                    workspace.addClient(value);
+                    OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                    Util.toast_warning(getApplicationContext(), value + " added to clients list.");
+                }
             }
         });
 
@@ -173,5 +183,44 @@ public class OwnedWorkspace extends ActionBarActivity {
         });
 
         alert.show();
+    }
+
+    public void changeQuota() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Change quota");
+        alert.setMessage("Enter the new quota value (MB):");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setText(String.valueOf(workspace.getQuota() / 1048576));
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString().trim();
+                int quota = Integer.parseInt(value) * 1048576; //quota is stored in bytes
+
+                if (quota < workspace.getQuotaUsed()) {
+                    Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
+                } else {
+                    workspace.setQuota(quota);
+                    Util.toast_warning(getApplicationContext(), "New quota set.");
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+        alert.show();
+    }
+
+    //TODO: we could have an activity for this
+    public void manageTagList() {
+
     }
 }

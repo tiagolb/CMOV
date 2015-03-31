@@ -41,5 +41,7 @@
     <string name="remove">Remove</string>
     <string name="title_activity_workspace_client_list">workspaceClientList</string>
     <string name="manage_clients">Manage Clients</string>
+    <string name="change_quota">Change Quota</string>
+    <string name="manage_tags">Manage Tags</string>
 
 </resources>

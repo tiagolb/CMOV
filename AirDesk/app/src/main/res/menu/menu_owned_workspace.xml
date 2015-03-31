@@ -2,16 +2,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace">
-    <item android:id="@+id/action_invite"
+    <item
+        android:id="@+id/action_invite"
         android:icon="@drawable/invite"
         android:title="@string/invite"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/action_new_file"
+    <item
+        android:id="@+id/action_new_file"
         android:icon="@drawable/new_file"
         android:title="@string/new_button"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/action_client_list" android:title="@string/manage_clients"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/action_client_list"
+        android:title="@string/manage_clients"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_tag_list"
+        android:title="@string/manage_tags"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_change_quota"
+        android:title="@string/change_quota"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>
