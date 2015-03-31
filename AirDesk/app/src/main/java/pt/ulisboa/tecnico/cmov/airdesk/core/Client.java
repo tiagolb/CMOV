@@ -22,20 +22,25 @@ public class Client {
 
     public static WorkspaceCore getWorkspace(String owner, String workspace) {
         //for now we get it locally
-        return Server.getWorkspace("", workspace);
+        WorkspaceCore w = Server.getWorkspace("", workspace);
+        return new ForeignWorkspaceCore(w.getName(), w.getQuota(), w.getTagsString(), w.getOwner(), w.isPublic());
     }
 
     public static boolean setFileContent(String owner, String workspace, String file, String data)
             throws QuotaExceededException {
-        return getWorkspace(owner, workspace).getFile(file).setContent(Server.context, data);
+        return Server.getWorkspace("", workspace).getFile(file).setContent(Server.context, data);
     }
 
     public static String getFileContent(String owner, String workspace, String file) {
-        return getWorkspace(owner, workspace).getFile(file).getContent(Server.context);
+        return Server.getWorkspace("", workspace).getFile(file).getContent(Server.context);
     }
 
     public static void removeFile(String owner, String workspace, String file) {
-        getWorkspace(owner, workspace).removeFile(file);
+        Server.getWorkspace("", workspace).removeFile(file);
         Server.removeFile("", workspace, file);
+    }
+
+    public static ArrayList<String> getFiles(String owner, String workspace) {
+        return new ArrayList<>(Server.getWorkspace("", workspace).getFiles());
     }
 }
