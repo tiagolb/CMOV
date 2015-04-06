@@ -19,6 +19,10 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         super(name, quota, tags, owner, isPublic);
     }
 
+    public OwnedWorkspaceCore(String name, int quota, String owner, boolean isPublic) {
+        super(name, quota, owner, isPublic);
+    }
+
     //load the workspaces
     public static void loadWorkspaces(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

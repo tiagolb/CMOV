@@ -41,6 +41,13 @@ public class WorkspaceCore {
         setTags(tags);
     }
 
+    public WorkspaceCore(String name, int quota, String owner, boolean isPublic) {
+        this.name = name;
+        this.quota = quota;
+        this. owner = owner;
+        this.isPublic = isPublic;
+    }
+
     public int getQuota() {
         return quota;
     }
@@ -56,6 +63,10 @@ public class WorkspaceCore {
     // TODO: Return unmodifiable Collection
     public List<String> getTags() {
         return tags;
+    }
+
+    public void addTag(String tag) {
+        this.tags.add(tag);
     }
 
     public String getOwner() {
