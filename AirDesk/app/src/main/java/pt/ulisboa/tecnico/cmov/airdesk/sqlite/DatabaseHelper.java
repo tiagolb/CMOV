@@ -5,15 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "workspaceManager";
 
     // Tables
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_WORKSPACE = "workspaceName";
     private static final String COLUMN_OWNER = "owner";
     private static final String COLUMN_QUOTA = "quota";
-    private static final String COLUMN_PUBLIC = "public";
+    private static final String COLUMN_PUBLIC = "isPublic";
     private static final String COLUMN_FILE = "fileName";
     private static final String COLUMN_TAG = "tagName";
     private static final String COLUMN_CLIENT = "clientName";
@@ -34,18 +35,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Statements: Create tables
     // TODO: ADD Foreign keys
     private static final String CREATE_TABLE_WORKSPACE =
-            "CREATE TABLE " + TABLE_WORKSPACE + "(" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
-                    COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER," + COLUMN_PUBLIC +
-                    "INTEGER)";
+            "CREATE TABLE " + TABLE_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
+                    COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER," + COLUMN_PUBLIC + " INTEGER);";
     private static final String CREATE_TABLE_FILE =
-            "CREATE TABLE " + TABLE_FILE + "(" + COLUMN_WORKSPACE + " TEXT," +
-                    COLUMN_FILE + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE + COLUMN_FILE + "))";
+            "CREATE TABLE " + TABLE_FILE + " (" + COLUMN_WORKSPACE + " TEXT," +
+                    COLUMN_FILE + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +"," + COLUMN_FILE + "));";
     private static final String CREATE_TABLE_TAG =
-            "CREATE TABLE " + TABLE_TAG + "(" + COLUMN_WORKSPACE + " TEXT," +
-                    COLUMN_TAG + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE + COLUMN_TAG + "))";
+            "CREATE TABLE " + TABLE_TAG + " (" + COLUMN_WORKSPACE + " TEXT," +
+                    COLUMN_TAG + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +","+ COLUMN_TAG + "));";
     private static final String CREATE_TABLE_CLIENT =
-            "CREATE TABLE " + TABLE_FILE + "(" + COLUMN_WORKSPACE + " TEXT," +
-                    COLUMN_CLIENT + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE + COLUMN_CLIENT + "))";
+            "CREATE TABLE " + TABLE_CLIENT + " (" + COLUMN_WORKSPACE + " TEXT," +
+                    COLUMN_CLIENT + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +"," + COLUMN_CLIENT + "));";
 
 
     public DatabaseHelper(Context context) {
@@ -55,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_WORKSPACE);
+        Log.d("teste", CREATE_TABLE_WORKSPACE);
         db.execSQL(CREATE_TABLE_FILE);
         db.execSQL(CREATE_TABLE_TAG);
         db.execSQL(CREATE_TABLE_CLIENT);
@@ -70,15 +71,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Methods to add stuff to workspace
-    public void addWorkspace(OwnedWorkspaceCore workspace) {
+    public void addWorkspace(WorkspaceCore workspace) {
         SQLiteDatabase db = this.getWritableDatabase();
         String workspaceName = workspace.getName();
 
         ContentValues values = new ContentValues();
+        values.put(COLUMN_PUBLIC, (workspace.isPublic())? 1 : 0);
         values.put(COLUMN_WORKSPACE, workspaceName);
         values.put(COLUMN_OWNER, workspace.getOwner());
         values.put(COLUMN_QUOTA, workspace.getQuota());
-        values.put(COLUMN_PUBLIC, (workspace.isPublic())? 1 : 0);
+
 
         db.insert(TABLE_WORKSPACE, null, values);
 
@@ -138,7 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Methods to remove stuff from workspace
-    public void removeWorkspace(OwnedWorkspaceCore workspace) {
+    public void removeWorkspace(WorkspaceCore workspace) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String whereClause = COLUMN_WORKSPACE + " = ?";
@@ -197,7 +199,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Methods to get stuff from workspace
-    private OwnedWorkspaceCore getWorkspace(String workspaceName) {
+    private WorkspaceCore getWorkspace(String workspaceName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_WORKSPACE;
         String selectFilesQuery = "SELECT * FROM " + TABLE_FILE +
@@ -209,7 +211,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String[] workspaceArg = new String[]{workspaceName};
 
-        OwnedWorkspaceCore workspace = null;
+        WorkspaceCore workspace = null;
 
         Cursor workspaceCursor = db.rawQuery(selectQuery, null);
         if(workspaceCursor.moveToFirst()) {
@@ -218,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Add to table isPublic
             boolean isPublic = (workspaceCursor.getInt(workspaceCursor.
                     getColumnIndex(COLUMN_PUBLIC)) == 1);
-            workspace = new OwnedWorkspaceCore(workspaceName, quota, owner, isPublic);
+            workspace = new WorkspaceCore(workspaceName, quota, owner, isPublic);
         }
 
         Cursor fileCursor = db.rawQuery(selectFilesQuery, workspaceArg);
@@ -244,8 +246,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workspace;
     }
 
-    public List<OwnedWorkspaceCore> getAllWorkspaces() {
-        List<OwnedWorkspaceCore> workspaces = new ArrayList<>();
+    public List<WorkspaceCore> getAllWorkspaces() {
+        List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT "+ COLUMN_WORKSPACE +" FROM " + TABLE_WORKSPACE;
@@ -258,5 +260,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return workspaces;
+    }
+
+    public void setWorkspaceQuota(String name, int quota) {
+        SQLiteDatabase db = getWritableDatabase();
+        String where = COLUMN_WORKSPACE + " = ?";
+        ContentValues newValues = new ContentValues();
+        newValues.put(COLUMN_QUOTA, quota);
+        String[] args = new String[] {String.valueOf(quota)};
+        db.update(TABLE_WORKSPACE, newValues, where, args);
     }
 }

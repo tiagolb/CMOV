@@ -69,7 +69,9 @@ public class ViewFileOwned extends ActionBarActivity {
                 return true;
             case R.id.action_remove_file:
                 //remove file from workspace
-                workspace.removeFile(file.getName());
+                AirDeskContext context = (AirDeskContext) getApplicationContext();
+                context.removeFileFromWorkspace(workspace, file.getName());
+                //workspace.removeFile(file.getName());
                 //save changes
                 //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 //remove file from disk

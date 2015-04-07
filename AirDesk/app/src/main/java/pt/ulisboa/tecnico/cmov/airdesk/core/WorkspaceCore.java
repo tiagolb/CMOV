@@ -44,8 +44,10 @@ public class WorkspaceCore {
     public WorkspaceCore(String name, int quota, String owner, boolean isPublic) {
         this.name = name;
         this.quota = quota;
-        this. owner = owner;
+        this.owner = owner;
         this.isPublic = isPublic;
+        this.tags = new ArrayList<>();
+        this.files = new ArrayList<>();
     }
 
     public int getQuota() {
@@ -66,6 +68,7 @@ public class WorkspaceCore {
     }
 
     public void addTag(String tag) {
+        //DatabaseHelper dbHelper = new DatabaseHelper(context);
         this.tags.add(tag);
     }
 
@@ -84,6 +87,7 @@ public class WorkspaceCore {
     }
 
     public void addClient(String client) {
+        //DatabaseHelper dbHelper = new DatabaseHelper();
         this.clients.add(client);
     }
 
@@ -124,6 +128,7 @@ public class WorkspaceCore {
         this.quota = quota;
     }
 
+    // TODO: addTags
     public void setTags(String tags) {
         this.tags = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(tags);

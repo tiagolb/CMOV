@@ -1,14 +1,6 @@
 package pt.ulisboa.tecnico.cmov.airdesk.core;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class OwnedWorkspaceCore extends WorkspaceCore {
@@ -24,7 +16,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
     }
 
     //load the workspaces
-    public static void loadWorkspaces(Context context) {
+    /*public static void loadWorkspaces(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String workspacesJSONString = prefs.getString("ownedWorkspaces", "");
         if (workspacesJSONString.equals(""))
@@ -45,7 +37,7 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             prefs.edit().putString("ownedWorkspaces", workspacesJSONString).apply();
         }
-    }
+    }*/
 
 
     //get workspace by id

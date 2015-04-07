@@ -18,7 +18,6 @@ import android.widget.ListView;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
@@ -123,9 +122,11 @@ public class ForeignWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
                 } else {
                     dialog.dismiss();
-                    workspace.addFile(value);
+                    AirDeskContext context = (AirDeskContext) getApplicationContext();
+                    context.addFileToWorkspace(workspace, value);
+                    //workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), "File " + value + " created");
-                    OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                    //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 }
             }
         });

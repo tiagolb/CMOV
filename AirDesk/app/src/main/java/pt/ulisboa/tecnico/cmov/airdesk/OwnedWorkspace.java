@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
-import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 
@@ -151,9 +150,11 @@ public class OwnedWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
                 } else {
                     dialog.dismiss();
-                    workspace.addFile(value);
+                    AirDeskContext context = (AirDeskContext) getApplicationContext();
+                    context.addFileToWorkspace(workspace,value);
+                    //workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), "File " + value + " created");
-                    OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                    //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 }
             }
         });
@@ -196,8 +197,10 @@ public class OwnedWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That client already has access.");
                 } else {
                     dialog.dismiss();
-                    workspace.addClient(value);
-                    OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                    AirDeskContext context = (AirDeskContext) getApplicationContext();
+                    context.addClientToWorkspace(workspace, value);
+                    //workspace.addClient(value);
+                    //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                     Util.toast_warning(getApplicationContext(), value + " added to clients list.");
                 }
             }
@@ -242,7 +245,9 @@ public class OwnedWorkspace extends ActionBarActivity {
                         Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
                     } else {
                         dialog.dismiss();
-                        workspace.setQuota(quota);
+                        AirDeskContext context = (AirDeskContext) getApplicationContext();
+                        context.setWorkspaceQuota(workspace, quota);
+                        //workspace.setQuota(quota);
                         Util.toast_warning(getApplicationContext(), "New quota set.");
                     }
                 } catch (Exception NumberFormatException) {

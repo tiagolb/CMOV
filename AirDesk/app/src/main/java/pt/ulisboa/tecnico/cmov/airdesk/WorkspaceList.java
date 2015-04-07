@@ -51,6 +51,7 @@ public class WorkspaceList extends ActionBarActivity {
 
     private void populateWorkspaceLists() {
         Server.context = (AirDeskContext) getApplicationContext();
+        Server.context.initContext();
 
         ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
         ownedWorkspacesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
