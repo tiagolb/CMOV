@@ -13,11 +13,11 @@ public class AirDeskContext extends Application {
     private List<WorkspaceCore> mountedWorkspaces = null;
     private DatabaseHelper dbHelper = null;
 
-    public void initContext() {
+    public void initContext(String ownerEmail) {
         if (workspaces == null) {
             dbHelper = new DatabaseHelper(this);
-            workspaces = dbHelper.getAllWorkspaces();
-            mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
+            workspaces = dbHelper.getAllWorkspaces(ownerEmail);
+            mountedWorkspaces = dbHelper.getAllMountedWorkspaces(ownerEmail);
         }
 
         /*if(workspaces.isEmpty()) {
@@ -38,6 +38,15 @@ public class AirDeskContext extends Application {
         }
         workspaces.add(workspace);
         dbHelper.addWorkspace(workspace);
+    }
+
+    public void addMountedWorkspace(WorkspaceCore workspace) {
+        if (workspaces == null) {
+            workspaces = new ArrayList<>();
+        }
+        mountedWorkspaces.add(workspace);
+        //FIXME: para a primeira entrega isto esta comentado mas depois deixa de estar
+        //dbHelper.addWorkspace(workspace);
     }
 
     public void addClientToWorkspace(WorkspaceCore workspace, String client) {
@@ -84,6 +93,11 @@ public class AirDeskContext extends Application {
 
     public List<WorkspaceCore> getMountedWorkspaces() {
         return mountedWorkspaces;
+    }
+
+    //FIXME: para a primeira entrega fica assim
+    public List<WorkspaceCore> getWorkspacesWithTag(String tag) {
+        return dbHelper.getAllWorkspacesWithTag(tag);
     }
 
     public WorkspaceCore getWorkspace(String name) {

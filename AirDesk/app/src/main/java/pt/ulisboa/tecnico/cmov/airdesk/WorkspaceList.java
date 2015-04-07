@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,11 +11,14 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
@@ -21,10 +26,9 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.Server;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceList extends ActionBarActivity {
-
-    //public static String OWNER_NICKNAME;
-    //public static String OWNER_EMAIL;
     private AirDeskContext context;
+    private String ownerNick;
+    private String ownerEmail;
 
     public void setupNewWorkspace(View view) {
         Intent intent = new Intent(this, WorkspaceSetup.class);
@@ -36,22 +40,24 @@ public class WorkspaceList extends ActionBarActivity {
         super.onResume();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-        String nick = prefs.getString("nick", "");
-        String email = prefs.getString("email", "");
+        ownerNick = prefs.getString("nick", "");
+        ownerEmail = prefs.getString("email", "");
 
-        if (nick.equals("") || email.equals("")) {
+        if (ownerNick.equals("") || ownerEmail.equals("")) {
             Intent intent = new Intent(this, Login.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+        } else {
+            // FIXME: Aqui deve haver uma maneira melhor de fazer isto
+            ownerNick = prefs.getString("nick", "");
+            ownerEmail = prefs.getString("email", "");
+            populateWorkspaceLists();
         }
-
-        // Estou a experimentar uma coisa
-        populateWorkspaceLists();
     }
 
     private void populateWorkspaceLists() {
         Server.context = (AirDeskContext) getApplicationContext();
-        Server.context.initContext();
+        Server.context.initContext(ownerEmail);
 
         ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
         ownedWorkspacesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,7 +111,8 @@ public class WorkspaceList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_list);
 
-        populateWorkspaceLists();
+        // Aqui acho que nao e preciso isto
+        //populateWorkspaceLists();
     }
 
     @Override
@@ -170,10 +177,50 @@ public class WorkspaceList extends ActionBarActivity {
     }
 
     public void subscribe(View view) {
-        //we have two options: this button adds a subscription, and we have to add an option to manage subscriptions
-        //or, this button opens a dialog with the list of subscriptions (similar to how we currently manage tags)
-        //we also need to save the subscriptions (a list of tags) somewhere
-        Util.toast_warning(getApplicationContext(), "Not implemented.");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Subscribe to a Workspace");
+        builder.setMessage("Please enter a tag:");
+
+        final EditText tagInput = new EditText(this);
+        builder.setView(tagInput);
+
+        builder.setPositiveButton("Subscribe",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tag = tagInput.getText().toString().trim();
+                if (tag.equals("")) {
+                    Util.toast_warning(getApplicationContext(), "You have to enter a tag.");
+                } else {
+                    dialog.dismiss();
+                    List<WorkspaceCore> workspacesWithTag = context.getWorkspacesWithTag(tag);
+                    if (workspacesWithTag.isEmpty()) {
+                        Util.toast_warning(getApplicationContext(), "No Workspace with such tag exists");
+                    } else {
+                        for (WorkspaceCore workspace : workspacesWithTag) {
+                            context.addMountedWorkspace(workspace);
+                        }
+                        Util.toast_warning(getApplicationContext(), "SUBSCRIBE");
+                    }
+                }
+            }
+        });
     }
 
     @Override

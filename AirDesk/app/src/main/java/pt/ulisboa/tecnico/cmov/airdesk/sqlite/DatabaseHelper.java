@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Tables
     private static final String TABLE_WORKSPACE = "workspace";
-    private static final String TABLE_FOREIGN_WORKSPACE = "foreign_workspace";
+    //private static final String TABLE_FOREIGN_WORKSPACE = "foreign_workspace";
     private static final String TABLE_FILE = "file";
     private static final String TABLE_TAG = "tag";
     private static final String TABLE_CLIENT = "client";
@@ -39,9 +39,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
                     COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER," + COLUMN_PUBLIC + " INTEGER);";
 
-    private static final String CREATE_TABLE_FOREIGN_WORKSPACE =
+    /*private static final String CREATE_TABLE_FOREIGN_WORKSPACE =
             "CREATE TABLE " + TABLE_FOREIGN_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
                     COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER);";
+    */
 
     private static final String CREATE_TABLE_FILE =
             "CREATE TABLE " + TABLE_FILE + " (" + COLUMN_WORKSPACE + " TEXT," +
@@ -67,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CLIENT);
 
         // TODO: perguntar ao francis se e assim que se faz
-        db.execSQL(CREATE_TABLE_FOREIGN_WORKSPACE);
+        //db.execSQL(CREATE_TABLE_FOREIGN_WORKSPACE);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FILE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WORKSPACE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOREIGN_WORKSPACE);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOREIGN_WORKSPACE);
         onCreate(db);
     }
 
@@ -256,11 +257,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workspace;
     }
 
-    public List<WorkspaceCore> getAllWorkspaces() {
+    public List<WorkspaceCore> getAllWorkspaces(String ownerEmail) {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +" FROM " + TABLE_WORKSPACE;
+        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +
+                             " FROM " + TABLE_WORKSPACE +
+                             " WHERE " + COLUMN_OWNER + "='" + ownerEmail + "'";
+        Log.d("SQL", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {
@@ -272,14 +276,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workspaces;
     }
 
-    // TODO: aqui se calhar a ideia era ver na tabela workspaces quais eram aqueles
-    // TODO: tinham o dono D como owner
-    // TODO: por agora fiz assim depois e facil mudar
-    public List<WorkspaceCore> getAllMountedWorkspaces() {
+    public List<WorkspaceCore> getAllMountedWorkspaces(String ownerEmail) {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +" FROM " + TABLE_FOREIGN_WORKSPACE;
+        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +
+                " FROM " + TABLE_WORKSPACE +
+                " WHERE " + COLUMN_OWNER + "<>'" + ownerEmail + "' ";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
+            } while (c.moveToNext());
+        }
+
+        return workspaces;
+    }
+
+    public List<WorkspaceCore> getAllWorkspacesWithTag(String tag) {
+        List<WorkspaceCore> workspaces = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT "+ "W."+ COLUMN_WORKSPACE +
+                " FROM " + TABLE_WORKSPACE + " AS W , " + TABLE_TAG + " AS T" +
+                " WHERE " + "W." + COLUMN_WORKSPACE + "=T." + COLUMN_WORKSPACE +
+                " AND " + COLUMN_TAG + "='" + tag + "'"+
+                " AND " + COLUMN_PUBLIC + "=1";
+        Log.d("SQL", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {
