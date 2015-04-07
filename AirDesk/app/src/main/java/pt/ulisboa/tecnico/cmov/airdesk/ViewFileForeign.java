@@ -39,6 +39,7 @@ public class ViewFileForeign extends ActionBarActivity {
         if (file != null) {
             bar.setTitle("View " + file.getName());
         }
+        context = (AirDeskContext) getApplicationContext();
     }
 
     @Override

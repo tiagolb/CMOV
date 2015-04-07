@@ -66,6 +66,16 @@ public class ForeignWorkspace extends ActionBarActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //update view
+        ListView fileList = (ListView) findViewById(R.id.foreign_workspace_file_list);
+        FileListAdapter adapter = (FileListAdapter) fileList.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

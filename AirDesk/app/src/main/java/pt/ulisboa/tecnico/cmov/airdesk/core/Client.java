@@ -24,7 +24,8 @@ public class Client {
     public static WorkspaceCore getWorkspace(String owner, String workspace) {
         //for now we get it locally
         WorkspaceCore w = Server.getWorkspace("", workspace);
-        return new ForeignWorkspaceCore(w.getName(), w.getQuota(), w.getTagsString(), w.getOwner(), w.isPublic());
+        return w;
+        //return new ForeignWorkspaceCore(w.getName(), w.getQuota(), w.getTagsString(), w.getOwner(), w.isPublic());
     }
 
     public static boolean setFileContent(String owner, String workspace, String file, String data)
