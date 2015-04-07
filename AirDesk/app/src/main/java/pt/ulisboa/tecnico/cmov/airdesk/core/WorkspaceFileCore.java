@@ -59,6 +59,9 @@ public class WorkspaceFileCore {
         StringBuilder sb = new StringBuilder();
         try {
             fis = context.openFileInput(toString());
+
+            //FIXME: temp size
+            //size = fis.getChannel().size();
             scanner = new Scanner(fis);
             while (scanner.hasNextLine()) {
                 String lineToAppend = scanner.nextLine() + LINE_SEP;
@@ -98,7 +101,7 @@ public class WorkspaceFileCore {
     }
 
     public int getSize() {
-        return size;
+       return size;
     }
 
     @Override

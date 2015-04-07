@@ -55,7 +55,12 @@ public class WorkspaceCore {
     }
 
     public int getQuotaUsed() {
-        return 0; //FIXME: query db for the sum of the files size
+        int quotaUsed = 0;
+        for (String filename : files) {
+            WorkspaceFileCore file = this.getFile(filename);
+            quotaUsed += file.getSize();
+        }
+        return quotaUsed;
     }
 
     public int getQuotaAvailable() {
