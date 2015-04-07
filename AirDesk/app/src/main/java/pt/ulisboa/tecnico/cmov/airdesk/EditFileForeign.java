@@ -80,4 +80,7 @@ public class EditFileForeign extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {}
 }

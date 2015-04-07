@@ -26,12 +26,6 @@ public class ForeignWorkspace extends ActionBarActivity {
     private WorkspaceCore workspace = null;
 
     @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, WorkspaceList.class);
-        startActivity(intent);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foreign_workspace);
@@ -141,4 +135,7 @@ public class ForeignWorkspace extends ActionBarActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {}
 }

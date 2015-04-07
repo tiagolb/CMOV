@@ -175,4 +175,7 @@ public class WorkspaceList extends ActionBarActivity {
         //we also need to save the subscriptions (a list of tags) somewhere
         Util.toast_warning(getApplicationContext(), "Not implemented.");
     }
+
+    @Override
+    public void onBackPressed() {}
 }

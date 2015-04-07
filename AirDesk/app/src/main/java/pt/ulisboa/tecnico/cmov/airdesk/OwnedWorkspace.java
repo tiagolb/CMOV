@@ -284,4 +284,7 @@ public class OwnedWorkspace extends ActionBarActivity {
         });
         alert.show();
     }
+
+    @Override
+    public void onBackPressed() {}
 }
