@@ -15,6 +15,7 @@ public class Client {
     private static ArrayList<WorkspaceCore> mountedWorkspaces;
 
     public static ArrayList<WorkspaceCore> getMountedWorkspaces(Context context) {
+        // TODO: change to foreign workspaces
         //for now we return local workspaces
         ArrayList<WorkspaceCore> workspaces = (ArrayList) ((AirDeskContext) context).getWorkspaces();
         return mountedWorkspaces = workspaces;

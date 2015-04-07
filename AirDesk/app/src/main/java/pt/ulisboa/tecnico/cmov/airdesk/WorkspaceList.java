@@ -22,8 +22,8 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceList extends ActionBarActivity {
 
-    public static String OWNER_NICKNAME;
-    public static String OWNER_EMAIL;
+    //public static String OWNER_NICKNAME;
+    //public static String OWNER_EMAIL;
     private AirDeskContext context;
 
     public void setupNewWorkspace(View view) {
@@ -44,13 +44,12 @@ public class WorkspaceList extends ActionBarActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+
+        // Estou a experimentar uma coisa
+        populateWorkspaceLists();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workspace_list);
-
+    private void populateWorkspaceLists() {
         Server.context = (AirDeskContext) getApplicationContext();
 
         ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
@@ -98,6 +97,14 @@ public class WorkspaceList extends ActionBarActivity {
         foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
 
         registerForContextMenu(foreignWorkspaceList);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_workspace_list);
+
+        populateWorkspaceLists();
     }
 
     @Override

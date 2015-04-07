@@ -1,10 +1,13 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +42,11 @@ public class WorkspaceSetup extends ActionBarActivity {
 
             boolean isPublic = privacy.equals("Public");
 
-            workspace = new OwnedWorkspaceCore(workspaceName, quota, tags, WorkspaceList.OWNER_EMAIL, isPublic);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String ownerEmail = prefs.getString("email", "");
+            Log.d("TAG", ownerEmail);
+
+            workspace = new OwnedWorkspaceCore(workspaceName, quota, tags, ownerEmail, isPublic);
             AirDeskContext context = (AirDeskContext) getApplicationContext();
             context.addWorkspace(workspace);
 
