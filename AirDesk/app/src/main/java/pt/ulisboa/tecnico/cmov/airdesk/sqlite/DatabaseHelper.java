@@ -19,6 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Tables
     private static final String TABLE_WORKSPACE = "workspace";
+    private static final String TABLE_FOREIGN_WORKSPACE = "foreign_workspace";
     private static final String TABLE_FILE = "file";
     private static final String TABLE_TAG = "tag";
     private static final String TABLE_CLIENT = "client";
@@ -37,6 +38,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_WORKSPACE =
             "CREATE TABLE " + TABLE_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
                     COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER," + COLUMN_PUBLIC + " INTEGER);";
+
+    private static final String CREATE_TABLE_FOREIGN_WORKSPACE =
+            "CREATE TABLE " + TABLE_FOREIGN_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
+                    COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER);";
+
     private static final String CREATE_TABLE_FILE =
             "CREATE TABLE " + TABLE_FILE + " (" + COLUMN_WORKSPACE + " TEXT," +
                     COLUMN_FILE + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +"," + COLUMN_FILE + "));";
@@ -59,6 +65,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_FILE);
         db.execSQL(CREATE_TABLE_TAG);
         db.execSQL(CREATE_TABLE_CLIENT);
+
+        // TODO: perguntar ao francis se e assim que se faz
+        db.execSQL(CREATE_TABLE_FOREIGN_WORKSPACE);
     }
 
     @Override
@@ -67,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FILE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WORKSPACE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOREIGN_WORKSPACE);
         onCreate(db);
     }
 
@@ -251,6 +261,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT "+ COLUMN_WORKSPACE +" FROM " + TABLE_WORKSPACE;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
+            } while (c.moveToNext());
+        }
+
+        return workspaces;
+    }
+
+    // TODO: aqui se calhar a ideia era ver na tabela workspaces quais eram aqueles
+    // TODO: tinham o dono D como owner
+    // TODO: por agora fiz assim depois e facil mudar
+    public List<WorkspaceCore> getAllMountedWorkspaces() {
+        List<WorkspaceCore> workspaces = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +" FROM " + TABLE_FOREIGN_WORKSPACE;
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {

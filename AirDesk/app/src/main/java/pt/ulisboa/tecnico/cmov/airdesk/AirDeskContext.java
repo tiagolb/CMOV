@@ -10,12 +10,14 @@ import pt.ulisboa.tecnico.cmov.airdesk.sqlite.DatabaseHelper;
 
 public class AirDeskContext extends Application {
     private List<WorkspaceCore> workspaces = null;
+    private List<WorkspaceCore> mountedWorkspaces = null;
     private DatabaseHelper dbHelper = null;
 
     public void initContext() {
         if (workspaces == null) {
             dbHelper = new DatabaseHelper(this);
             workspaces = dbHelper.getAllWorkspaces();
+            mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
         }
 
         /*if(workspaces.isEmpty()) {
@@ -78,6 +80,10 @@ public class AirDeskContext extends Application {
             addWorkspace(workspace);
         }*/
         return workspaces;
+    }
+
+    public List<WorkspaceCore> getMountedWorkspaces() {
+        return mountedWorkspaces;
     }
 
     public WorkspaceCore getWorkspace(String name) {

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.R;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
@@ -19,7 +20,7 @@ public class WorkspaceAdapter extends ArrayAdapter<WorkspaceCore> {
 
     private static final String LOG_TAG = "WorkspaceAdapter";
 
-    public WorkspaceAdapter(Context context, int textViewResourceId, ArrayList<WorkspaceCore> workspaces) {
+    public WorkspaceAdapter(Context context, int textViewResourceId, List<WorkspaceCore> workspaces) {
         super(context, textViewResourceId, workspaces);
         this.layoutResourceId = textViewResourceId;
     }

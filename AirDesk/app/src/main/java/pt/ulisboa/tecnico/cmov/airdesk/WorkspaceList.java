@@ -70,7 +70,7 @@ public class WorkspaceList extends ActionBarActivity {
         context = (AirDeskContext) getApplicationContext();
         ListView onwedWorkspaceList = (ListView) findViewById(R.id.owned_workspace_list);
         //WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, OwnedWorkspaceCore.workspaces);
-        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, (ArrayList) context.getWorkspaces());
+        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, context.getWorkspaces());
 
         onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
         registerForContextMenu(onwedWorkspaceList);
@@ -94,7 +94,7 @@ public class WorkspaceList extends ActionBarActivity {
         //populate foreign workspace list
         WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this,
                 R.layout.workspace_list_item,
-                (ArrayList) Client.getMountedWorkspaces(getApplicationContext()));
+                context.getMountedWorkspaces());
         foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
 
         registerForContextMenu(foreignWorkspaceList);

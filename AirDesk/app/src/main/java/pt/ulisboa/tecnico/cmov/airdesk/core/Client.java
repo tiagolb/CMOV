@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.cmov.airdesk.core;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
@@ -12,13 +13,11 @@ import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
  * Low level network methods may be implemented somewhere else.
  */
 public class Client {
-    private static ArrayList<WorkspaceCore> mountedWorkspaces;
+    private static List<WorkspaceCore> mountedWorkspaces;
 
-    public static ArrayList<WorkspaceCore> getMountedWorkspaces(Context context) {
-        // TODO: change to foreign workspaces
-        //for now we return local workspaces
-        ArrayList<WorkspaceCore> workspaces = (ArrayList) ((AirDeskContext) context).getWorkspaces();
-        return mountedWorkspaces = workspaces;
+    public static List<WorkspaceCore> getMountedWorkspaces(Context context) {
+        // FIXME: Client is needed? I added this here just for now
+        return ((AirDeskContext) context).getMountedWorkspaces();
     }
 
     public static WorkspaceCore getWorkspace(String owner, String workspace) {
