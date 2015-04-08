@@ -48,6 +48,7 @@ public class WorkspaceCore {
         this.isPublic = isPublic;
         this.tags = new ArrayList<>();
         this.files = new ArrayList<>();
+        this.clients = new ArrayList<>();
     }
 
     public int getQuota() {

@@ -22,6 +22,7 @@
         </activity>
         <activity
             android:name=".OwnedWorkspace"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_owned_workspace"
             android:parentActivityName=".WorkspaceList">
             <meta-data
@@ -30,6 +31,7 @@
         </activity>
         <activity
             android:name=".ForeignWorkspace"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_foreign_workspace"
             android:parentActivityName=".WorkspaceList">
             <meta-data

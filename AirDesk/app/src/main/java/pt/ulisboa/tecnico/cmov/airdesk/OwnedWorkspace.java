@@ -34,9 +34,12 @@ public class OwnedWorkspace extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
+        AirDeskContext context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
-            AirDeskContext context = (AirDeskContext) getApplicationContext();
             workspace = context.getWorkspace(bundle.getString("workspaceName"));
+        }
+        else if (savedInstanceState != null) {
+            workspace = context.getWorkspace(savedInstanceState.getString("workspaceName"));
         }
         /*else if (savedInstanceState != null) { //FIXME: it's always null
             workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
@@ -78,6 +81,8 @@ public class OwnedWorkspace extends ActionBarActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString("workspaceName", workspace.getName());
         //savedInstanceState.putString("workspace", workspace.getId());
     }
 
