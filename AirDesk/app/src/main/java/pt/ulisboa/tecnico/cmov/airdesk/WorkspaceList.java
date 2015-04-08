@@ -17,12 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
-import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
-import pt.ulisboa.tecnico.cmov.airdesk.core.Server;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceList extends ActionBarActivity {
@@ -68,8 +65,8 @@ public class WorkspaceList extends ActionBarActivity {
     }
 
     private void populateWorkspaceLists() {
-        Server.context = (AirDeskContext) getApplicationContext();
-        Server.context.initContext(ownerEmail);
+        AirDeskContext context = (AirDeskContext) getApplicationContext();
+        context.initContext(ownerEmail);
 
         ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
         ownedWorkspacesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -228,5 +225,6 @@ public class WorkspaceList extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

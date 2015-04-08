@@ -19,7 +19,6 @@ public class ViewFileForeign extends ActionBarActivity {
 
     private WorkspaceCore workspace;
     private WorkspaceFileCore file;
-    private AirDeskContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class ViewFileForeign extends ActionBarActivity {
         if (file != null) {
             bar.setTitle("View " + file.getName());
         }
-        context = (AirDeskContext) getApplicationContext();
     }
 
     @Override
@@ -71,7 +69,6 @@ public class ViewFileForeign extends ActionBarActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_remove_file:
-                //context.removeFileFromWorkspace(workspace, file.getName());
                 workspace.removeFile(file.getName());
                 file.removeFile(getApplicationContext());
                 Util.toast_warning(getApplicationContext(), "File removed");
@@ -83,5 +80,6 @@ public class ViewFileForeign extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }
