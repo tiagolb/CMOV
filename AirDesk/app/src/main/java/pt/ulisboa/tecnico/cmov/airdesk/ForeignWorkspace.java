@@ -126,16 +126,16 @@ public class ForeignWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
                 } else {
                     dialog.dismiss();
-                    AirDeskContext context = (AirDeskContext) getApplicationContext();
-                    context.addFileToWorkspace(workspace, value);
-                    //workspace.addFile(value);
+                    //AirDeskContext context = (AirDeskContext) getApplicationContext();
+                    //context.addFileToWorkspace(workspace, value);
+                    workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), "File " + value + " created");
-                    //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 }
             }
         });
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

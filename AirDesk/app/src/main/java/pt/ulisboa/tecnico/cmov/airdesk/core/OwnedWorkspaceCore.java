@@ -29,4 +29,29 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         AirDeskContext.getContext().addClientToWorkspace(this, client);
     }
 
+    public void addFile(String file) {
+        super.addFile(file);
+        AirDeskContext.getContext().addFileToWorkspace(this, file);
+    }
+
+    public void setQuota(int quota) {
+        super.setQuota(quota);
+        AirDeskContext.getContext().setWorkspaceQuota(this, quota);
+    }
+
+    public void setTags(String tags) {
+        super.setTags(tags);
+        AirDeskContext.getContext().setWorkspaceTags(this, tags);
+    }
+
+    public void removeFile(String file) {
+        super.removeFile(file);
+        AirDeskContext.getContext().removeFileFromWorkspace(this, file);
+    }
+
+    public void removeClient(String client) {
+        super.removeClient(client);
+        AirDeskContext.getContext().removeClientFromWorkspace(this, client);
+    }
+
 }

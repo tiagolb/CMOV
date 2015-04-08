@@ -69,14 +69,12 @@ public class ViewFileOwned extends ActionBarActivity {
                 return true;
             case R.id.action_remove_file:
                 //remove file from workspace
-                AirDeskContext context = (AirDeskContext) getApplicationContext();
-                context.removeFileFromWorkspace(workspace, file.getName());
-                //workspace.removeFile(file.getName());
-                //save changes
-                //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                //AirDeskContext context = (AirDeskContext) getApplicationContext();
+                //context.removeFileFromWorkspace(workspace, file.getName());
+                workspace.removeFile(file.getName());
+                //TODO: remove file from disk in a more appropriate place
                 //remove file from disk
                 file.removeFile(getApplicationContext());
-
                 Util.toast_warning(getApplicationContext(), "File removed");
                 finish();
                 return true;
@@ -86,5 +84,6 @@ public class ViewFileOwned extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

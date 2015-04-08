@@ -40,9 +40,6 @@ public class OwnedWorkspace extends ActionBarActivity {
         } else if (savedInstanceState != null) {
             workspace = context.getWorkspace(savedInstanceState.getString("workspaceName"));
         }
-        /*else if (savedInstanceState != null) { //FIXME: it's always null
-            workspace = OwnedWorkspaceCore.getWorkspaceById(bundle.getString("workspace"));
-        }*/
         if (workspace != null) {
             bar.setTitle(workspace.getName());
 
@@ -53,7 +50,6 @@ public class OwnedWorkspace extends ActionBarActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
                     Intent intent = new Intent(OwnedWorkspace.this, ViewFileOwned.class);
-                    //intent.putExtra("file", (String) parent.getAdapter().getItem(position));
                     intent.putExtra("file", (String) parent.getAdapter().getItem(position));
                     intent.putExtra("workspace", workspace.getName());
                     startActivity(intent);
@@ -80,9 +76,7 @@ public class OwnedWorkspace extends ActionBarActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-
         savedInstanceState.putString("workspaceName", workspace.getName());
-        //savedInstanceState.putString("workspace", workspace.getId());
     }
 
     @Override
@@ -154,11 +148,10 @@ public class OwnedWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
                 } else {
                     dialog.dismiss();
-                    AirDeskContext context = (AirDeskContext) getApplicationContext();
-                    context.addFileToWorkspace(workspace, value);
-                    //workspace.addFile(value);
+                    //AirDeskContext context = (AirDeskContext) getApplicationContext();
+                    //context.addFileToWorkspace(workspace, value);
+                    workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), "File " + value + " created");
-                    //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 }
             }
         });
@@ -246,9 +239,9 @@ public class OwnedWorkspace extends ActionBarActivity {
                         Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
                     } else {
                         dialog.dismiss();
-                        AirDeskContext context = (AirDeskContext) getApplicationContext();
-                        context.setWorkspaceQuota(workspace, quota);
-                        //workspace.setQuota(quota);
+                        //AirDeskContext context = (AirDeskContext) getApplicationContext();
+                        //context.setWorkspaceQuota(workspace, quota);
+                        workspace.setQuota(quota);
                         Util.toast_warning(getApplicationContext(), "New quota set.");
                     }
                 } catch (Exception NumberFormatException) {
@@ -273,8 +266,9 @@ public class OwnedWorkspace extends ActionBarActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
-                AirDeskContext context = (AirDeskContext) getApplicationContext();
-                context.setWorkspaceTags(workspace, value);
+                //AirDeskContext context = (AirDeskContext) getApplicationContext();
+                //context.setWorkspaceTags(workspace, value);
+                workspace.setTags(value);
                 Util.toast_warning(getApplicationContext(), "Tags saved.");
             }
         });

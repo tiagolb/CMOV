@@ -46,7 +46,7 @@ public class AirDeskContext extends Application {
     }
 
     public void setWorkspaceTags(WorkspaceCore workspace, String tags) {
-        workspace.setTags(tags);
+        //workspace.setTags(tags);
         dbHelper.setWorkspaceTags(workspace.getName(), workspace.getTags());
 
     }
@@ -74,22 +74,22 @@ public class AirDeskContext extends Application {
     }
 
     public void removeClientFromWorkspace(WorkspaceCore workspace, String client) {
-        workspace.removeClient(client);
+        //workspace.removeClient(client);
         dbHelper.removeClientFromWorkspace(workspace.getName(), client);
     }
 
     public void addFileToWorkspace(WorkspaceCore workspace, String file) {
-        workspace.addFile(file);
+        //workspace.addFile(file);
         dbHelper.addFileToWorkspace(workspace.getName(), file);
     }
 
     public void removeFileFromWorkspace(WorkspaceCore workspace, String file) {
-        workspace.removeFile(file);
+        //workspace.removeFile(file);
         dbHelper.removeFileFromWorkspace(workspace.getName(), file);
     }
 
     public void setWorkspaceQuota(WorkspaceCore workspace, int quota) {
-        workspace.setQuota(quota);
+        //workspace.setQuota(quota);
         dbHelper.setWorkspaceQuota(workspace.getName(), quota);
     }
 

@@ -90,9 +90,9 @@ public class WorkspaceClientList extends ActionBarActivity {
                 ListView list = (ListView) info.targetView.getParent();
                 ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
                 String client = (String) adapter.getItem(info.position);
-                AirDeskContext context = (AirDeskContext) getApplicationContext();
-                context.removeClientFromWorkspace(workspace, client);
-                //workspace.removeClient(client);
+                //AirDeskContext context = (AirDeskContext) getApplicationContext();
+                //context.removeClientFromWorkspace(workspace, client);
+                workspace.removeClient(client);
                 adapter.notifyDataSetChanged();
                 Util.toast_warning(getApplicationContext(), "Removed client " + client);
                 return true;
@@ -102,5 +102,6 @@ public class WorkspaceClientList extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

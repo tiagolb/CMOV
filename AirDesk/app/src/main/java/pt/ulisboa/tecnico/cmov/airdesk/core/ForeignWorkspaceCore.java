@@ -3,6 +3,8 @@ package pt.ulisboa.tecnico.cmov.airdesk.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
+
 /**
  * This class represents an foreign WorkspaceCore stored remotely.
  */
@@ -23,4 +25,8 @@ public class ForeignWorkspaceCore extends WorkspaceCore {
         return Client.getFiles(getOwner(), getName());
     }
 
+    public void addFile(String file) {
+        super.addFile(file);
+        AirDeskContext.getContext().addFileToWorkspace(this, file);
+    }
 }
