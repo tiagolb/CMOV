@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="OwnedWorkspaceTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/OwnedWorkspaceActionBar</item>
+        <item name="actionBarStyle">@style/OwnedWorkspaceActionBar</item>
+    </style>
+
+    <style name="ForeignWorkspaceTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ForeignWorkspaceActionBar</item>
+        <item name="actionBarStyle">@style/ForeignWorkspaceActionBar</item>
+    </style>
+
+    <style name="OwnedWorkspaceActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/holo_red_light</item>
+        <item name="background">@android:color/holo_red_light</item>
+    </style>
+
+    <style name="ForeignWorkspaceActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/holo_blue_dark</item>
+        <item name="background">@android:color/holo_blue_dark</item>
+    </style>
+</resources>

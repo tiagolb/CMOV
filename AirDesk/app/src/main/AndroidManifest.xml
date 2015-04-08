@@ -24,6 +24,7 @@
             android:name=".OwnedWorkspace"
             android:launchMode="singleTop"
             android:label="@string/title_activity_owned_workspace"
+            android:theme="@style/OwnedWorkspaceTheme"
             android:parentActivityName=".WorkspaceList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -33,6 +34,7 @@
             android:name=".ForeignWorkspace"
             android:launchMode="singleTop"
             android:label="@string/title_activity_foreign_workspace"
+            android:theme="@style/ForeignWorkspaceTheme"
             android:parentActivityName=".WorkspaceList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -41,6 +43,7 @@
         <activity
             android:name=".WorkspaceSetup"
             android:label="@string/title_activity_workspace_setup"
+            android:theme="@style/OwnedWorkspaceTheme"
             android:parentActivityName=".WorkspaceList"
             android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
@@ -49,7 +52,8 @@
         </activity>
         <activity
             android:name=".ViewFileOwned"
-            android:label="@string/title_activity_view_file_owned">
+            android:label="@string/title_activity_view_file_owned"
+            android:theme="@style/OwnedWorkspaceTheme"
             android:parentActivityName=".OwnedWorkspace" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -57,7 +61,8 @@
         </activity>
         <activity
             android:name=".EditFileOwned"
-            android:label="@string/title_activity_edit_file_owned">
+            android:label="@string/title_activity_edit_file_owned"
+            android:theme="@style/OwnedWorkspaceTheme"
             android:parentActivityName=".OwnedWorkspace" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,6 +71,7 @@
         <activity
             android:name=".EditFileForeign"
             android:label="@string/title_activity_edit_file_foreign"
+            android:theme="@style/ForeignWorkspaceTheme"
             android:parentActivityName=".ForeignWorkspace">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -74,6 +80,7 @@
         <activity
             android:name=".ViewFileForeign"
             android:label="@string/title_activity_view_file_foreign"
+            android:theme="@style/ForeignWorkspaceTheme"
             android:parentActivityName=".ForeignWorkspace">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -81,6 +88,7 @@
         </activity>
         <activity
             android:name=".WorkspaceClientList"
+            android:theme="@style/OwnedWorkspaceTheme"
             android:label="@string/title_activity_workspace_client_list">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

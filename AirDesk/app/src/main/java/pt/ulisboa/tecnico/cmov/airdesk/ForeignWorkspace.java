@@ -3,8 +3,6 @@ package pt.ulisboa.tecnico.cmov.airdesk;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -31,7 +29,6 @@ public class ForeignWorkspace extends ActionBarActivity {
         setContentView(R.layout.activity_foreign_workspace);
 
         ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff0099cc"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

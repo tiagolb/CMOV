@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -36,7 +34,6 @@ public class EditFileOwned extends ActionBarActivity {
             } else {
                 //set action-bar's title and background color
                 ActionBar bar = getSupportActionBar();
-                bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
                 bar.setTitle("Edit " + file.getName());
 
                 //display file content
@@ -72,5 +69,6 @@ public class EditFileOwned extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -28,7 +26,6 @@ public class EditFileForeign extends ActionBarActivity {
 
         //set action-bar's title and background color
         ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff0099cc"))); //FIXME: get color from colors
 
         //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
@@ -82,5 +79,6 @@ public class EditFileForeign extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

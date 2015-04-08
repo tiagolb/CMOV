@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -25,7 +23,6 @@ public class WorkspaceClientList extends ActionBarActivity {
         setContentView(R.layout.activity_workspace_client_list);
 
         ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

@@ -1,8 +1,6 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -26,7 +24,6 @@ public class ViewFileOwned extends ActionBarActivity {
 
         //set action-bar's title and background color
         ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff4444"))); //FIXME: get color from colors
 
         //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
