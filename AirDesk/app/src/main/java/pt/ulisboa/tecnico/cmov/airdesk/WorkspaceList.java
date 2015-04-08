@@ -49,10 +49,22 @@ public class WorkspaceList extends ActionBarActivity {
             startActivity(intent);
         } else {
             // FIXME: Aqui deve haver uma maneira melhor de fazer isto
-            ownerNick = prefs.getString("nick", "");
-            ownerEmail = prefs.getString("email", "");
-            populateWorkspaceLists();
+            //ownerNick = prefs.getString("nick", "");
+            //ownerEmail = prefs.getString("email", "");
+            //populateWorkspaceLists();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_workspace_list);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        // Aqui acho que nao e preciso isto
+        ownerNick = prefs.getString("nick", "");
+        ownerEmail = prefs.getString("email", "");
+        populateWorkspaceLists();
     }
 
     private void populateWorkspaceLists() {
@@ -104,15 +116,6 @@ public class WorkspaceList extends ActionBarActivity {
         foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
 
         registerForContextMenu(foreignWorkspaceList);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workspace_list);
-
-        // Aqui acho que nao e preciso isto
-        //populateWorkspaceLists();
     }
 
     @Override
@@ -209,6 +212,7 @@ public class WorkspaceList extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "You have to enter a tag.");
                 } else {
                     dialog.dismiss();
+                    context.addTagToSubscriptionTags(tag);
                     List<WorkspaceCore> workspacesWithTag = context.getWorkspacesWithTag(tag);
                     if (workspacesWithTag.isEmpty()) {
                         Util.toast_warning(getApplicationContext(), "No Workspace with such tag exists");

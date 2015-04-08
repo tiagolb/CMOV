@@ -11,14 +11,17 @@ import pt.ulisboa.tecnico.cmov.airdesk.sqlite.DatabaseHelper;
 public class AirDeskContext extends Application {
     private List<WorkspaceCore> workspaces = null;
     private List<WorkspaceCore> mountedWorkspaces = null;
+    private List<String> subscribedTags = null;
     private DatabaseHelper dbHelper = null;
 
     public void initContext(String ownerEmail) {
         if (workspaces == null) {
             dbHelper = new DatabaseHelper(this);
             workspaces = dbHelper.getAllWorkspaces(ownerEmail);
-            mountedWorkspaces = dbHelper.getAllMountedWorkspaces(ownerEmail);
         }
+
+        mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
+        mountedWorkspaces.addAll(dbHelper.getAllPushedWorkspaces(ownerEmail));
 
         /*if(workspaces.isEmpty()) {
             OwnedWorkspaceCore workspace = new OwnedWorkspaceCore("Example Workspace", 16, "", "self", true);
@@ -30,6 +33,16 @@ public class AirDeskContext extends Application {
             //workspaces.add(workspace);
             addWorkspace(workspace);
         }*/
+    }
+
+    public void addTagToSubscriptionTags(String tag) {
+        dbHelper.addTagToSubscribedTags(tag);
+    }
+
+    public void setWorkspaceTags(WorkspaceCore workspace, String tags) {
+        workspace.setTags(tags);
+        dbHelper.setWorkspaceTags(workspace.getName(), workspace.getTags());
+
     }
 
     public void addWorkspace(WorkspaceCore workspace) {

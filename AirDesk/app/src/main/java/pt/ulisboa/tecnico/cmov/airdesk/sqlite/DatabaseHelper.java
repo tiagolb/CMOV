@@ -8,13 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "workspaceManager";
 
     // Tables
@@ -22,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //private static final String TABLE_FOREIGN_WORKSPACE = "foreign_workspace";
     private static final String TABLE_FILE = "file";
     private static final String TABLE_TAG = "tag";
+    private static final String TABLE_SUBSCRIPTION_TAG = "subscription_tag";
     private static final String TABLE_CLIENT = "client";
 
     // Columns
@@ -43,6 +45,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_FOREIGN_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
                     COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER);";
     */
+
+    private static final String CREATE_TABLE_SUBSCRIPTION_TAG =
+            "CREATE TABLE " + TABLE_SUBSCRIPTION_TAG + " (" + COLUMN_TAG + " TEXT);";
 
     private static final String CREATE_TABLE_FILE =
             "CREATE TABLE " + TABLE_FILE + " (" + COLUMN_WORKSPACE + " TEXT," +
@@ -66,6 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TAG);
         db.execSQL(CREATE_TABLE_CLIENT);
 
+        db.execSQL(CREATE_TABLE_SUBSCRIPTION_TAG);
         // TODO: perguntar ao francis se e assim que se faz
         //db.execSQL(CREATE_TABLE_FOREIGN_WORKSPACE);
     }
@@ -76,6 +82,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FILE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WORKSPACE);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBSCRIPTION_TAG);
         //db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOREIGN_WORKSPACE);
         onCreate(db);
     }
@@ -133,6 +141,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         addTagToWorkspace(workspace, tag, db);
+    }
+
+    public void addTagToSubscribedTags(String tag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TAG, tag);
+
+        db.insert(TABLE_SUBSCRIPTION_TAG, null, values);
     }
 
     public void addClientToWorkspace(String workspace, String client, SQLiteDatabase db) {
@@ -275,13 +291,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workspaces;
     }
 
-    public List<WorkspaceCore> getAllMountedWorkspaces(String ownerEmail) {
+    // ON CREATE
+    public List<WorkspaceCore> getAllMountedWorkspaces() {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +
-                " FROM " + TABLE_WORKSPACE +
-                " WHERE " + COLUMN_OWNER + "<>'" + ownerEmail + "' ";
+        String selectQuery = "SELECT "+ "T."+ COLUMN_WORKSPACE +
+                " FROM " + TABLE_TAG + " AS T , " +
+                           TABLE_SUBSCRIPTION_TAG + " AS S " +
+                " WHERE " + "T."+ COLUMN_TAG + "=" + "S." + COLUMN_TAG;
+        Log.d("SQL", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {
@@ -293,6 +312,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workspaces;
     }
 
+    // SUBSCRIBE
     public List<WorkspaceCore> getAllWorkspacesWithTag(String tag) {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
@@ -321,5 +341,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         newValues.put(COLUMN_QUOTA, quota);
         String[] args = new String[] {String.valueOf(quota)};
         db.update(TABLE_WORKSPACE, newValues, where, args);
+    }
+
+    public List<WorkspaceCore> getAllPushedWorkspaces(String ownerEmail) {
+        List<WorkspaceCore> workspaces = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +
+                " FROM " + TABLE_CLIENT +
+                " WHERE " + COLUMN_CLIENT + "=" + "'" + ownerEmail + "'";
+        Log.d("SQL", selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
+            } while (c.moveToNext());
+        }
+
+        return workspaces;
+    }
+
+    public void setWorkspaceTags(String workspaceName, List<String> tags) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String whereClause = COLUMN_WORKSPACE + " = ?";
+        db.delete(TABLE_TAG, whereClause, new String[] {workspaceName});
+
+        for(String tag : tags) {
+            addTagToWorkspace(workspaceName, tag, db);
+        }
     }
 }

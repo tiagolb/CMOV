@@ -216,7 +216,7 @@ public class OwnedWorkspace extends ActionBarActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Change quota");
-        builder.setMessage("Enter the new quota value (MB):");
+        builder.setMessage("Enter the new quota value (Bytes):");
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -245,7 +245,7 @@ public class OwnedWorkspace extends ActionBarActivity {
                 String value = input.getText().toString().trim();
 
                 try {
-                    int quota = Integer.parseInt(value) * 1048576; //quota is stored in bytes
+                    int quota = Integer.parseInt(value) ;//* 1024; //quota is stored in bytes
                     if (quota < workspace.getQuotaUsed()) {
                         Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
                     } else {
@@ -277,7 +277,8 @@ public class OwnedWorkspace extends ActionBarActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
-                workspace.setTags(value);
+                AirDeskContext context = (AirDeskContext) getApplicationContext();
+                context.setWorkspaceTags(workspace, value);
                 Util.toast_warning(getApplicationContext(), "Tags saved.");
             }
         });

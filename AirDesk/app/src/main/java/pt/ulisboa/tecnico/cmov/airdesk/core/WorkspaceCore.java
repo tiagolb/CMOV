@@ -134,7 +134,6 @@ public class WorkspaceCore {
         this.quota = quota;
     }
 
-    // TODO: addTags
     public void setTags(String tags) {
         this.tags = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(tags);
