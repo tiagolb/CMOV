@@ -46,7 +46,11 @@ public class ViewFileOwned extends ActionBarActivity {
         super.onResume();
 
         //display file content
-        ((EditText) findViewById(R.id.view_file_owned_text)).setText(file.getContent(getApplicationContext()));
+        if (file != null) {
+            String content = file.getContent(getApplicationContext());
+            if (content.length() == 0) content = "Empty File...";
+            ((EditText) findViewById(R.id.view_file_owned_text)).setText(content);
+        }
     }
 
 
@@ -72,8 +76,6 @@ public class ViewFileOwned extends ActionBarActivity {
                 //AirDeskContext context = (AirDeskContext) getApplicationContext();
                 //context.removeFileFromWorkspace(workspace, file.getName());
                 workspace.removeFile(file.getName());
-                //TODO: remove file from disk in a more appropriate place
-                //remove file from disk
                 file.removeFile(getApplicationContext());
                 Util.toast_warning(getApplicationContext(), "File removed");
                 finish();

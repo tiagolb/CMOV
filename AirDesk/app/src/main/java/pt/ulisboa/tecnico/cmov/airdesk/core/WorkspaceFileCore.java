@@ -70,7 +70,7 @@ public class WorkspaceFileCore {
             return sb.toString();
         } catch (FileNotFoundException e) {
             Log.e("WorkspaceFileCore", "File not found");
-            return "Empty File...";
+            return "";
         } finally {
             if (fis != null) {
                 try {
@@ -101,7 +101,7 @@ public class WorkspaceFileCore {
     }
 
     public int getSize() {
-       return size;
+        return size;
     }
 
     @Override

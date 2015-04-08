@@ -46,7 +46,9 @@ public class ViewFileForeign extends ActionBarActivity {
 
         //display file content
         if (file != null) {
-            ((EditText) findViewById(R.id.view_file_foreign_text)).setText(file.getContent(getApplicationContext()));
+            String content = file.getContent(getApplicationContext());
+            if (content.length() == 0) content = "Empty File...";
+            ((EditText) findViewById(R.id.view_file_foreign_text)).setText(content);
         }
     }
 

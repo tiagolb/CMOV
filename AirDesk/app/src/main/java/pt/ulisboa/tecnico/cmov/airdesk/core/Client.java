@@ -1,38 +1,30 @@
 package pt.ulisboa.tecnico.cmov.airdesk.core;
 
-import android.content.Context;
-
 import java.util.List;
 
-import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 /**
  * This class implements all the methods that our application will use to make remote requests.
  * Low level network methods may be implemented somewhere else.
  */
-public class Client {
-    private static List<WorkspaceCore> mountedWorkspaces;
 
-    public static List<WorkspaceCore> getMountedWorkspaces(Context context) {
-        // FIXME: Client is needed? I added this here just for now
-        return ((AirDeskContext) context).getMountedWorkspaces();
-    }
+// For now all methods will call our own server directly. When we implement networking, we only need
+// change these methods.
+public class Client {
 
     public static WorkspaceCore getWorkspace(String owner, String workspace) {
-        //for now we get it locally
-        WorkspaceCore w = Server.getWorkspace("", workspace);
-        //return w;
+        WorkspaceCore w = Server.getWorkspace("client", workspace);
         return new ForeignWorkspaceCore(w.getName(), w.getQuota(), w.getTagsString(), w.getOwner(), w.isPublic());
     }
 
-    public static boolean setFileContent(String owner, String workspace, String file, String data)
+    public static boolean setFileContent(String owner, String workspace, String file, String content)
             throws QuotaExceededException {
-        return Server.getWorkspace("", workspace).getFile(file).setContent(AirDeskContext.getContext(), data);
+        return Server.setFileContent("client", workspace, file, content);
     }
 
     public static String getFileContent(String owner, String workspace, String file) {
-        return Server.getWorkspace("", workspace).getFile(file).getContent(AirDeskContext.getContext());
+        return Server.getFileContent("client", workspace, file);
     }
 
     public static void removeFile(String owner, String workspace, String file) {
@@ -40,7 +32,7 @@ public class Client {
     }
 
     public static List<String> getFiles(String owner, String workspace) {
-        return Server.getWorkspace("", workspace).getFiles();
+        return Server.getWorkspace("client", workspace).getFiles();
     }
 
     public static void addFile(String owner, String workspace, String file) {
