@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 
 public class WorkspaceCore {
 
-    //private String id;
     private String name;
     private int quota;
     private List<String> tags;
@@ -20,18 +19,8 @@ public class WorkspaceCore {
     private List<String> clients;
     private boolean isPublic;
 
-    /*public static abstract class WorkspaceCoreEntry implements BaseColumns {
-        public static final String TABLE_NAME = "workspace";
-        public static final String COLUMN_NAME_WORKSPACE_NAME = "workspace_name";
-        public static final String COLUMN_NAME_QUOTA = "quota";
-        public static final String COLUMN_NAME_TAG = "tag";
-        public static final String COLUMN_NAME_OWNER_EMAIL = "owner";
-        public static final String COLUMN_NAME_FILE = "file_name";
-    }*/
-
     // TODO: Remove tag or receive list
     public WorkspaceCore(String name, int quota, String tags, String owner, boolean isPublic) {
-        //this.id = UUID.randomUUID().toString();
         this.name = name;
         this.quota = quota; //bytes
         this.owner = owner;
@@ -74,7 +63,6 @@ public class WorkspaceCore {
     }
 
     public void addTag(String tag) {
-        //DatabaseHelper dbHelper = new DatabaseHelper(context);
         this.tags.add(tag);
     }
 
@@ -93,7 +81,6 @@ public class WorkspaceCore {
     }
 
     public void addClient(String client) {
-        //DatabaseHelper dbHelper = new DatabaseHelper();
         this.clients.add(client);
     }
 
@@ -105,15 +92,11 @@ public class WorkspaceCore {
         return name;
     }
 
-    //public String getId() { return id; }
-
     public void addFile(String fileName) {
-        //this.files.put(fileName, new WorkspaceFileCore(fileName, this.getId()));
         this.files.add(fileName);
     }
 
     public Boolean hasFile(String fileName) {
-        //return this.files.containsKey(fileName);
         return this.files.contains(fileName);
     }
 
@@ -122,7 +105,6 @@ public class WorkspaceCore {
     }
 
     public WorkspaceFileCore getFile(String fileName) {
-        //return this.files.get(fileName);
         return new WorkspaceFileCore(fileName, getName());
     }
 

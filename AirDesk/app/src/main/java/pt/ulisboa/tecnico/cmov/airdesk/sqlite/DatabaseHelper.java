@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -237,39 +237,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String[] workspaceArg = new String[]{workspaceName};
 
-        WorkspaceCore workspace = null;
-
         Cursor workspaceCursor = db.rawQuery(selectQuery, null);
-        if(workspaceCursor.moveToFirst()) {
+        if (workspaceCursor.moveToFirst()) {
             int quota = workspaceCursor.getInt(workspaceCursor.getColumnIndex(COLUMN_QUOTA));
             String owner = workspaceCursor.getString(workspaceCursor.getColumnIndex(COLUMN_OWNER));
             // Add to table isPublic
             boolean isPublic = (workspaceCursor.getInt(workspaceCursor.
                     getColumnIndex(COLUMN_PUBLIC)) == 1);
-            workspace = new WorkspaceCore(workspaceName, quota, owner, isPublic);
-        }
 
-        Cursor fileCursor = db.rawQuery(selectFilesQuery, workspaceArg);
-        if (fileCursor.moveToFirst()) {
-            do {
-                workspace.addFile(fileCursor.getString(fileCursor.getColumnIndex(COLUMN_FILE)));
-            } while (fileCursor.moveToNext());
-        }
+            ArrayList<String> files = new ArrayList<>();
+            Cursor fileCursor = db.rawQuery(selectFilesQuery, workspaceArg);
+            if (fileCursor.moveToFirst()) {
+                do {
+                    files.add(fileCursor.getString(fileCursor.getColumnIndex(COLUMN_FILE)));
+                    //workspace.addFile(fileCursor.getString(fileCursor.getColumnIndex(COLUMN_FILE)));
+                } while (fileCursor.moveToNext());
+            }
 
-        Cursor tagCursor = db.rawQuery(selectTagsQuery, workspaceArg);
-        if (tagCursor.moveToFirst()) {
-            do {
-                workspace.addTag(tagCursor.getString(tagCursor.getColumnIndex(COLUMN_TAG)));
-            } while (tagCursor.moveToNext());
-        }
+            ArrayList<String> tags = new ArrayList<>();
+            Cursor tagCursor = db.rawQuery(selectTagsQuery, workspaceArg);
+            if (tagCursor.moveToFirst()) {
+                do {
+                    tags.add(tagCursor.getString(tagCursor.getColumnIndex(COLUMN_TAG)));
+                    //workspace.addTag(tagCursor.getString(tagCursor.getColumnIndex(COLUMN_TAG)));
+                } while (tagCursor.moveToNext());
+            }
 
-        Cursor clientCursor = db.rawQuery(selectClientsQuery, workspaceArg);
-        if (clientCursor.moveToFirst()) {
-            do {
-                workspace.addClient(clientCursor.getString(clientCursor.getColumnIndex(COLUMN_CLIENT)));
-            } while (clientCursor.moveToNext());
+            ArrayList<String> clients = new ArrayList<>();
+            Cursor clientCursor = db.rawQuery(selectClientsQuery, workspaceArg);
+            if (clientCursor.moveToFirst()) {
+                do {
+                    clients.add(clientCursor.getString(clientCursor.getColumnIndex(COLUMN_CLIENT)));
+                    // workspace.addClient(clientCursor.getString(clientCursor.getColumnIndex(COLUMN_CLIENT)));
+                } while (clientCursor.moveToNext());
+            }
+
+            return new OwnedWorkspaceCore(workspaceName, quota, owner, isPublic, tags, clients, files);
         }
-        return workspace;
+        return null;
     }
 
     public List<WorkspaceCore> getAllWorkspaces(String ownerEmail) {

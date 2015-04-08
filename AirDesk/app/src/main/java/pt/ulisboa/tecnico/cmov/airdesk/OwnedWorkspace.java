@@ -37,8 +37,7 @@ public class OwnedWorkspace extends ActionBarActivity {
         AirDeskContext context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
             workspace = context.getWorkspace(bundle.getString("workspaceName"));
-        }
-        else if (savedInstanceState != null) {
+        } else if (savedInstanceState != null) {
             workspace = context.getWorkspace(savedInstanceState.getString("workspaceName"));
         }
         /*else if (savedInstanceState != null) { //FIXME: it's always null
@@ -156,7 +155,7 @@ public class OwnedWorkspace extends ActionBarActivity {
                 } else {
                     dialog.dismiss();
                     AirDeskContext context = (AirDeskContext) getApplicationContext();
-                    context.addFileToWorkspace(workspace,value);
+                    context.addFileToWorkspace(workspace, value);
                     //workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), "File " + value + " created");
                     //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
@@ -202,10 +201,7 @@ public class OwnedWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That client already has access.");
                 } else {
                     dialog.dismiss();
-                    AirDeskContext context = (AirDeskContext) getApplicationContext();
-                    context.addClientToWorkspace(workspace, value);
-                    //workspace.addClient(value);
-                    //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
+                    workspace.addClient(value);
                     Util.toast_warning(getApplicationContext(), value + " added to clients list.");
                 }
             }
@@ -245,7 +241,7 @@ public class OwnedWorkspace extends ActionBarActivity {
                 String value = input.getText().toString().trim();
 
                 try {
-                    int quota = Integer.parseInt(value) ;//* 1024; //quota is stored in bytes
+                    int quota = Integer.parseInt(value);//* 1024; //quota is stored in bytes
                     if (quota < workspace.getQuotaUsed()) {
                         Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
                     } else {
@@ -292,5 +288,6 @@ public class OwnedWorkspace extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

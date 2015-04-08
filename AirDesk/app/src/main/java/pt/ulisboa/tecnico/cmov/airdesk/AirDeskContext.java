@@ -13,11 +13,17 @@ public class AirDeskContext extends Application {
     private List<WorkspaceCore> mountedWorkspaces = null;
     private List<String> subscribedTags = null;
     private DatabaseHelper dbHelper = null;
+    static public AirDeskContext context;
+
+    static public AirDeskContext getContext() {
+        return context;
+    }
 
     public void initContext(String ownerEmail) {
         if (workspaces == null) {
             dbHelper = new DatabaseHelper(this);
             workspaces = dbHelper.getAllWorkspaces(ownerEmail);
+            AirDeskContext.context = this;
         }
 
         mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
@@ -63,7 +69,7 @@ public class AirDeskContext extends Application {
     }
 
     public void addClientToWorkspace(WorkspaceCore workspace, String client) {
-        workspace.addClient(client);
+        //workspace.addClient(client);
         dbHelper.addClientToWorkspace(workspace.getName(), client);
     }
 
