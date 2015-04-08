@@ -23,9 +23,6 @@ import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceList extends ActionBarActivity {
-    private AirDeskContext context;
-    private String ownerNick;
-    private String ownerEmail;
 
     public void setupNewWorkspace(View view) {
         Intent intent = new Intent(this, WorkspaceSetup.class);
@@ -35,21 +32,6 @@ public class WorkspaceList extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-        ownerNick = prefs.getString("nick", "");
-        ownerEmail = prefs.getString("email", "");
-
-        if (ownerNick.equals("") || ownerEmail.equals("")) {
-            Intent intent = new Intent(this, Login.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        } else {
-            // FIXME: Aqui deve haver uma maneira melhor de fazer isto
-            //ownerNick = prefs.getString("nick", "");
-            //ownerEmail = prefs.getString("email", "");
-            //populateWorkspaceLists();
-        }
     }
 
     @Override
@@ -58,46 +40,51 @@ public class WorkspaceList extends ActionBarActivity {
         setContentView(R.layout.activity_workspace_list);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        // Aqui acho que nao e preciso isto
-        ownerNick = prefs.getString("nick", "");
-        ownerEmail = prefs.getString("email", "");
+
+        String ownerNick = prefs.getString("nick", "");
+        String ownerEmail = prefs.getString("email", "");
+
+        if (ownerNick.equals("") || ownerEmail.equals("")) {
+            Intent intent = new Intent(this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+
+        AirDeskContext context = (AirDeskContext) getApplicationContext();
+        context.initContext(ownerEmail);
+
         populateWorkspaceLists();
     }
 
     private void populateWorkspaceLists() {
-        AirDeskContext context = (AirDeskContext) getApplicationContext();
-        context.initContext(ownerEmail);
 
-        ListView ownedWorkspacesList = (ListView) findViewById(R.id.owned_workspace_list);
-        ownedWorkspacesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //owned workspace list
+        ListView onwedWorkspaceList = (ListView) findViewById(R.id.owned_workspace_list);
+        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this,
+                R.layout.workspace_list_item, AirDeskContext.getContext().getWorkspaces());
+
+        onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
+        registerForContextMenu(onwedWorkspaceList);
+
+        onwedWorkspaceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                // Does this work? sim, é quando clicas num workspace, ele abre o workspace
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Util.launchOwnedWorkspace(WorkspaceList.this, OwnedWorkspace.class, workspace);
             }
         });
 
-
-        // populate the ListView
-        //OwnedWorkspaceCore.loadWorkspaces(getApplicationContext());
-        context = (AirDeskContext) getApplicationContext();
-        ListView onwedWorkspaceList = (ListView) findViewById(R.id.owned_workspace_list);
-        //WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, OwnedWorkspaceCore.workspaces);
-        WorkspaceAdapter onwedWorkspaceAdapter = new WorkspaceAdapter(this, R.layout.workspace_list_item, context.getWorkspaces());
-
-        onwedWorkspaceList.setAdapter(onwedWorkspaceAdapter);
-        registerForContextMenu(onwedWorkspaceList);
-
         //foreign workspace list
         ListView foreignWorkspaceList = (ListView) findViewById(R.id.foreign_workspace_list);
+        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this,
+                R.layout.workspace_list_item, AirDeskContext.getContext().getMountedWorkspaces());
 
-        //when user clicks foreign workspace
+        foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
+        registerForContextMenu(foreignWorkspaceList);
+
         foreignWorkspaceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WorkspaceCore workspace = (WorkspaceCore) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(WorkspaceList.this, ForeignWorkspace.class);
                 intent.putExtra("workspace", workspace.getName());
@@ -105,14 +92,6 @@ public class WorkspaceList extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
-        //populate foreign workspace list
-        WorkspaceAdapter foreignWorkspaceAdapter = new WorkspaceAdapter(this,
-                R.layout.workspace_list_item,
-                context.getMountedWorkspaces());
-        foreignWorkspaceList.setAdapter(foreignWorkspaceAdapter);
-
-        registerForContextMenu(foreignWorkspaceList);
     }
 
     @Override
@@ -147,10 +126,7 @@ public class WorkspaceList extends ActionBarActivity {
             WorkspaceCore workspace = (WorkspaceCore) list.getAdapter().getItem(info.position);
 
             menu.setHeaderTitle(workspace.getName());
-            String[] menuItems = {"Delete"};
-            for (int i = 0; i < menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
+            menu.add(Menu.NONE, 0, 0, "Delete");
         }
     }
 
@@ -164,10 +140,8 @@ public class WorkspaceList extends ActionBarActivity {
                 ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
                 WorkspaceCore workspace = (WorkspaceCore) adapter.getItem(info.position);
 
-                //OwnedWorkspaceCore.workspaces.remove(workspace);
-                context.removeWorkspace(workspace.getName());
+                AirDeskContext.getContext().removeWorkspace(workspace.getName());
                 adapter.notifyDataSetChanged();
-                //OwnedWorkspaceCore.saveWorkspaces(getApplicationContext());
                 Util.toast_warning(getApplicationContext(), "Deleted workspace " + workspace.getName());
 
                 return true;
@@ -209,6 +183,7 @@ public class WorkspaceList extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "You have to enter a tag.");
                 } else {
                     dialog.dismiss();
+                    AirDeskContext context = AirDeskContext.getContext();
                     context.addTagToSubscriptionTags(tag);
                     List<WorkspaceCore> workspacesWithTag = context.getWorkspacesWithTag(tag);
                     if (workspacesWithTag.isEmpty()) {

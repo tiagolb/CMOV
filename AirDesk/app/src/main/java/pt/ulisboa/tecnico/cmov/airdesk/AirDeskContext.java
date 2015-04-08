@@ -46,7 +46,6 @@ public class AirDeskContext extends Application {
     }
 
     public void setWorkspaceTags(WorkspaceCore workspace, String tags) {
-        //workspace.setTags(tags);
         dbHelper.setWorkspaceTags(workspace.getName(), workspace.getTags());
 
     }
@@ -69,44 +68,27 @@ public class AirDeskContext extends Application {
     }
 
     public void addClientToWorkspace(WorkspaceCore workspace, String client) {
-        //workspace.addClient(client);
         dbHelper.addClientToWorkspace(workspace.getName(), client);
     }
 
     public void removeClientFromWorkspace(WorkspaceCore workspace, String client) {
-        //workspace.removeClient(client);
         dbHelper.removeClientFromWorkspace(workspace.getName(), client);
     }
 
     public void addFileToWorkspace(WorkspaceCore workspace, String file) {
-        //workspace.addFile(file);
         dbHelper.addFileToWorkspace(workspace.getName(), file);
     }
 
     public void removeFileFromWorkspace(WorkspaceCore workspace, String file) {
-        //workspace.removeFile(file);
         dbHelper.removeFileFromWorkspace(workspace.getName(), file);
     }
 
     public void setWorkspaceQuota(WorkspaceCore workspace, int quota) {
-        //workspace.setQuota(quota);
         dbHelper.setWorkspaceQuota(workspace.getName(), quota);
     }
 
 
     public List<WorkspaceCore> getWorkspaces() {
-        /*if (workspaces == null) {
-            workspaces = new ArrayList<>();
-            //first time, let's populate with an example
-            OwnedWorkspaceCore workspace = new OwnedWorkspaceCore("Example Workspace", 16, "", "self", true);
-            workspace.addClient("joao@tecnico.ulisboa.pt");
-            workspace.addClient("luis@tecnico.ulisboa.pt");
-            workspace.addClient("ana@tecnico.ulisboa.pt");
-            workspace.addFile("Notas.txt");
-            workspace.addFile("Exemplo.txt");
-            //workspaces.add(workspace);
-            addWorkspace(workspace);
-        }*/
         return workspaces;
     }
 
