@@ -27,7 +27,10 @@ public class Util {
         context.startActivity(intent);
     }
 
-    public static AlertDialog createEditTextDialog(Activity activity, String title, String message, String positiveButtonLabel, String negativeButtonLabel, EditText editText) {
+    public static AlertDialog createEditTextDialog(Activity activity, String title, String message,
+                                                   String positiveButtonLabel,
+                                                   String negativeButtonLabel,
+                                                   EditText editText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setTitle(title);
@@ -44,17 +47,18 @@ public class Util {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
         });
-        return builder.create();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+        return dialog;
     }
 
-    public static void subscribe(final Activity activity, final Context context, View view) {
+    public static void subscribe(final Activity activity, final Context context) {
         final EditText editText = new EditText(activity);
         final AlertDialog dialog = Util.createEditTextDialog(activity,
                 activity.getString(R.string.subscribe_to_workspaces),
                 activity.getString(R.string.enter_tag) + ":", activity.getString(R.string.subscribe),
                 activity.getString(R.string.cancel), editText);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        dialog.show();
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +75,38 @@ public class Util {
                         //Util.toast_warning(context, "No Workspace with such tag exists");
                     } else for (WorkspaceCore workspace : workspacesWithTag)
                         context.addMountedWorkspace(workspace);
-                    Util.toast_warning(context, context.getString(R.string.tag_subscribed_success) + ": " + tag);
+                    Util.toast_warning(context, context.getString(R.string.tag_subscribed_success) +
+                            ": " + tag);
+                }
+            }
+        });
+    }
+
+    public static void inviteClient(final Activity activity, final Context context,
+                                    final WorkspaceCore workspace) {
+        final EditText editText = new EditText(activity);
+        final AlertDialog dialog = Util.createEditTextDialog(activity,
+                activity.getString(R.string.invite_client),
+                activity.getString(R.string.enter_client_email) + ":",
+                activity.getString(R.string.invite),
+                activity.getString(R.string.cancel), editText);
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String value = editText.getText().toString().trim();
+
+                if (value.equals("")) {
+                    Util.toast_warning(context,
+                            activity.getString(R.string.must_enter_email));
+                } else if (workspace.hasClient(value)) {
+                    Util.toast_warning(context,
+                            activity.getString(R.string.client_already_in_workspace));
+                } else {
+                    dialog.dismiss();
+                    workspace.addClient(value);
+                    Util.toast_warning(context,
+                            activity.getString(R.string.client_added) + ": " + value);
                 }
             }
         });

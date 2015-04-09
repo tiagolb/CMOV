@@ -43,6 +43,7 @@ public class AirDeskContext extends Application {
     }
 
     public void addTagToSubscriptionTags(String tag) {
+        subscribedTags.add(tag);
         dbHelper.addTagToSubscribedTags(tag);
     }
 
@@ -129,7 +130,7 @@ public class AirDeskContext extends Application {
 
     public void removeSubscribedTag(String tag) {
         for (int i = 0; i < subscribedTags.size(); i++) {
-            if(tag.equals(subscribedTags.get(i))) {
+            if (tag.equals(subscribedTags.get(i))) {
                 subscribedTags.remove(i);
                 dbHelper.removeSubscribedTag(tag);
             }

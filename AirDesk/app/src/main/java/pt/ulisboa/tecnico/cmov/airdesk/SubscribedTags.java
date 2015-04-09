@@ -1,8 +1,7 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +18,9 @@ public class SubscribedTags extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscribed_tags);
 
-        ActionBar bar = getSupportActionBar();
-
-        //populate file list
+        //populate tag list
         ListView fileList = (ListView) findViewById(R.id.subscribed_tags_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.subscribed_tag_list_item, AirDeskContext.getContext().getSubscribedTags());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.subscribed_tag_list_item, AirDeskContext.getContext().getSubscribedTags());
         fileList.setAdapter(adapter);
         registerForContextMenu(fileList);
     }
@@ -38,17 +35,14 @@ public class SubscribedTags extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_add_tag:
+                Util.subscribe(this, getApplicationContext());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -61,7 +55,7 @@ public class SubscribedTags extends ActionBarActivity {
             String tag = (String) list.getAdapter().getItem(info.position);
 
             menu.setHeaderTitle(tag);
-            menu.add(Menu.NONE, 0, 0, "Remove tag");
+            menu.add(Menu.NONE, 0, 0, getString(R.string.remove_tag));
         }
     }
 
@@ -79,7 +73,7 @@ public class SubscribedTags extends ActionBarActivity {
                 AirDeskContext.getContext().removeSubscribedTag(tag);
 
                 adapter.notifyDataSetChanged();
-                Util.toast_warning(getApplicationContext(), "Removed tag: " + tag);
+                Util.toast_warning(getApplicationContext(), getString(R.string.tag_removed) + ": " + tag);
                 return true;
             default:
                 return super.onContextItemSelected(item);

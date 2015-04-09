@@ -43,7 +43,7 @@
     <string name="manage_clients">Manage Clients</string>
     <string name="change_quota">Change Quota</string>
     <string name="manage_tags">Manage Tags</string>
-    <string name="title_activity_subscribed_tags">SubscribedTags</string>
+    <string name="title_activity_subscribed_tags">Subscribed Tags</string>
     <string name="tags">Tags</string>
     <string name="delete">Delete</string>
     <string name="workspace_deleted">Deleted workspace</string>
@@ -52,5 +52,26 @@
     <string name="cancel">Cancel</string>
     <string name="must_enter_tag">You have to enter a tag.</string>
     <string name="tag_subscribed_success">Success, you have subscribed to</string>
+    <string name="remove_tag">Remove tag</string>
+    <string name="tag_removed">Removed tag</string>
+    <string name="create_new_file">Create new file</string>
+    <string name="enter_file_name">Please enter the file name</string>
+    <string name="must_enter_filename">You have to enter a filename.</string>
+    <string name="file_already_exists">That file already exists.</string>
+    <string name="file">File</string>
+    <string name="created">created</string>
+    <string name="invite_client">Invite client</string>
+    <string name="enter_client_email">Please enter the client\'s e-mail address</string>
+    <string name="must_enter_email">You have to enter an e-mail address.</string>
+    <string name="client_already_in_workspace">That client already has access.</string>
+    <string name="client_added">Client added</string>
+    <string name="enter_new_quota">Enter the new quota value (Bytes):</string>
+    <string name="save">Save</string>
+    <string name="cannot_set_lower_quota">"You cannot set a new quota lower than the current used quota: "</string>
+    <string name="new_quota_set">New quota set.</string>
+    <string name="must_enter_a_number">You must enter a number.</string>
+    <string name="enter_tags">Enter the workspace\'s tags:</string>
+    <string name="tags_saved">Tags saved.</string>
+    <string name="ok">OK</string>
 
 </resources>

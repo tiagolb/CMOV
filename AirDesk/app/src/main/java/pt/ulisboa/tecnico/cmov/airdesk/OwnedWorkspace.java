@@ -54,7 +54,8 @@ public class OwnedWorkspace extends ActionBarActivity {
             });
 
             //populate file list
-            FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.getFiles());
+            FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item,
+                    workspace.getFiles());
             fileList.setAdapter(adapter);
         }
     }
@@ -88,7 +89,7 @@ public class OwnedWorkspace extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_invite:
-                invite();
+                Util.inviteClient(this, getApplicationContext(), workspace);
                 return true;
             case R.id.action_new_file:
                 newFile();
@@ -112,20 +113,20 @@ public class OwnedWorkspace extends ActionBarActivity {
     public void newFile() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Create new file");
-        builder.setMessage("Please enter the file name:");
+        builder.setTitle(getString(R.string.create_new_file));
+        builder.setMessage(getString(R.string.enter_file_name) + ":");
 
         final EditText input = new EditText(this);
         builder.setView(input);
 
-        builder.setPositiveButton("Create",
+        builder.setPositiveButton(getString(R.string.create),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
         });
@@ -140,59 +141,18 @@ public class OwnedWorkspace extends ActionBarActivity {
                 String value = input.getText().toString().trim();
 
                 if (value.equals("")) {
-                    Util.toast_warning(getApplicationContext(), "You have to enter a filename.");
+                    Util.toast_warning(getApplicationContext(),
+                            getString(R.string.must_enter_filename));
                 } else if (workspace.hasFile(value)) {
-                    Util.toast_warning(getApplicationContext(), "That file already exists.");
+                    Util.toast_warning(getApplicationContext(),
+                            getString(R.string.file_already_exists));
                 } else {
                     dialog.dismiss();
                     //AirDeskContext context = (AirDeskContext) getApplicationContext();
                     //context.addFileToWorkspace(workspace, value);
                     workspace.addFile(value);
-                    Util.toast_warning(getApplicationContext(), "File " + value + " created");
-                }
-            }
-        });
-    }
-
-    public void invite() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Invite client");
-        builder.setMessage("Please enter the client's e-mail address:");
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        builder.setView(input);
-
-        builder.setPositiveButton("Invite",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-
-        final AlertDialog dialog = builder.create();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        dialog.show();
-
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String value = input.getText().toString().trim();
-
-                if (value.equals("")) {
-                    Util.toast_warning(getApplicationContext(), "You have to enter an e-mail address.");
-                } else if (workspace.hasClient(value)) {
-                    Util.toast_warning(getApplicationContext(), "That client already has access.");
-                } else {
-                    dialog.dismiss();
-                    workspace.addClient(value);
-                    Util.toast_warning(getApplicationContext(), value + " added to clients list.");
+                    Util.toast_warning(getApplicationContext(), getString(R.string.file) + " " +
+                            value + " " + getString(R.string.created));
                 }
             }
         });
@@ -201,22 +161,22 @@ public class OwnedWorkspace extends ActionBarActivity {
     public void changeQuota() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Change quota");
-        builder.setMessage("Enter the new quota value (Bytes):");
+        builder.setTitle(getString(R.string.change_quota));
+        builder.setMessage(getString(R.string.enter_new_quota));
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setText(String.valueOf(workspace.getQuota() /*/ 1048576*/));
         builder.setView(input);
 
-        builder.setPositiveButton("Save",
+        builder.setPositiveButton(getString(R.string.save),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
         });
@@ -233,16 +193,20 @@ public class OwnedWorkspace extends ActionBarActivity {
                 try {
                     int quota = Integer.parseInt(value);//* 1024; //quota is stored in bytes
                     if (quota < workspace.getQuotaUsed()) {
-                        Util.toast_warning(getApplicationContext(), "You cannot set a new quota lower than the current used quota: " + workspace.getQuotaUsed() + " bytes");
+                        Util.toast_warning(getApplicationContext(),
+                                getString(R.string.cannot_set_lower_quota) +
+                                        workspace.getQuotaUsed() + " bytes");
                     } else {
                         dialog.dismiss();
                         //AirDeskContext context = (AirDeskContext) getApplicationContext();
                         //context.setWorkspaceQuota(workspace, quota);
                         workspace.setQuota(quota);
-                        Util.toast_warning(getApplicationContext(), "New quota set.");
+                        Util.toast_warning(getApplicationContext(),
+                                getString(R.string.new_quota_set));
                     }
                 } catch (Exception NumberFormatException) {
-                    Util.toast_warning(getApplicationContext(), "You must enter a number.");
+                    Util.toast_warning(getApplicationContext(),
+                            getString(R.string.must_enter_a_number));
                 }
             }
         });
@@ -252,25 +216,25 @@ public class OwnedWorkspace extends ActionBarActivity {
     public void manageTagList() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Manage tags");
-        alert.setMessage("Enter the workspace's tags:");
+        alert.setTitle(getString(R.string.manage_tags));
+        alert.setMessage(getString(R.string.enter_tags));
 
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         input.setText(workspace.getTagsString());
         alert.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
                 //AirDeskContext context = (AirDeskContext) getApplicationContext();
                 //context.setWorkspaceTags(workspace, value);
                 workspace.setTags(value);
-                Util.toast_warning(getApplicationContext(), "Tags saved.");
+                Util.toast_warning(getApplicationContext(), getString(R.string.tags_saved));
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Canceled.
             }

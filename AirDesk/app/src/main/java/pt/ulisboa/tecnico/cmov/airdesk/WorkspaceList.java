@@ -128,7 +128,8 @@ public class WorkspaceList extends ActionBarActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                AdapterView.AdapterContextMenuInfo info =
+                        (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
                 ListView list = (ListView) info.targetView.getParent();
                 ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
@@ -146,7 +147,7 @@ public class WorkspaceList extends ActionBarActivity {
     }
 
     public void subscribe(View view) {
-        Util.subscribe(this, getApplicationContext(), view);
+        Util.subscribe(this, getApplicationContext());
     }
 
     public void manage_tags(View view) {
