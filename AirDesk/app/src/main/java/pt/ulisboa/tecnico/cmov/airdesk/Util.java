@@ -28,6 +28,22 @@ public class Util {
         context.startActivity(intent);
     }
 
+    public static void launchEditFileOwned(Context context, WorkspaceCore workspace,
+                                           WorkspaceFileCore file) {
+        Intent intent = new Intent(context, EditFileOwned.class);
+        intent.putExtra("file", file.getName());
+        intent.putExtra("workspace", workspace.getName());
+        context.startActivity(intent);
+    }
+
+    public static void launchEditFileForeign(Context context, WorkspaceCore workspace,
+                                             WorkspaceFileCore file) {
+        Intent intent = new Intent(context, EditFileForeign.class);
+        intent.putExtra("file", file.getName());
+        intent.putExtra("workspace", workspace.getName());
+        context.startActivity(intent);
+    }
+
     public static AlertDialog createDialog(Activity activity, String title, String message,
                                            String positiveButtonLabel,
                                            String negativeButtonLabel,

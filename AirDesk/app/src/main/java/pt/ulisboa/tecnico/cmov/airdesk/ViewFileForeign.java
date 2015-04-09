@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -61,11 +60,7 @@ public class ViewFileForeign extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_edit_file:
-                Intent intent = new Intent(ViewFileForeign.this, EditFileForeign.class);
-                intent.putExtra("owner", workspace.getOwner());
-                intent.putExtra("workspace", workspace.getName());
-                intent.putExtra("file", file.getName());
-                startActivity(intent);
+                Util.launchEditFileForeign(ViewFileForeign.this, workspace, file);
                 return true;
             case R.id.action_remove_file:
                 Util.removeFile(getApplicationContext(), workspace, file);

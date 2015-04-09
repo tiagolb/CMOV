@@ -76,5 +76,6 @@
     <string name="tag_already_subscribed">That tag is already subscribled.</string>
     <string name="file_removed">File removed</string>
     <string name="remove_file">Remove file</string>
+    <string name="edit_file">Edit file</string>
 
 </resources>

@@ -254,18 +254,23 @@ public class OwnedWorkspace extends ActionBarActivity {
             String item = (String) list.getAdapter().getItem(info.position);
 
             menu.setHeaderTitle(item);
-            menu.add(Menu.NONE, 0, 0, getString(R.string.remove_file));
+            menu.add(Menu.NONE, 0, 0, getString(R.string.edit_file));
+            menu.add(Menu.NONE, 0, 1, getString(R.string.remove_file));
         }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        ListView list = (ListView) info.targetView.getParent();
+        ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
+        String file = (String) adapter.getItem(info.position);
+
         switch (item.getItemId()) {
             case 0:
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                ListView list = (ListView) info.targetView.getParent();
-                ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
-                String file = (String) adapter.getItem(info.position);
+                Util.launchEditFileOwned(this, workspace, workspace.getFile(file));
+                return true;
+            case 1:
                 Util.removeFile(getApplicationContext(), workspace, workspace.getFile(file));
                 adapter.notifyDataSetChanged();
                 return true;

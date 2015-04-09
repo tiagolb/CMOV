@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -63,10 +62,7 @@ public class ViewFileOwned extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_edit_file:
-                Intent intent = new Intent(ViewFileOwned.this, EditFileOwned.class);
-                intent.putExtra("file", file.getName());
-                intent.putExtra("workspace", workspace.getName());
-                startActivity(intent);
+                Util.launchEditFileOwned(ViewFileOwned.this, workspace, file);
                 return true;
             case R.id.action_remove_file:
                 Util.removeFile(getApplicationContext(), workspace, file);
