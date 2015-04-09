@@ -34,10 +34,10 @@ public class WorkspaceClientList extends ActionBarActivity {
             bar.setTitle("Clients for " + workspace.getName());
 
             //populate file list
-            ListView fileList = (ListView) findViewById(R.id.workspace_client_list);
+            ListView clientList = (ListView) findViewById(R.id.workspace_client_list);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.workspace_client_list_item, workspace.getClients());
-            fileList.setAdapter(adapter);
-            registerForContextMenu(fileList);
+            clientList.setAdapter(adapter);
+            registerForContextMenu(clientList);
         }
     }
 

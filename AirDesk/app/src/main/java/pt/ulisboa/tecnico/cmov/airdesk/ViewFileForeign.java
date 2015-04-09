@@ -68,9 +68,7 @@ public class ViewFileForeign extends ActionBarActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_remove_file:
-                workspace.removeFile(file.getName());
-                file.removeFile(getApplicationContext());
-                Util.toast_warning(getApplicationContext(), "File removed");
+                Util.removeFile(getApplicationContext(), workspace, file);
                 finish();
                 return true;
             default:

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 
 public class Util {
 
@@ -27,10 +28,10 @@ public class Util {
         context.startActivity(intent);
     }
 
-    public static AlertDialog createEditTextDialog(Activity activity, String title, String message,
-                                                   String positiveButtonLabel,
-                                                   String negativeButtonLabel,
-                                                   EditText editText) {
+    public static AlertDialog createDialog(Activity activity, String title, String message,
+                                           String positiveButtonLabel,
+                                           String negativeButtonLabel,
+                                           EditText editText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setTitle(title);
@@ -55,7 +56,7 @@ public class Util {
 
     public static void subscribe(final Activity activity, final Context context) {
         final EditText editText = new EditText(activity);
-        final AlertDialog dialog = Util.createEditTextDialog(activity,
+        final AlertDialog dialog = Util.createDialog(activity,
                 activity.getString(R.string.subscribe_to_workspaces),
                 activity.getString(R.string.enter_tag) + ":", activity.getString(R.string.subscribe),
                 activity.getString(R.string.cancel), editText);
@@ -87,7 +88,7 @@ public class Util {
     public static void inviteClient(final Activity activity, final Context context,
                                     final WorkspaceCore workspace) {
         final EditText editText = new EditText(activity);
-        final AlertDialog dialog = Util.createEditTextDialog(activity,
+        final AlertDialog dialog = Util.createDialog(activity,
                 activity.getString(R.string.invite_client),
                 activity.getString(R.string.enter_client_email) + ":",
                 activity.getString(R.string.invite),
@@ -112,6 +113,12 @@ public class Util {
                 }
             }
         });
+    }
+
+    public static void removeFile(Context context, WorkspaceCore workspace, WorkspaceFileCore file) {
+        workspace.removeFile(file.getName());
+        file.removeFile(context);
+        Util.toast_warning(context, context.getString(R.string.file_removed));
     }
 
 

@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import pt.ulisboa.tecnico.cmov.airdesk.adapters.FileListAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.Client;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
@@ -52,8 +53,9 @@ public class ForeignWorkspace extends ActionBarActivity {
             });
 
             //populate file list
-            FileListAdapter adapter = new FileListAdapter(this, R.layout.workspace_file_list_item, workspace.getFiles());
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.workspace_file_list_item, workspace.getFiles());
             fileList.setAdapter(adapter);
+            registerForContextMenu(fileList);
         }
     }
 
@@ -63,7 +65,7 @@ public class ForeignWorkspace extends ActionBarActivity {
 
         //update view
         ListView fileList = (ListView) findViewById(R.id.foreign_workspace_file_list);
-        FileListAdapter adapter = (FileListAdapter) fileList.getAdapter();
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) fileList.getAdapter();
         adapter.notifyDataSetChanged();
     }
 
@@ -130,6 +132,36 @@ public class ForeignWorkspace extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.foreign_workspace_file_list) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+            ListView list = (ListView) v;
+            String item = (String) list.getAdapter().getItem(info.position);
+
+            menu.setHeaderTitle(item);
+            menu.add(Menu.NONE, 0, 0, getString(R.string.remove_file));
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 0:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                ListView list = (ListView) info.targetView.getParent();
+                ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
+                String file = (String) adapter.getItem(info.position);
+                Util.removeFile(getApplicationContext(), workspace, workspace.getFile(file));
+                adapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
