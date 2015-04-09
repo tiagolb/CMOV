@@ -45,5 +45,12 @@
     <string name="manage_tags">Manage Tags</string>
     <string name="title_activity_subscribed_tags">SubscribedTags</string>
     <string name="tags">Tags</string>
+    <string name="delete">Delete</string>
+    <string name="workspace_deleted">Deleted workspace</string>
+    <string name="subscribe_to_workspaces">Subscribe to Workspaces</string>
+    <string name="enter_tag">Please enter a tag</string>
+    <string name="cancel">Cancel</string>
+    <string name="must_enter_tag">You have to enter a tag.</string>
+    <string name="tag_subscribed_success">Success, you have subscribed to</string>
 
 </resources>

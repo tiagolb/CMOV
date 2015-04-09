@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,13 +9,9 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-
-import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
@@ -126,7 +120,7 @@ public class WorkspaceList extends ActionBarActivity {
             WorkspaceCore workspace = (WorkspaceCore) list.getAdapter().getItem(info.position);
 
             menu.setHeaderTitle(workspace.getName());
-            menu.add(Menu.NONE, 0, 0, "Delete");
+            menu.add(Menu.NONE, 0, 0, getString(R.string.delete));
         }
     }
 
@@ -142,7 +136,8 @@ public class WorkspaceList extends ActionBarActivity {
 
                 AirDeskContext.getContext().removeWorkspace(workspace.getName());
                 adapter.notifyDataSetChanged();
-                Util.toast_warning(getApplicationContext(), "Deleted workspace " + workspace.getName());
+                Util.toast_warning(getApplicationContext(), getString(R.string.workspace_deleted) +
+                        ": " + workspace.getName());
 
                 return true;
             default:
@@ -151,52 +146,7 @@ public class WorkspaceList extends ActionBarActivity {
     }
 
     public void subscribe(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Subscribe to a Workspace");
-        builder.setMessage("Please enter a tag:");
-
-        final EditText tagInput = new EditText(this);
-        builder.setView(tagInput);
-
-        builder.setPositiveButton("Subscribe",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-
-        final AlertDialog dialog = builder.create();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        dialog.show();
-
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tag = tagInput.getText().toString().trim();
-                if (tag.equals("")) {
-                    Util.toast_warning(getApplicationContext(), "You have to enter a tag.");
-                } else {
-                    dialog.dismiss();
-                    AirDeskContext context = AirDeskContext.getContext();
-                    context.addTagToSubscriptionTags(tag);
-                    List<WorkspaceCore> workspacesWithTag = context.getWorkspacesWithTag(tag);
-                    if (workspacesWithTag.isEmpty()) {
-                        Util.toast_warning(getApplicationContext(), "No Workspace with such tag exists");
-                    } else {
-                        for (WorkspaceCore workspace : workspacesWithTag) {
-                            context.addMountedWorkspace(workspace);
-                        }
-                        Util.toast_warning(getApplicationContext(), "SUBSCRIBE");
-                    }
-                }
-            }
-        });
+        Util.subscribe(this, getApplicationContext(), view);
     }
 
     public void manage_tags(View view) {
