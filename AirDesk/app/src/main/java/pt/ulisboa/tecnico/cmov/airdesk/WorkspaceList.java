@@ -199,6 +199,11 @@ public class WorkspaceList extends ActionBarActivity {
         });
     }
 
+    public void manage_tags(View view) {
+        Intent intent = new Intent(this, SubscribedTags.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onBackPressed() {
     }

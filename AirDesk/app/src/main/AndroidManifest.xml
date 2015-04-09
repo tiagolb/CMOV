@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pt.ulisboa.tecnico.cmov.airdesk">
+    package="pt.ulisboa.tecnico.cmov.airdesk" >
 
     <application
         android:name=".AirDeskContext"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".Login"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".WorkspaceList"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,20 +22,20 @@
         </activity>
         <activity
             android:name=".OwnedWorkspace"
-            android:launchMode="singleTop"
             android:label="@string/title_activity_owned_workspace"
-            android:theme="@style/OwnedWorkspaceTheme"
-            android:parentActivityName=".WorkspaceList">
+            android:launchMode="singleTop"
+            android:parentActivityName=".WorkspaceList"
+            android:theme="@style/OwnedWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
         </activity>
         <activity
             android:name=".ForeignWorkspace"
-            android:launchMode="singleTop"
             android:label="@string/title_activity_foreign_workspace"
-            android:theme="@style/ForeignWorkspaceTheme"
-            android:parentActivityName=".WorkspaceList">
+            android:launchMode="singleTop"
+            android:parentActivityName=".WorkspaceList"
+            android:theme="@style/ForeignWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
@@ -43,9 +43,9 @@
         <activity
             android:name=".WorkspaceSetup"
             android:label="@string/title_activity_workspace_setup"
-            android:theme="@style/OwnedWorkspaceTheme"
             android:parentActivityName=".WorkspaceList"
-            android:windowSoftInputMode="stateVisible|adjustPan">
+            android:theme="@style/OwnedWorkspaceTheme"
+            android:windowSoftInputMode="stateVisible|adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
@@ -53,8 +53,8 @@
         <activity
             android:name=".ViewFileOwned"
             android:label="@string/title_activity_view_file_owned"
-            android:theme="@style/OwnedWorkspaceTheme"
-            android:parentActivityName=".OwnedWorkspace" >
+            android:parentActivityName=".OwnedWorkspace"
+            android:theme="@style/OwnedWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnedWorkspace" />
@@ -62,8 +62,8 @@
         <activity
             android:name=".EditFileOwned"
             android:label="@string/title_activity_edit_file_owned"
-            android:theme="@style/OwnedWorkspaceTheme"
-            android:parentActivityName=".OwnedWorkspace" >
+            android:parentActivityName=".OwnedWorkspace"
+            android:theme="@style/OwnedWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.OwnedWorkspace" />
@@ -71,8 +71,8 @@
         <activity
             android:name=".EditFileForeign"
             android:label="@string/title_activity_edit_file_foreign"
-            android:theme="@style/ForeignWorkspaceTheme"
-            android:parentActivityName=".ForeignWorkspace">
+            android:parentActivityName=".ForeignWorkspace"
+            android:theme="@style/ForeignWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
@@ -80,19 +80,28 @@
         <activity
             android:name=".ViewFileForeign"
             android:label="@string/title_activity_view_file_foreign"
-            android:theme="@style/ForeignWorkspaceTheme"
-            android:parentActivityName=".ForeignWorkspace">
+            android:parentActivityName=".ForeignWorkspace"
+            android:theme="@style/ForeignWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pt.ulisboa.tecnico.cmov.airdesk.ForeignWorkspace" />
         </activity>
         <activity
             android:name=".WorkspaceClientList"
-            android:theme="@style/OwnedWorkspaceTheme"
-            android:label="@string/title_activity_workspace_client_list">
+            android:label="@string/title_activity_workspace_client_list"
+            android:theme="@style/OwnedWorkspaceTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnedWorkspace" />
+        </activity>
+        <activity
+            android:name=".SubscribedTags"
+            android:label="@string/title_activity_subscribed_tags"
+            android:theme="@style/ForeignWorkspaceTheme" >
+            android:parentActivityName=".WorkspaceList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceList" />
         </activity>
     </application>
 

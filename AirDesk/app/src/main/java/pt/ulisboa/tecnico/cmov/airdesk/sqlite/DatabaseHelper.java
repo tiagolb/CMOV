@@ -381,4 +381,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             addTagToWorkspace(workspaceName, tag, db);
         }
     }
+
+    public List<String> getSubscribedTags() {
+        List<String> tags = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT "+ COLUMN_TAG +
+                " FROM " + TABLE_SUBSCRIPTION_TAG;
+        Log.d("SQL", selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                tags.add(c.getString(c.getColumnIndex(COLUMN_TAG)));
+            } while (c.moveToNext());
+        }
+
+        return tags;
+    }
+
+    public void removeSubscribedTag(String tag) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String whereClause = COLUMN_TAG + " = ?";
+        db.delete(TABLE_SUBSCRIPTION_TAG, whereClause, new String[] {tag});
+    }
 }

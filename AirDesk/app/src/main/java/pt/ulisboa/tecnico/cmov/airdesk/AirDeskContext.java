@@ -28,6 +28,7 @@ public class AirDeskContext extends Application {
 
         mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
         mountedWorkspaces.addAll(dbHelper.getAllPushedWorkspaces(ownerEmail));
+        subscribedTags = dbHelper.getSubscribedTags();
 
         /*if(workspaces.isEmpty()) {
             OwnedWorkspaceCore workspace = new OwnedWorkspaceCore("Example Workspace", 16, "", "self", true);
@@ -118,6 +119,19 @@ public class AirDeskContext extends Application {
                 workspaces.remove(i);
                 dbHelper.removeWorkspace(workspace);
                 return;
+            }
+        }
+    }
+
+    public List<String> getSubscribedTags() {
+        return subscribedTags;
+    }
+
+    public void removeSubscribedTag(String tag) {
+        for (int i = 0; i < subscribedTags.size(); i++) {
+            if(tag.equals(subscribedTags.get(i))) {
+                subscribedTags.remove(i);
+                dbHelper.removeSubscribedTag(tag);
             }
         }
     }
