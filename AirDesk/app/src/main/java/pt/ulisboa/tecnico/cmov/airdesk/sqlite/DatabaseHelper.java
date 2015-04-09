@@ -301,10 +301,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+
+        //TODO: depois para a segunda entrega tem que se mudar isto mas por agora :public:
         String selectQuery = "SELECT "+ "T."+ COLUMN_WORKSPACE +
                 " FROM " + TABLE_TAG + " AS T , " +
-                           TABLE_SUBSCRIPTION_TAG + " AS S " +
-                " WHERE " + "T."+ COLUMN_TAG + "=" + "S." + COLUMN_TAG;
+                           TABLE_SUBSCRIPTION_TAG + " AS S , " +
+                           TABLE_WORKSPACE + " AS W " +
+                " WHERE " + "T."+ COLUMN_TAG + "=" + "S." + COLUMN_TAG +
+                " AND W." + COLUMN_WORKSPACE + "=T." + COLUMN_WORKSPACE +
+                " AND " + COLUMN_PUBLIC + "=1";
         Log.d("SQL", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);

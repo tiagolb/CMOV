@@ -206,7 +206,7 @@ public class OwnedWorkspace extends ActionBarActivity {
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        input.setText(String.valueOf(workspace.getQuota() / 1048576));
+        input.setText(String.valueOf(workspace.getQuota() /*/ 1048576*/));
         builder.setView(input);
 
         builder.setPositiveButton("Save",
