@@ -73,5 +73,6 @@
     <string name="enter_tags">Enter the workspace\'s tags:</string>
     <string name="tags_saved">Tags saved.</string>
     <string name="ok">OK</string>
+    <string name="tag_already_subscribed">That tag is already subscribled.</string>
 
 </resources>

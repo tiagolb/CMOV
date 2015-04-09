@@ -63,18 +63,20 @@ public class Util {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AirDeskContext airDesk = AirDeskContext.getContext();
                 String tag = editText.getText().toString().trim();
                 if (tag.equals("")) {
                     Util.toast_warning(context, activity.getString(R.string.must_enter_tag));
+                } else if (airDesk.getSubscribedTags().contains(tag)) {
+                    Util.toast_warning(context, activity.getString(R.string.tag_already_subscribed));
                 } else {
                     dialog.dismiss();
-                    AirDeskContext context = AirDeskContext.getContext();
-                    context.addTagToSubscriptionTags(tag);
-                    List<WorkspaceCore> workspacesWithTag = context.getWorkspacesWithTag(tag);
+                    airDesk.addTagToSubscriptionTags(tag);
+                    List<WorkspaceCore> workspacesWithTag = airDesk.getWorkspacesWithTag(tag);
                     if (workspacesWithTag.isEmpty()) {
                         //Util.toast_warning(context, "No Workspace with such tag exists");
                     } else for (WorkspaceCore workspace : workspacesWithTag)
-                        context.addMountedWorkspace(workspace);
+                        airDesk.addMountedWorkspace(workspace);
                     Util.toast_warning(context, context.getString(R.string.tag_subscribed_success) +
                             ": " + tag);
                 }
