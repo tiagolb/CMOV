@@ -15,7 +15,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "workspaceManager";
 
     // Tables
@@ -48,7 +48,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     */
 
     private static final String CREATE_TABLE_SUBSCRIPTION_TAG =
-            "CREATE TABLE " + TABLE_SUBSCRIPTION_TAG + " (" + COLUMN_TAG + " TEXT);";
+            "CREATE TABLE " + TABLE_SUBSCRIPTION_TAG + " (" + COLUMN_TAG + " TEXT, "+
+                    COLUMN_OWNER + " TEXT, PRIMARY KEY (" + COLUMN_TAG + "," + COLUMN_OWNER + "));";
 
     private static final String CREATE_TABLE_FILE =
             "CREATE TABLE " + TABLE_FILE + " (" +
@@ -135,10 +136,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addTagToWorkspace(workspace, tag, db);
     }
 
-    public void addTagToSubscribedTags(String tag) {
+    public void addTagToSubscribedTags(String tag, String ownerEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TAG, tag);
+        values.put(COLUMN_OWNER, ownerEmail);
 
         db.insert(TABLE_SUBSCRIPTION_TAG, null, values);
     }
@@ -294,7 +296,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // ON CREATE
-    public List<WorkspaceCore> getAllMountedWorkspaces() {
+    public List<WorkspaceCore> getAllMountedWorkspaces(String ownerEmail) {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -306,6 +308,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TABLE_WORKSPACE + " AS W " +
                 " WHERE " + "T." + COLUMN_TAG + "=" + "S." + COLUMN_TAG +
                 " AND W." + COLUMN_WORKSPACE + "=T." + COLUMN_WORKSPACE +
+                " AND S."+ COLUMN_OWNER + "='" + ownerEmail + "'" +
                 " AND " + COLUMN_PUBLIC + "=1";
         Log.d("SQL", selectQuery);
 
@@ -382,12 +385,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<String> getSubscribedTags() {
+    public List<String> getSubscribedTags(String ownerEmail) {
         List<String> tags = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_TAG +
-                " FROM " + TABLE_SUBSCRIPTION_TAG;
+                " FROM " + TABLE_SUBSCRIPTION_TAG +
+                " WHERE " + COLUMN_OWNER +"='"+ownerEmail+"'";
         Log.d("SQL", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);

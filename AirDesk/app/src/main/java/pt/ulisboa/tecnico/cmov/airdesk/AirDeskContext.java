@@ -19,21 +19,21 @@ public class AirDeskContext extends Application {
         return context;
     }
 
-    public void initContext(String ownerEmail) {
-        if (workspaces == null) {
+    public void initContext(String ownerEmail, boolean newLogin) {
+        if (workspaces == null || newLogin) {
             dbHelper = new DatabaseHelper(this);
             workspaces = dbHelper.getAllWorkspaces(ownerEmail);
             AirDeskContext.context = this;
         }
 
-        mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
+        mountedWorkspaces = dbHelper.getAllMountedWorkspaces(ownerEmail);
         mountedWorkspaces.addAll(dbHelper.getAllPushedWorkspaces(ownerEmail));
-        subscribedTags = dbHelper.getSubscribedTags();
+        subscribedTags = dbHelper.getSubscribedTags(ownerEmail);
     }
 
-    public void addTagToSubscriptionTags(String tag) {
+    public void addTagToSubscribedTags(String tag, String ownerEmail) {
         subscribedTags.add(tag);
-        dbHelper.addTagToSubscribedTags(tag);
+        dbHelper.addTagToSubscribedTags(tag, ownerEmail);
     }
 
     public void setWorkspaceTags(WorkspaceCore workspace, String tags) {

@@ -1,6 +1,8 @@
 package pt.ulisboa.tecnico.cmov.airdesk;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -25,6 +27,16 @@ public class SubscribedTags extends ActionBarActivity {
         registerForContextMenu(fileList);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //update view
+        ListView fileList = (ListView) findViewById(R.id.subscribed_tags_list);
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) fileList.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,7 +50,10 @@ public class SubscribedTags extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_add_tag:
-                Util.subscribe(this, getApplicationContext());
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                String ownerEmail = prefs.getString("email", "");
+
+                Util.subscribe(this, getApplicationContext(), ownerEmail);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

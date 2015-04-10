@@ -40,6 +40,16 @@ public class WorkspaceClientList extends ActionBarActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //update view
+        ListView fileList = (ListView) findViewById(R.id.workspace_client_list);
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) fileList.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

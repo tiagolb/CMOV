@@ -33,6 +33,7 @@ public class Login extends ActionBarActivity {
 
         Intent intent = new Intent(this, WorkspaceList.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("newLogin", true);
         startActivity(intent);
     }
 
@@ -53,23 +54,6 @@ public class Login extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
-
-    // era so para os settings e isto ja nao existe pois nao fazia sentido se nao era usado
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public void onBackPressed() {

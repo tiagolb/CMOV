@@ -78,7 +78,7 @@ public class Util {
         return dialog;
     }
 
-    public static void subscribe(final Activity activity, final Context context) {
+    public static void subscribe(final Activity activity, final Context context, final String ownerEmail) {
         final EditText editText = new EditText(activity);
         final AlertDialog dialog = Util.createDialog(activity,
                 activity.getString(R.string.subscribe_to_workspaces),
@@ -96,7 +96,7 @@ public class Util {
                     Util.toast(context, activity.getString(R.string.tag_already_subscribed));
                 } else {
                     dialog.dismiss();
-                    airDesk.addTagToSubscriptionTags(tag);
+                    airDesk.addTagToSubscribedTags(tag, ownerEmail);
                     List<WorkspaceCore> workspacesWithTag = airDesk.getWorkspacesWithTag(tag);
                     for (WorkspaceCore workspace : workspacesWithTag)
                         airDesk.addMountedWorkspace(workspace);

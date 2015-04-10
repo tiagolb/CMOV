@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,14 @@ public class WorkspaceList extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //update view
+        ListView ownedList = (ListView) findViewById(R.id.owned_workspace_list);
+        ArrayAdapter<String> ownedAdapter = (ArrayAdapter<String>) ownedList.getAdapter();
+        ownedAdapter.notifyDataSetChanged();
+
+        ListView foreignList = (ListView) findViewById(R.id.foreign_workspace_list);
+        ArrayAdapter<String> foreignAdapter = (ArrayAdapter<String>) foreignList.getAdapter();
+        foreignAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -44,8 +53,12 @@ public class WorkspaceList extends ActionBarActivity {
             startActivity(intent);
         }
 
+
+        boolean newLogin = getIntent().hasExtra("newLogin");
         AirDeskContext context = (AirDeskContext) getApplicationContext();
-        context.initContext(ownerEmail);
+        context.initContext(ownerEmail, newLogin);
+        Util.toast("onCreate -> " + ownerEmail + ", " + newLogin);
+        Log.d("TAG", "onCreate -> " + ownerEmail + ", " + newLogin);
 
         populateWorkspaceLists();
     }
@@ -150,7 +163,10 @@ public class WorkspaceList extends ActionBarActivity {
     }
 
     public void subscribe(View view) {
-        Util.subscribe(this, getApplicationContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String ownerEmail = prefs.getString("email", "");
+
+        Util.subscribe(this, getApplicationContext(), ownerEmail);
     }
 
     public void manageTags(View view) {
