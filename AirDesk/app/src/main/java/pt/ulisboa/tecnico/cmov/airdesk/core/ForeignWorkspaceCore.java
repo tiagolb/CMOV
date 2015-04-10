@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.airdesk.core;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,14 +8,12 @@ import java.util.List;
 
 public class ForeignWorkspaceCore extends WorkspaceCore {
 
-    public static ArrayList<WorkspaceCore> workspaces = null;
-
     public ForeignWorkspaceCore(String name, int quota, String tags, String owner, boolean isPublic) {
         super(name, quota, tags, owner, isPublic);
     }
 
     public WorkspaceFileCore getFile(String fileName) {
-        return new ForeignFileCore(fileName, getName());
+        return new ForeignFileCore(getOwner(), getName(), fileName);
     }
 
     public List<String> getFiles() {

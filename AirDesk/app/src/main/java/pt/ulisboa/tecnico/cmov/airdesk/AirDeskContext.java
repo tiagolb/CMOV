@@ -9,11 +9,11 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.sqlite.DatabaseHelper;
 
 public class AirDeskContext extends Application {
-    private List<WorkspaceCore> workspaces = null;
+    private ArrayList<WorkspaceCore> workspaces = null;
     private List<WorkspaceCore> mountedWorkspaces = null;
     private List<String> subscribedTags = null;
     private DatabaseHelper dbHelper = null;
-    static public AirDeskContext context;
+    static private AirDeskContext context;
 
     static public AirDeskContext getContext() {
         return context;
@@ -29,17 +29,6 @@ public class AirDeskContext extends Application {
         mountedWorkspaces = dbHelper.getAllMountedWorkspaces();
         mountedWorkspaces.addAll(dbHelper.getAllPushedWorkspaces(ownerEmail));
         subscribedTags = dbHelper.getSubscribedTags();
-
-        /*if(workspaces.isEmpty()) {
-            OwnedWorkspaceCore workspace = new OwnedWorkspaceCore("Example Workspace", 16, "", "self", true);
-            addClientToWorkspace(workspace, "joao@tecnico.ulisboa.pt");
-            addClientToWorkspace(workspace, "luis@tecnico.ulisboa.pt");
-            addClientToWorkspace(workspace, "ana@tecnico.ulisboa.pt");
-            addFileToWorkspace(workspace, "Notas.txt");
-            addFileToWorkspace(workspace, "Exemplo.txt");
-            //workspaces.add(workspace);
-            addWorkspace(workspace);
-        }*/
     }
 
     public void addTagToSubscriptionTags(String tag) {
@@ -65,8 +54,6 @@ public class AirDeskContext extends Application {
             workspaces = new ArrayList<>();
         }
         mountedWorkspaces.add(workspace);
-        //FIXME: para a primeira entrega isto esta comentado mas depois deixa de estar
-        //dbHelper.addWorkspace(workspace);
     }
 
     public void addClientToWorkspace(WorkspaceCore workspace, String client) {
@@ -90,7 +77,7 @@ public class AirDeskContext extends Application {
     }
 
 
-    public List<WorkspaceCore> getWorkspaces() {
+    public ArrayList<WorkspaceCore> getWorkspaces() {
         return workspaces;
     }
 
@@ -98,7 +85,6 @@ public class AirDeskContext extends Application {
         return mountedWorkspaces;
     }
 
-    //FIXME: para a primeira entrega fica assim
     public List<WorkspaceCore> getWorkspacesWithTag(String tag) {
         return dbHelper.getAllWorkspacesWithTag(tag);
     }
@@ -113,7 +99,7 @@ public class AirDeskContext extends Application {
     }
 
     public void removeWorkspace(String name) {
-        WorkspaceCore workspace = null;
+        WorkspaceCore workspace;
         for (int i = 0; i < workspaces.size(); i++) {
             if (name.equals(workspaces.get(i).getName())) {
                 workspace = workspaces.get(i);
@@ -135,5 +121,13 @@ public class AirDeskContext extends Application {
                 dbHelper.removeSubscribedTag(tag);
             }
         }
+    }
+
+    public int getQuotaUsed(String workspace) {
+        return dbHelper.getQuotaUsed(workspace);
+    }
+
+    public void setFileSize(String workspace, String file, int size) {
+        dbHelper.setFileSize(workspace, file, size);
     }
 }

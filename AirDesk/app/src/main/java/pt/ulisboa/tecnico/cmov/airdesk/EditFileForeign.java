@@ -22,15 +22,11 @@ public class EditFileForeign extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_file_foreign);
 
-        WorkspaceCore workspace;
-
-        //set action-bar's title and background color
-        ActionBar bar = getSupportActionBar();
-
         //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            workspace = Client.getWorkspace(bundle.getString("owner"), bundle.getString("workspace"));
+            WorkspaceCore workspace = Client.getWorkspace(bundle.getString("owner"),
+                    bundle.getString("workspace"));
             file = workspace.getFile(bundle.getString("file"));
         }
         if (file != null) {
@@ -38,6 +34,8 @@ public class EditFileForeign extends ActionBarActivity {
                 Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
                 finish();
             } else {
+                //set action-bar's title
+                ActionBar bar = getSupportActionBar();
                 bar.setTitle("Edit " + file.getName());
             }
         }
@@ -80,5 +78,6 @@ public class EditFileForeign extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

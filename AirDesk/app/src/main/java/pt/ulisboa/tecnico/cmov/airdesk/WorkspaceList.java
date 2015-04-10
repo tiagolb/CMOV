@@ -106,6 +106,9 @@ public class WorkspaceList extends ActionBarActivity {
             case R.id.action_change_login:
                 startActivity(new Intent(this, Login.class));
                 return true;
+            case R.id.action_manage_subscriptions:
+                manageTags(null);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -150,7 +153,7 @@ public class WorkspaceList extends ActionBarActivity {
         Util.subscribe(this, getApplicationContext());
     }
 
-    public void manage_tags(View view) {
+    public void manageTags(View view) {
         Intent intent = new Intent(this, SubscribedTags.class);
         startActivity(intent);
     }

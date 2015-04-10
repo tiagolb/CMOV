@@ -54,4 +54,8 @@ public class OwnedWorkspaceCore extends WorkspaceCore {
         AirDeskContext.getContext().removeClientFromWorkspace(this, client);
     }
 
+    public WorkspaceFileCore getFile(String fileName) {
+        return new OwnedFileCore(getName(), fileName);
+    }
+
 }

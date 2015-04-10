@@ -12,12 +12,11 @@ import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 public class Server {
 
     private static boolean hasAccess(String client, WorkspaceCore workspace) {
-        //TODO: verify if client belong to clients
-        return true;
+        return workspace.isPublic() || workspace.hasClient(client);
     }
 
     public static WorkspaceCore getWorkspace(String client, String workspace) {
-        ArrayList<WorkspaceCore> workspaces = (ArrayList) AirDeskContext.getContext().getWorkspaces();
+        ArrayList<WorkspaceCore> workspaces = AirDeskContext.getContext().getWorkspaces();
         for (WorkspaceCore w : workspaces)
             if (w.getName().equals(workspace)) return hasAccess(client, w) ? w : null;
         return null;

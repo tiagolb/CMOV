@@ -4,29 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-//FIXME: most methods implemented here should be in fact implemented in OwnedWorkspaceCore (with db access)
-// We should also start using ForeignWorkspaceCore, that should implement methods using calls to Client class
-// We're using simple WorkspaceCore almost everywhere, we need to change them to Owned/Foreign.
-// In fact, this class could be Abstract.
+import pt.ulisboa.tecnico.cmov.airdesk.AirDeskContext;
 
-public class WorkspaceCore {
+public abstract class WorkspaceCore {
 
     private String name;
-    private int quota;
-    private List<String> tags;
+    private int quota; //bytes
+    private List<String> tags = new ArrayList<>();
     private String owner;
-    private List<String> files;
-    private List<String> clients;
+    private List<String> files = new ArrayList<>();
+    private List<String> clients = new ArrayList<>();
     private boolean isPublic;
 
-    // TODO: Remove tag or receive list
     public WorkspaceCore(String name, int quota, String tags, String owner, boolean isPublic) {
-        this.name = name;
-        this.quota = quota; //bytes
-        this.owner = owner;
-        this.files = new ArrayList<>();
-        this.clients = new ArrayList<>();
-        this.isPublic = isPublic;
+        this(name, quota, owner, isPublic);
         setTags(tags);
     }
 
@@ -35,9 +26,6 @@ public class WorkspaceCore {
         this.quota = quota;
         this.owner = owner;
         this.isPublic = isPublic;
-        this.tags = new ArrayList<>();
-        this.files = new ArrayList<>();
-        this.clients = new ArrayList<>();
     }
 
     public int getQuota() {
@@ -45,19 +33,13 @@ public class WorkspaceCore {
     }
 
     public int getQuotaUsed() {
-        int quotaUsed = 0;
-        for (String filename : files) {
-            WorkspaceFileCore file = this.getFile(filename);
-            quotaUsed += file.getSize();
-        }
-        return quotaUsed;
+        return AirDeskContext.getContext().getQuotaUsed(getName());
     }
 
     public int getQuotaAvailable() {
         return getQuota() - getQuotaUsed();
     }
 
-    // TODO: Return unmodifiable Collection
     public List<String> getTags() {
         return tags;
     }
@@ -70,12 +52,10 @@ public class WorkspaceCore {
         return owner;
     }
 
-    // TODO: Return unmodifiable Collection
     public List<String> getFiles() {
         return files;
     }
 
-    // TODO: Return unmodifiable Collection
     public List<String> getClients() {
         return clients;
     }
@@ -104,9 +84,7 @@ public class WorkspaceCore {
         return this.clients.contains(client);
     }
 
-    public WorkspaceFileCore getFile(String fileName) {
-        return new WorkspaceFileCore(fileName, getName());
-    }
+    public abstract WorkspaceFileCore getFile(String fileName);
 
     public void removeFile(String fileName) {
         this.files.remove(fileName);
@@ -133,4 +111,11 @@ public class WorkspaceCore {
         return this.isPublic;
     }
 
+    public void setPublic() {
+        this.isPublic = true;
+    }
+
+    public void setPrivate() {
+        this.isPublic = false;
+    }
 }

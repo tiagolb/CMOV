@@ -22,8 +22,6 @@ public class WorkspaceClientList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace_client_list);
 
-        ActionBar bar = getSupportActionBar();
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             AirDeskContext context = (AirDeskContext) getApplicationContext();
@@ -31,6 +29,7 @@ public class WorkspaceClientList extends ActionBarActivity {
         }
 
         if (workspace != null) {
+            ActionBar bar = getSupportActionBar();
             bar.setTitle("Clients for " + workspace.getName());
 
             //populate file list
@@ -84,8 +83,6 @@ public class WorkspaceClientList extends ActionBarActivity {
                 ListView list = (ListView) info.targetView.getParent();
                 ArrayAdapter adapter = (ArrayAdapter) list.getAdapter();
                 String client = (String) adapter.getItem(info.position);
-                //AirDeskContext context = (AirDeskContext) getApplicationContext();
-                //context.removeClientFromWorkspace(workspace, client);
                 workspace.removeClient(client);
                 adapter.notifyDataSetChanged();
                 Util.toast_warning(getApplicationContext(), "Removed client " + client);
@@ -97,5 +94,6 @@ public class WorkspaceClientList extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

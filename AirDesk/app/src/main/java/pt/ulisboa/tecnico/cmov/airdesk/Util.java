@@ -22,6 +22,10 @@ public class Util {
         Toast.makeText(context, warning, Toast.LENGTH_SHORT).show();
     }
 
+    public static void toast(String text) {
+        Toast.makeText(AirDeskContext.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
     public static void launchOwnedWorkspace(Context context, Class<?> cls, WorkspaceCore workspace) {
         Intent intent = new Intent(context, cls);
         intent.putExtra("workspaceName", workspace.getName());
@@ -39,6 +43,7 @@ public class Util {
     public static void launchEditFileForeign(Context context, WorkspaceCore workspace,
                                              WorkspaceFileCore file) {
         Intent intent = new Intent(context, EditFileForeign.class);
+        intent.putExtra("owner", workspace.getOwner());
         intent.putExtra("file", file.getName());
         intent.putExtra("workspace", workspace.getName());
         context.startActivity(intent);
@@ -52,7 +57,7 @@ public class Util {
 
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setView(editText);
+        if (editText != null) builder.setView(editText);
 
         builder.setPositiveButton(positiveButtonLabel,
                 new DialogInterface.OnClickListener() {
@@ -65,7 +70,9 @@ public class Util {
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        if (editText != null) {
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
         dialog.show();
         return dialog;
     }
@@ -90,9 +97,7 @@ public class Util {
                     dialog.dismiss();
                     airDesk.addTagToSubscriptionTags(tag);
                     List<WorkspaceCore> workspacesWithTag = airDesk.getWorkspacesWithTag(tag);
-                    if (workspacesWithTag.isEmpty()) {
-                        //Util.toast_warning(context, "No Workspace with such tag exists");
-                    } else for (WorkspaceCore workspace : workspacesWithTag)
+                    for (WorkspaceCore workspace : workspacesWithTag)
                         airDesk.addMountedWorkspace(workspace);
                     Util.toast_warning(context, context.getString(R.string.tag_subscribed_success) +
                             ": " + tag);

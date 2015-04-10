@@ -6,27 +6,26 @@ import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
 public class ForeignFileCore extends WorkspaceFileCore {
 
-    private static final String LINE_SEP = System.getProperty("line.separator");
-
-    private String name;
-    private String workspace;
     private String owner;
 
-    public ForeignFileCore(String name, String workspace) {
-        super(name, workspace);
-        this.name = name;
-        this.workspace = workspace;
+    public ForeignFileCore(String owner, String workspace, String name) {
+        super(workspace, name);
+        this.owner = owner;
     }
 
     public boolean setContent(Context context, String data) throws QuotaExceededException {
-        return Client.setFileContent(owner, workspace, name, data);
+        return Client.setFileContent(owner, getWorkspace(), getName(), data);
     }
 
     public String getContent(Context context) {
-        return Client.getFileContent(owner, workspace, name);
+        return Client.getFileContent(owner, getWorkspace(), getName());
     }
 
     public void removeFile(Context context) {
-        Client.removeFile(owner, workspace, name);
+        Client.removeFile(owner, getWorkspace(), getName());
+    }
+
+    public String getOwner() {
+        return owner;
     }
 }

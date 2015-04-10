@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 import pt.ulisboa.tecnico.cmov.airdesk.exceptions.QuotaExceededException;
 
@@ -23,16 +24,15 @@ public class EditFileOwned extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            String workspaceName = bundle.getString("workspace");
-            String fileName = bundle.getString("file");
-
-            file = new WorkspaceFileCore(fileName, workspaceName);
+            AirDeskContext context = (AirDeskContext) getApplicationContext();
+            WorkspaceCore workspace = context.getWorkspace(bundle.getString("workspace"));
+            file = workspace.getFile(bundle.getString("file"));
 
             if (!file.editLock()) {
                 Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
                 finish();
             } else {
-                //set action-bar's title and background color
+                //set action-bar's title
                 ActionBar bar = getSupportActionBar();
                 bar.setTitle("Edit " + file.getName());
 
@@ -70,5 +70,6 @@ public class EditFileOwned extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

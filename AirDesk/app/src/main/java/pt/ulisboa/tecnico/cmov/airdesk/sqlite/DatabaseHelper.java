@@ -15,7 +15,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "workspaceManager";
 
     // Tables
@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_QUOTA = "quota";
     private static final String COLUMN_PUBLIC = "isPublic";
     private static final String COLUMN_FILE = "fileName";
+    private static final String COLUMN_SIZE = "size";
     private static final String COLUMN_TAG = "tagName";
     private static final String COLUMN_CLIENT = "clientName";
 
@@ -50,14 +51,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_SUBSCRIPTION_TAG + " (" + COLUMN_TAG + " TEXT);";
 
     private static final String CREATE_TABLE_FILE =
-            "CREATE TABLE " + TABLE_FILE + " (" + COLUMN_WORKSPACE + " TEXT," +
-                    COLUMN_FILE + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +"," + COLUMN_FILE + "));";
+            "CREATE TABLE " + TABLE_FILE + " (" +
+                    COLUMN_WORKSPACE + " TEXT, " +
+                    COLUMN_FILE + " TEXT, " +
+                    COLUMN_SIZE + " INTEGER, " +
+                    "PRIMARY KEY (" +
+                    COLUMN_WORKSPACE + ", " + COLUMN_FILE + "));";
     private static final String CREATE_TABLE_TAG =
             "CREATE TABLE " + TABLE_TAG + " (" + COLUMN_WORKSPACE + " TEXT," +
-                    COLUMN_TAG + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +","+ COLUMN_TAG + "));";
+                    COLUMN_TAG + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE + "," + COLUMN_TAG + "));";
     private static final String CREATE_TABLE_CLIENT =
             "CREATE TABLE " + TABLE_CLIENT + " (" + COLUMN_WORKSPACE + " TEXT," +
-                    COLUMN_CLIENT + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE +"," + COLUMN_CLIENT + "));";
+                    COLUMN_CLIENT + " TEXT, PRIMARY KEY (" + COLUMN_WORKSPACE + "," + COLUMN_CLIENT + "));";
 
 
     public DatabaseHelper(Context context) {
@@ -94,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String workspaceName = workspace.getName();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PUBLIC, (workspace.isPublic())? 1 : 0);
+        values.put(COLUMN_PUBLIC, (workspace.isPublic()) ? 1 : 0);
         values.put(COLUMN_WORKSPACE, workspaceName);
         values.put(COLUMN_OWNER, workspace.getOwner());
         values.put(COLUMN_QUOTA, workspace.getQuota());
@@ -172,28 +177,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String whereClause = COLUMN_WORKSPACE + " = ?";
         String workspaceName = workspace.getName();
 
-        db.delete(TABLE_WORKSPACE, whereClause, new String[] {workspaceName});
+        db.delete(TABLE_WORKSPACE, whereClause, new String[]{workspaceName});
 
         List<String> files = workspace.getFiles();
         List<String> tags = workspace.getTags();
         List<String> clients = workspace.getClients();
 
-        for(String file : files) {
+        for (String file : files) {
             removeFileFromWorkspace(workspaceName, file, db);
         }
 
-        for(String tag : tags) {
+        for (String tag : tags) {
             removeTagFromWorkspace(workspaceName, tag, db);
         }
 
-        for(String client : clients) {
+        for (String client : clients) {
             removeClientFromWorkspace(workspaceName, client, db);
         }
     }
 
     private void removeFileFromWorkspace(String workspaceName, String file, SQLiteDatabase db) {
         String whereClause = COLUMN_WORKSPACE + " = ? and " + COLUMN_FILE + " = ?";
-        db.delete(TABLE_FILE, whereClause, new String[] {workspaceName, file});
+        db.delete(TABLE_FILE, whereClause, new String[]{workspaceName, file});
     }
 
     public void removeFileFromWorkspace(String workspaceName, String file) {
@@ -215,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void removeClientFromWorkspace(String workspaceName, String client, SQLiteDatabase db) {
         String whereClause = COLUMN_WORKSPACE + " = ? and " + COLUMN_CLIENT + " = ?";
-        db.delete(TABLE_CLIENT, whereClause, new String[] {workspaceName, client});
+        db.delete(TABLE_CLIENT, whereClause, new String[]{workspaceName, client});
     }
 
     public void removeClientFromWorkspace(String workspaceName, String client) {
@@ -244,6 +249,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Add to table isPublic
             boolean isPublic = (workspaceCursor.getInt(workspaceCursor.
                     getColumnIndex(COLUMN_PUBLIC)) == 1);
+            workspaceCursor.close();
 
             ArrayList<String> files = new ArrayList<>();
             Cursor fileCursor = db.rawQuery(selectFilesQuery, workspaceArg);
@@ -253,6 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     //workspace.addFile(fileCursor.getString(fileCursor.getColumnIndex(COLUMN_FILE)));
                 } while (fileCursor.moveToNext());
             }
+            fileCursor.close();
 
             ArrayList<String> tags = new ArrayList<>();
             Cursor tagCursor = db.rawQuery(selectTagsQuery, workspaceArg);
@@ -262,6 +269,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     //workspace.addTag(tagCursor.getString(tagCursor.getColumnIndex(COLUMN_TAG)));
                 } while (tagCursor.moveToNext());
             }
+            tagCursor.close();
 
             ArrayList<String> clients = new ArrayList<>();
             Cursor clientCursor = db.rawQuery(selectClientsQuery, workspaceArg);
@@ -271,19 +279,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     // workspace.addClient(clientCursor.getString(clientCursor.getColumnIndex(COLUMN_CLIENT)));
                 } while (clientCursor.moveToNext());
             }
+            clientCursor.close();
 
             return new OwnedWorkspaceCore(workspaceName, quota, owner, isPublic, tags, clients, files);
         }
         return null;
     }
 
-    public List<WorkspaceCore> getAllWorkspaces(String ownerEmail) {
-        List<WorkspaceCore> workspaces = new ArrayList<>();
+    public ArrayList<WorkspaceCore> getAllWorkspaces(String ownerEmail) {
+        ArrayList<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +
-                             " FROM " + TABLE_WORKSPACE +
-                             " WHERE " + COLUMN_OWNER + "='" + ownerEmail + "'";
+        String selectQuery = "SELECT " + COLUMN_WORKSPACE +
+                " FROM " + TABLE_WORKSPACE +
+                " WHERE " + COLUMN_OWNER + "='" + ownerEmail + "'";
         Log.d("SQL", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -292,6 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
             } while (c.moveToNext());
         }
+        c.close();
 
         return workspaces;
     }
@@ -303,11 +313,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         //TODO: depois para a segunda entrega tem que se mudar isto mas por agora :public:
-        String selectQuery = "SELECT "+ "T."+ COLUMN_WORKSPACE +
+        String selectQuery = "SELECT " + "T." + COLUMN_WORKSPACE +
                 " FROM " + TABLE_TAG + " AS T , " +
-                           TABLE_SUBSCRIPTION_TAG + " AS S , " +
-                           TABLE_WORKSPACE + " AS W " +
-                " WHERE " + "T."+ COLUMN_TAG + "=" + "S." + COLUMN_TAG +
+                TABLE_SUBSCRIPTION_TAG + " AS S , " +
+                TABLE_WORKSPACE + " AS W " +
+                " WHERE " + "T." + COLUMN_TAG + "=" + "S." + COLUMN_TAG +
                 " AND W." + COLUMN_WORKSPACE + "=T." + COLUMN_WORKSPACE +
                 " AND " + COLUMN_PUBLIC + "=1";
         Log.d("SQL", selectQuery);
@@ -318,6 +328,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
             } while (c.moveToNext());
         }
+        c.close();
 
         return workspaces;
     }
@@ -327,10 +338,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ "W."+ COLUMN_WORKSPACE +
+        String selectQuery = "SELECT " + "W." + COLUMN_WORKSPACE +
                 " FROM " + TABLE_WORKSPACE + " AS W , " + TABLE_TAG + " AS T" +
                 " WHERE " + "W." + COLUMN_WORKSPACE + "=T." + COLUMN_WORKSPACE +
-                " AND " + COLUMN_TAG + "='" + tag + "'"+
+                " AND " + COLUMN_TAG + "='" + tag + "'" +
                 " AND " + COLUMN_PUBLIC + "=1";
         Log.d("SQL", selectQuery);
 
@@ -340,6 +351,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
             } while (c.moveToNext());
         }
+        c.close();
 
         return workspaces;
     }
@@ -349,7 +361,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String where = COLUMN_WORKSPACE + " = ?";
         ContentValues newValues = new ContentValues();
         newValues.put(COLUMN_QUOTA, quota);
-        String[] args = new String[] {String.valueOf(quota)};
+        String[] args = new String[]{String.valueOf(quota)};
         db.update(TABLE_WORKSPACE, newValues, where, args);
     }
 
@@ -357,7 +369,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<WorkspaceCore> workspaces = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ COLUMN_WORKSPACE +
+        String selectQuery = "SELECT " + COLUMN_WORKSPACE +
                 " FROM " + TABLE_CLIENT +
                 " WHERE " + COLUMN_CLIENT + "=" + "'" + ownerEmail + "'";
         Log.d("SQL", selectQuery);
@@ -368,6 +380,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 workspaces.add(getWorkspace(c.getString(c.getColumnIndex(COLUMN_WORKSPACE))));
             } while (c.moveToNext());
         }
+        c.close();
 
         return workspaces;
     }
@@ -375,9 +388,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void setWorkspaceTags(String workspaceName, List<String> tags) {
         SQLiteDatabase db = this.getReadableDatabase();
         String whereClause = COLUMN_WORKSPACE + " = ?";
-        db.delete(TABLE_TAG, whereClause, new String[] {workspaceName});
+        db.delete(TABLE_TAG, whereClause, new String[]{workspaceName});
 
-        for(String tag : tags) {
+        for (String tag : tags) {
             addTagToWorkspace(workspaceName, tag, db);
         }
     }
@@ -386,7 +399,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<String> tags = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT "+ COLUMN_TAG +
+        String selectQuery = "SELECT " + COLUMN_TAG +
                 " FROM " + TABLE_SUBSCRIPTION_TAG;
         Log.d("SQL", selectQuery);
 
@@ -396,6 +409,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 tags.add(c.getString(c.getColumnIndex(COLUMN_TAG)));
             } while (c.moveToNext());
         }
+        c.close();
 
         return tags;
     }
@@ -403,6 +417,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void removeSubscribedTag(String tag) {
         SQLiteDatabase db = this.getReadableDatabase();
         String whereClause = COLUMN_TAG + " = ?";
-        db.delete(TABLE_SUBSCRIPTION_TAG, whereClause, new String[] {tag});
+        db.delete(TABLE_SUBSCRIPTION_TAG, whereClause, new String[]{tag});
+    }
+
+    public int getQuotaUsed(String workspace) {
+        int result = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT SUM(" + COLUMN_SIZE + ") FROM " + TABLE_FILE +
+                " WHERE " + COLUMN_WORKSPACE + " = '" + workspace + "'";
+        Log.d("SQL", selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) result = c.getInt(0);
+        c.close();
+        return result;
+    }
+
+    public void setFileSize(String workspace, String file, int size) {
+        SQLiteDatabase db = getWritableDatabase();
+        String where = COLUMN_WORKSPACE + " = ? AND " + COLUMN_FILE + " = ?";
+        ContentValues newValues = new ContentValues();
+        newValues.put(COLUMN_SIZE, size);
+        String[] args = new String[]{workspace, file};
+        db.update(TABLE_FILE, newValues, where, args);
     }
 }

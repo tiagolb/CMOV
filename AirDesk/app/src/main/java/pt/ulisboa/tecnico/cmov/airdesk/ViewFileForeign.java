@@ -22,16 +22,20 @@ public class ViewFileForeign extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_file_foreign);
 
-        //set action-bar's title and background color
-        ActionBar bar = getSupportActionBar();
-
         //get workspace and file objects
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            workspace = Client.getWorkspace(bundle.getString("owner"), bundle.getString("workspace"));
+            workspace = Client.getWorkspace(bundle.getString("owner"),
+                    bundle.getString("workspace"));
             file = workspace.getFile(bundle.getString("file"));
+        } else if (savedInstanceState != null) {
+            workspace = Client.getWorkspace(savedInstanceState.getString("owner"),
+                    savedInstanceState.getString("workspace"));
+            file = workspace.getFile(savedInstanceState.getString("file"));
         }
         if (file != null) {
+            //set action-bar's title
+            ActionBar bar = getSupportActionBar();
             bar.setTitle("View " + file.getName());
         }
     }
@@ -46,6 +50,14 @@ public class ViewFileForeign extends ActionBarActivity {
             if (content.length() == 0) content = "Empty File...";
             ((EditText) findViewById(R.id.view_file_foreign_text)).setText(content);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("workspace", workspace.getName());
+        savedInstanceState.putString("file", file.getName());
+        savedInstanceState.putString("owner", workspace.getOwner());
     }
 
     @Override
@@ -73,5 +85,6 @@ public class ViewFileForeign extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

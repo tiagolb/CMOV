@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.airdesk.R;
@@ -34,15 +33,12 @@ public class WorkspaceAdapter extends ArrayAdapter<WorkspaceCore> {
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inflater.inflate(layoutResourceId, null);
-                //v.setLongClickable(true);
-                //v.setClickable(true);
             } else {
                 v = convertView;
             }
 
             TextView header = (TextView) v.findViewById(R.id.workspace_list_item);
             header.setText(item.getName());
-            //description.setText(item.getValue());
 
             return v;
         } catch (Exception e) {

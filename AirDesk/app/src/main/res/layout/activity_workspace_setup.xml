@@ -10,30 +10,6 @@
     android:gravity="center_horizontal"
     tools:context="pt.ulisboa.tecnico.cmov.airdesk.WorkspaceSetup">
 
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_red_light"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="@string/workspace_setup"
-            android:textSize="@dimen/abc_text_size_title_material"
-            android:paddingTop="@dimen/abc_text_size_body_1_material"
-            android:paddingBottom="@dimen/abc_text_size_body_1_material"
-            android:paddingLeft="@dimen/abc_text_size_body_1_material"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:gravity="center">-->
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/quota"
-        android:text="1"
+        android:text="1024"
         android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
         android:inputType="number" />
 
@@ -100,8 +76,5 @@
         android:text="@string/create"
         android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
         android:onClick="createNewWorkspace" />
-
-    <!--</LinearLayout>
-</LinearLayout>-->
 
 </LinearLayout>

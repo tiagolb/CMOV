@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".WorkspaceList">
     <item
+        android:id="@+id/action_manage_subscriptions"
+        android:title="@string/manage_subscriptions"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_change_login"
         android:title="@string/change_login"
         android:orderInCategory="100"

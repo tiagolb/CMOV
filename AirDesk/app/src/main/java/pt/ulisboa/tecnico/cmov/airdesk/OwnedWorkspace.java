@@ -29,8 +29,6 @@ public class OwnedWorkspace extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owned_workspace);
 
-        ActionBar bar = getSupportActionBar();
-
         Bundle bundle = getIntent().getExtras();
         AirDeskContext context = (AirDeskContext) getApplicationContext();
         if (bundle != null) {
@@ -39,6 +37,7 @@ public class OwnedWorkspace extends ActionBarActivity {
             workspace = context.getWorkspace(savedInstanceState.getString("workspaceName"));
         }
         if (workspace != null) {
+            ActionBar bar = getSupportActionBar();
             bar.setTitle(workspace.getName());
 
             //file click handler
@@ -72,7 +71,6 @@ public class OwnedWorkspace extends ActionBarActivity {
         adapter.notifyDataSetChanged();
     }
 
-    // TODO
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -107,9 +105,41 @@ public class OwnedWorkspace extends ActionBarActivity {
             case R.id.action_tag_list:
                 manageTagList();
                 return true;
+            case R.id.action_change_privacy:
+                changePrivacy();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void changePrivacy() {
+        final AlertDialog dialog = Util.createDialog(this,
+                getString(R.string.change_privacy),
+                getString(R.string.this_workspace_is) + ": " +
+                        (workspace.isPublic() ?
+                                getString(R.string.privacy_public) :
+                                getString(R.string.privacy_private)) + "\n\n" +
+                        getString(R.string.update_it_to) + ":",
+                getString(R.string.privacy_public),
+                getString(R.string.privacy_private), null);
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                workspace.setPublic();
+                Util.toast(getString(R.string.workspace_pricacy_set_public));
+                dialog.dismiss();
+            }
+        });
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                workspace.setPrivate();
+                Util.toast(getString(R.string.workspace_pricacy_set_private));
+                dialog.dismiss();
+            }
+        });
     }
 
     public void newFile() {
@@ -150,8 +180,6 @@ public class OwnedWorkspace extends ActionBarActivity {
                             getString(R.string.file_already_exists));
                 } else {
                     dialog.dismiss();
-                    //AirDeskContext context = (AirDeskContext) getApplicationContext();
-                    //context.addFileToWorkspace(workspace, value);
                     workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), getString(R.string.file) + " " +
                             value + " " + getString(R.string.created));
@@ -168,7 +196,7 @@ public class OwnedWorkspace extends ActionBarActivity {
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        input.setText(String.valueOf(workspace.getQuota() /*/ 1048576*/));
+        input.setText(String.valueOf(workspace.getQuota()));
         builder.setView(input);
 
         builder.setPositiveButton(getString(R.string.save),
@@ -193,20 +221,18 @@ public class OwnedWorkspace extends ActionBarActivity {
                 String value = input.getText().toString().trim();
 
                 try {
-                    int quota = Integer.parseInt(value);//* 1024; //quota is stored in bytes
+                    int quota = Integer.parseInt(value); //quota is stored in bytes
                     if (quota < workspace.getQuotaUsed()) {
                         Util.toast_warning(getApplicationContext(),
                                 getString(R.string.cannot_set_lower_quota) +
-                                        workspace.getQuotaUsed() + " bytes");
+                                        workspace.getQuotaUsed() + " " + getString(R.string.bytes));
                     } else {
                         dialog.dismiss();
-                        //AirDeskContext context = (AirDeskContext) getApplicationContext();
-                        //context.setWorkspaceQuota(workspace, quota);
                         workspace.setQuota(quota);
                         Util.toast_warning(getApplicationContext(),
                                 getString(R.string.new_quota_set));
                     }
-                } catch (Exception NumberFormatException) {
+                } catch (NumberFormatException e) {
                     Util.toast_warning(getApplicationContext(),
                             getString(R.string.must_enter_a_number));
                 }
@@ -229,8 +255,6 @@ public class OwnedWorkspace extends ActionBarActivity {
         alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
-                //AirDeskContext context = (AirDeskContext) getApplicationContext();
-                //context.setWorkspaceTags(workspace, value);
                 workspace.setTags(value);
                 Util.toast_warning(getApplicationContext(), getString(R.string.tags_saved));
             }
@@ -281,5 +305,6 @@ public class OwnedWorkspace extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

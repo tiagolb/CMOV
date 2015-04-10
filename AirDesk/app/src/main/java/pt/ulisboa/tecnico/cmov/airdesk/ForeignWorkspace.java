@@ -29,13 +29,12 @@ public class ForeignWorkspace extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foreign_workspace);
 
-        ActionBar bar = getSupportActionBar();
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             workspace = Client.getWorkspace(bundle.getString("owner"), bundle.getString("workspace"));
         }
         if (workspace != null) {
+            ActionBar bar = getSupportActionBar();
             bar.setTitle(workspace.getName());
             //file click handler
             ListView fileList = (ListView) findViewById(R.id.foreign_workspace_file_list);
@@ -125,8 +124,6 @@ public class ForeignWorkspace extends ActionBarActivity {
                     Util.toast_warning(getApplicationContext(), "That file already exists.");
                 } else {
                     dialog.dismiss();
-                    //AirDeskContext context = (AirDeskContext) getApplicationContext();
-                    //context.addFileToWorkspace(workspace, value);
                     workspace.addFile(value);
                     Util.toast_warning(getApplicationContext(), "File " + value + " created");
                 }
@@ -171,5 +168,6 @@ public class ForeignWorkspace extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

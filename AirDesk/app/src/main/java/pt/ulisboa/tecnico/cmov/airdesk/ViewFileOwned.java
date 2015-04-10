@@ -21,19 +21,20 @@ public class ViewFileOwned extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_file_owned);
 
-        //set action-bar's title and background color
-        ActionBar bar = getSupportActionBar();
-
         //get workspace and file objects
+        AirDeskContext context = (AirDeskContext) getApplicationContext();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String workspace = bundle.getString("workspace");
-            AirDeskContext context = (AirDeskContext) getApplicationContext();
-            this.workspace = context.getWorkspace(workspace);
-            String file = bundle.getString("file");
-            this.file = new WorkspaceFileCore(file, workspace);
-            bar.setTitle("View " + file);
-
+            workspace = context.getWorkspace(bundle.getString("workspace"));
+            file = workspace.getFile(bundle.getString("file"));
+        } else if (savedInstanceState != null) {
+            workspace = context.getWorkspace(savedInstanceState.getString("workspace"));
+            file = workspace.getFile(savedInstanceState.getString("file"));
+        }
+        if (file != null) {
+            //set action-bar's title
+            ActionBar bar = getSupportActionBar();
+            bar.setTitle("View " + file.getName());
         }
     }
 
@@ -49,6 +50,12 @@ public class ViewFileOwned extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("workspace", workspace.getName());
+        savedInstanceState.putString("file", file.getName());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,6 +70,7 @@ public class ViewFileOwned extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_edit_file:
                 Util.launchEditFileOwned(ViewFileOwned.this, workspace, file);
+
                 return true;
             case R.id.action_remove_file:
                 Util.removeFile(getApplicationContext(), workspace, file);
@@ -75,5 +83,6 @@ public class ViewFileOwned extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

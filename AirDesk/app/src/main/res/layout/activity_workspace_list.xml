@@ -32,7 +32,8 @@
                 android:layout_weight="0.7"
                 android:paddingTop="@dimen/abc_text_size_body_1_material"
                 android:paddingBottom="@dimen/abc_text_size_body_1_material"
-                android:paddingLeft="@dimen/abc_text_size_body_1_material" />
+                android:paddingLeft="@dimen/abc_text_size_body_1_material"
+                android:paddingRight="@dimen/abc_text_size_body_1_material" />
 
             <Button
                 android:layout_width="0dp"
@@ -78,6 +79,7 @@
                 android:layout_weight="0.6"
                 android:paddingTop="@dimen/abc_text_size_body_1_material"
                 android:paddingBottom="@dimen/abc_text_size_body_1_material"
+                android:paddingRight="@dimen/abc_text_size_body_1_material"
                 android:paddingLeft="@dimen/abc_text_size_body_1_material" />
 
             <Button
@@ -85,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:textColor="@android:color/white"
-                android:onClick="manage_tags"
+                android:onClick="manageTags"
                 android:text="@string/tags" />
 
             <Button

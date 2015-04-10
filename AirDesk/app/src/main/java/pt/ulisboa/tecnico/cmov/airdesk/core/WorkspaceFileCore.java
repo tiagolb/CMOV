@@ -22,16 +22,15 @@ public class WorkspaceFileCore {
     private boolean editLock = false;
     private int size = 0;
 
-    public WorkspaceFileCore(String name, String workspace) {
+    public WorkspaceFileCore(String workspace, String name) {
         this.name = name;
         this.workspace = workspace;
-        //FIXME: must retrieve remaining fields from database
     }
 
     //sets the content of the file in disk
     public boolean setContent(Context context, String data) throws QuotaExceededException {
         int quotaIncrease = data.length() - this.getSize();
-        ArrayList<WorkspaceCore> workspaces = (ArrayList) ((AirDeskContext) context).getWorkspaces();
+        ArrayList<WorkspaceCore> workspaces = ((AirDeskContext) context).getWorkspaces();
 
         //TODO: a method to obtain a workspace by name would be nice, or, have a reference for it in the file
         for (WorkspaceCore w : workspaces)
@@ -42,7 +41,7 @@ public class WorkspaceFileCore {
         try {
             fos = context.openFileOutput(toString(), Context.MODE_PRIVATE);
             fos.write(data.getBytes());
-            this.size = data.length();
+            setSize(data.length());
             return true;
         } catch (FileNotFoundException e) {
             Log.e("WorkspaceFileCore", "File not found");
@@ -59,9 +58,6 @@ public class WorkspaceFileCore {
         StringBuilder sb = new StringBuilder();
         try {
             fis = context.openFileInput(toString());
-
-            //FIXME: temp size
-            //size = fis.getChannel().size();
             scanner = new Scanner(fis);
             while (scanner.hasNextLine()) {
                 String lineToAppend = scanner.nextLine() + LINE_SEP;
@@ -102,6 +98,14 @@ public class WorkspaceFileCore {
 
     public int getSize() {
         return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getWorkspace() {
+        return workspace;
     }
 
     @Override

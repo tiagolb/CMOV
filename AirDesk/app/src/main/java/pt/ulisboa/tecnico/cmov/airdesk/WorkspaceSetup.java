@@ -16,8 +16,6 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceSetup extends ActionBarActivity {
 
-    private WorkspaceCore workspace;
-
     public void createNewWorkspace(View view) {
         String workspaceName = ((EditText) findViewById(R.id.et_workspace_name)).getText().toString().trim();
         String quotaString = ((EditText) findViewById(R.id.et_quota_value)).getText().toString().trim();
@@ -43,7 +41,7 @@ public class WorkspaceSetup extends ActionBarActivity {
             String ownerEmail = prefs.getString("email", "");
             Log.d("TAG", ownerEmail);
 
-            workspace = new OwnedWorkspaceCore(workspaceName, quota, tags, ownerEmail, isPublic);
+            WorkspaceCore workspace = new OwnedWorkspaceCore(workspaceName, quota, tags, ownerEmail, isPublic);
             AirDeskContext context = (AirDeskContext) getApplicationContext();
             context.addWorkspace(workspace);
 
@@ -82,5 +80,6 @@ public class WorkspaceSetup extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }
