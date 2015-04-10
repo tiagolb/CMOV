@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -109,6 +110,8 @@ public class Util {
     public static void inviteClient(final Activity activity, final Context context,
                                     final WorkspaceCore workspace) {
         final EditText editText = new EditText(activity);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT |
+                InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         final AlertDialog dialog = Util.createDialog(activity,
                 activity.getString(R.string.invite_client),
                 activity.getString(R.string.enter_client_email) + ":",
@@ -118,7 +121,7 @@ public class Util {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String value = editText.getText().toString().trim();
+                String value = editText.getText().toString().trim().toLowerCase();
 
                 if (value.equals("")) {
                     Util.toast(context,

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -22,7 +21,7 @@ public class Login extends ActionBarActivity {
         }
 
         EditText ownerEmail = (EditText) findViewById(R.id.owner_email);
-        String email = ownerEmail.getText().toString().trim();
+        String email = ownerEmail.getText().toString().trim().toLowerCase();
         if (email.equals("")) {
             Util.toast(getApplicationContext(), "Please enter an e-mail address.");
             return;

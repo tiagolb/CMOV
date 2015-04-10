@@ -348,7 +348,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String where = COLUMN_WORKSPACE + " = ?";
         ContentValues newValues = new ContentValues();
         newValues.put(COLUMN_QUOTA, quota);
-        String[] args = new String[]{String.valueOf(quota)};
+        String[] args = new String[]{name};
         db.update(TABLE_WORKSPACE, newValues, where, args);
     }
 

@@ -35,7 +35,7 @@ public class WorkspaceFileCore {
         //TODO: a method to obtain a workspace by name would be nice, or, have a reference for it in the file
         for (WorkspaceCore w : workspaces)
             if (w.getName().equals(workspace) && quotaIncrease > w.getQuotaAvailable())
-                throw new QuotaExceededException();
+                throw new QuotaExceededException(quotaIncrease - w.getQuotaAvailable());
 
         FileOutputStream fos;
         try {
@@ -65,7 +65,6 @@ public class WorkspaceFileCore {
             }
             return sb.toString();
         } catch (FileNotFoundException e) {
-            Log.e("WorkspaceFileCore", "File not found");
             return "";
         } finally {
             if (fis != null) {

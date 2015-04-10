@@ -68,7 +68,8 @@ public class EditFileForeign extends ActionBarActivity {
                     file.setContent(getApplicationContext(), newContent);
                     Util.toast(getApplicationContext(), "File saved");
                 } catch (QuotaExceededException e) {
-                    Util.toast(getApplicationContext(), "Cannot save file, quota exceeded.");
+                    Util.toast(getApplicationContext(), "Cannot save file, quota exceeded in " +
+                            e.getExcess() + " bytes.");
                 }
                 return true;
             default:
@@ -77,5 +78,6 @@ public class EditFileForeign extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }
