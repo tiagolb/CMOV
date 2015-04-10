@@ -77,7 +77,5 @@ public class EditFileForeign extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+    public void onBackPressed() {}
 }

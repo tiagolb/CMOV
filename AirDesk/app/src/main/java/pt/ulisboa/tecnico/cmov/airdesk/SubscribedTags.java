@@ -79,4 +79,9 @@ public class SubscribedTags extends ActionBarActivity {
                 return super.onContextItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

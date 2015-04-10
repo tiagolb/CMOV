@@ -305,6 +305,6 @@ public class OwnedWorkspace extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }

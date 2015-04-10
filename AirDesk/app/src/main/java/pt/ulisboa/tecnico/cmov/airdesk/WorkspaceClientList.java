@@ -94,6 +94,6 @@ public class WorkspaceClientList extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }

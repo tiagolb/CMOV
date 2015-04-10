@@ -168,6 +168,6 @@ public class ForeignWorkspace extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }

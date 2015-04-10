@@ -85,6 +85,6 @@ public class ViewFileForeign extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }

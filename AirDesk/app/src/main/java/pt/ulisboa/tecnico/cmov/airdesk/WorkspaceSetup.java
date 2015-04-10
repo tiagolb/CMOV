@@ -80,6 +80,6 @@ public class WorkspaceSetup extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }

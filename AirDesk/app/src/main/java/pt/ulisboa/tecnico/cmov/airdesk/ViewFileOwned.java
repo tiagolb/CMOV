@@ -83,6 +83,6 @@ public class ViewFileOwned extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }

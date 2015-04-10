@@ -70,6 +70,6 @@ public class EditFileOwned extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
     }
 }
