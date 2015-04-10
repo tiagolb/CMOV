@@ -432,4 +432,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] args = new String[]{workspace, file};
         db.update(TABLE_FILE, newValues, where, args);
     }
+
+    public void setPrivacy(int privacy, String workspaceName) {
+        SQLiteDatabase db = getWritableDatabase();
+        String where = COLUMN_WORKSPACE + " = ?";
+        ContentValues newValues = new ContentValues();
+        newValues.put(COLUMN_PUBLIC, privacy);
+        String[] args = new String[]{workspaceName};
+        db.update(TABLE_WORKSPACE, newValues, where, args);
+    }
 }

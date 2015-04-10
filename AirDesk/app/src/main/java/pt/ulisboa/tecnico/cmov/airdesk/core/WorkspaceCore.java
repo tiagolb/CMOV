@@ -113,9 +113,14 @@ public abstract class WorkspaceCore {
 
     public void setPublic() {
         this.isPublic = true;
+        AirDeskContext context = AirDeskContext.getContext();
+        context.setPrivacy(1, this);
     }
 
     public void setPrivate() {
         this.isPublic = false;
+
+        AirDeskContext context = AirDeskContext.getContext();
+        context.setPrivacy(0, this);
     }
 }

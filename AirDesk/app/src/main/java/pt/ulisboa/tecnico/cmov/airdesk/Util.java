@@ -98,10 +98,12 @@ public class Util {
                     dialog.dismiss();
                     airDesk.addTagToSubscribedTags(tag, ownerEmail);
                     List<WorkspaceCore> workspacesWithTag = airDesk.getWorkspacesWithTag(tag);
-                    for (WorkspaceCore workspace : workspacesWithTag)
-                        airDesk.addMountedWorkspace(workspace);
-                    Util.toast(context, context.getString(R.string.tag_subscribed_success) +
-                            ": " + tag);
+                    for (WorkspaceCore workspace : workspacesWithTag) {
+                        if(airDesk.isWorkspaceNotMounted(workspace.getName())) {
+                            airDesk.addMountedWorkspace(workspace);
+                        }
+                    }
+                    Util.toast(context, context.getString(R.string.tag_subscribed_success) +": " + tag);
                 }
             }
         });

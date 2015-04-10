@@ -57,8 +57,6 @@ public class WorkspaceList extends ActionBarActivity {
         boolean newLogin = getIntent().hasExtra("newLogin");
         AirDeskContext context = (AirDeskContext) getApplicationContext();
         context.initContext(ownerEmail, newLogin);
-        Util.toast("onCreate -> " + ownerEmail + ", " + newLogin);
-        Log.d("TAG", "onCreate -> " + ownerEmail + ", " + newLogin);
 
         populateWorkspaceLists();
     }

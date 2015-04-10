@@ -27,8 +27,19 @@ public class AirDeskContext extends Application {
         }
 
         mountedWorkspaces = dbHelper.getAllMountedWorkspaces(ownerEmail);
-        mountedWorkspaces.addAll(dbHelper.getAllPushedWorkspaces(ownerEmail));
+        mountedWorkspaces.addAll(getAllPushedWorkspaces(ownerEmail));
         subscribedTags = dbHelper.getSubscribedTags(ownerEmail);
+    }
+
+    private List<WorkspaceCore> getAllPushedWorkspaces(String ownerEmail) {
+        List<WorkspaceCore> pushed = dbHelper.getAllPushedWorkspaces(ownerEmail);
+        List<WorkspaceCore> cleanedPushed = new ArrayList<WorkspaceCore>();
+        for(WorkspaceCore workspace : pushed) {
+            if(isWorkspaceNotMounted(workspace.getName())) {
+                cleanedPushed.add(workspace);
+            }
+        }
+        return cleanedPushed;
     }
 
     public void addTagToSubscribedTags(String tag, String ownerEmail) {
@@ -98,6 +109,15 @@ public class AirDeskContext extends Application {
         return null;
     }
 
+    public boolean isWorkspaceNotMounted(String name) {
+        for (WorkspaceCore workspace : mountedWorkspaces) {
+            if (name.equals(workspace.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void removeWorkspace(String name) {
         WorkspaceCore workspace;
         for (int i = 0; i < workspaces.size(); i++) {
@@ -129,5 +149,9 @@ public class AirDeskContext extends Application {
 
     public void setFileSize(String workspace, String file, int size) {
         dbHelper.setFileSize(workspace, file, size);
+    }
+
+    public void setPrivacy(int privacy, WorkspaceCore workspace) {
+        dbHelper.setPrivacy(privacy, workspace.getName());
     }
 }

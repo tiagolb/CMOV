@@ -67,7 +67,7 @@
     <string name="enter_tags">Enter the workspace\'s tags:</string>
     <string name="tags_saved">Tags saved.</string>
     <string name="ok">OK</string>
-    <string name="tag_already_subscribed">That tag is already subscribled.</string>
+    <string name="tag_already_subscribed">That tag is already subscribed.</string>
     <string name="file_removed">File removed</string>
     <string name="remove_file">Remove file</string>
     <string name="edit_file">Edit file</string>
