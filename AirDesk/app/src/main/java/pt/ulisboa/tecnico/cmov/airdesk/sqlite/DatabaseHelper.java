@@ -104,20 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_OWNER, workspace.getOwner());
         values.put(COLUMN_QUOTA, workspace.getQuota());
 
-
         db.insert(TABLE_WORKSPACE, null, values);
-
-        for (String fileName : workspace.getFiles()) {
-            addFileToWorkspace(workspaceName, fileName, db);
-        }
-
-        for (String tag : workspace.getTags()) {
-            addTagToWorkspace(workspaceName, tag, db);
-        }
-
-        for (String client : workspace.getClients()) {
-            addTagToWorkspace(workspaceName, client, db);
-        }
     }
 
     public void addFileToWorkspace(String workspace, String file, SQLiteDatabase db) {
