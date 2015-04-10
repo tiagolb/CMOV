@@ -15,7 +15,7 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "workspaceManager";
 
     // Tables
@@ -39,8 +39,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Statements: Create tables
     // TODO: ADD Foreign keys
     private static final String CREATE_TABLE_WORKSPACE =
-            "CREATE TABLE " + TABLE_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
-                    COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER," + COLUMN_PUBLIC + " INTEGER);";
+            "CREATE TABLE " + TABLE_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT," +
+            COLUMN_OWNER + " TEXT," + COLUMN_QUOTA + " INTEGER," + COLUMN_PUBLIC + " INTEGER " +
+            ", PRIMARY KEY (" + COLUMN_WORKSPACE + "," + COLUMN_OWNER + "));";
 
     /*private static final String CREATE_TABLE_FOREIGN_WORKSPACE =
             "CREATE TABLE " + TABLE_FOREIGN_WORKSPACE + " (" + COLUMN_WORKSPACE + " TEXT PRIMARY KEY," +
@@ -308,6 +309,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TABLE_WORKSPACE + " AS W " +
                 " WHERE " + "T." + COLUMN_TAG + "=" + "S." + COLUMN_TAG +
                 " AND W." + COLUMN_WORKSPACE + "=T." + COLUMN_WORKSPACE +
+                //" AND W."+ COLUMN_OWNER + "='" + ownerEmail + "'" +
                 " AND S."+ COLUMN_OWNER + "='" + ownerEmail + "'" +
                 " AND " + COLUMN_PUBLIC + "=1";
         Log.d("SQL", selectQuery);
