@@ -142,7 +142,7 @@ public class ForeignWorkspace extends ActionBarActivity {
 
             menu.setHeaderTitle(item);
             menu.add(Menu.NONE, 0, 0, getString(R.string.edit_file));
-            menu.add(Menu.NONE, 0, 1, getString(R.string.remove_file));
+            menu.add(Menu.NONE, 1, 1, getString(R.string.remove_file));
         }
     }
 

@@ -73,7 +73,7 @@
     <string name="edit_file">Edit file</string>
     <string name="manage_subscriptions">Manage subscriptions</string>
     <string name="bytes">bytes</string>
-    <string name="change_privacy">Change privacy</string>
+    <string name="change_privacy">Change Privacy</string>
     <string name="privacy_public">Public</string>
     <string name="privacy_private">Private</string>
     <string name="this_workspace_is">This workspace is currently</string>
