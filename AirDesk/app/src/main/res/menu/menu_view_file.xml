@@ -12,9 +12,9 @@
         android:icon="@drawable/bin"
         android:title="@string/remove"
         app:showAsAction="ifRoom" />
-    <item
+    <!--<item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 </menu>

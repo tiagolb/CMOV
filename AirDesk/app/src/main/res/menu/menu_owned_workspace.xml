@@ -32,9 +32,9 @@
         android:title="@string/change_privacy"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item
+    <!--<item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="never" /> -->
 </menu>

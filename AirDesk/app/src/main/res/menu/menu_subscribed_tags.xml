@@ -7,9 +7,9 @@
         android:icon="@drawable/add_tag"
         android:title="@string/subscribe"
         app:showAsAction="ifRoom" />
-    <item
+    <!--<item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 </menu>

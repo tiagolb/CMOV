@@ -63,6 +63,8 @@ public class WorkspaceSetup extends ActionBarActivity {
         return true;
     }
 
+    // era so para os settings e isto ja nao existe pois nao fazia sentido se nao era usado
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -76,7 +78,7 @@ public class WorkspaceSetup extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

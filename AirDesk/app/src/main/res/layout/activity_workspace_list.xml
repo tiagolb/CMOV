@@ -76,24 +76,24 @@
                 android:text="@string/foreign_workspace"
                 android:textSize="@dimen/abc_text_size_title_material"
                 android:textColor="@android:color/white"
-                android:layout_weight="0.6"
+                android:layout_weight="0.7"
                 android:paddingTop="@dimen/abc_text_size_body_1_material"
                 android:paddingBottom="@dimen/abc_text_size_body_1_material"
                 android:paddingRight="@dimen/abc_text_size_body_1_material"
                 android:paddingLeft="@dimen/abc_text_size_body_1_material" />
 
-            <Button
+            <!--<Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:textColor="@android:color/white"
                 android:onClick="manageTags"
-                android:text="@string/tags" />
+                android:text="@string/tags" />-->
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:textColor="@android:color/white"
                 android:text="@string/subscribe"
                 android:onClick="subscribe" />
