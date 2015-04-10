@@ -17,14 +17,14 @@ public class Login extends ActionBarActivity {
         EditText ownerNickname = (EditText) findViewById(R.id.owner_nickname);
         String nick = ownerNickname.getText().toString().trim();
         if (nick.equals("")) {
-            Util.toast_warning(getApplicationContext(), "Please enter a nickname.");
+            Util.toast(getApplicationContext(), "Please enter a nickname.");
             return;
         }
 
         EditText ownerEmail = (EditText) findViewById(R.id.owner_email);
         String email = ownerEmail.getText().toString().trim();
         if (email.equals("")) {
-            Util.toast_warning(getApplicationContext(), "Please enter an e-mail address.");
+            Util.toast(getApplicationContext(), "Please enter an e-mail address.");
             return;
         }
 
@@ -71,5 +71,6 @@ public class Login extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }

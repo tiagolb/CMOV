@@ -73,7 +73,7 @@ public class SubscribedTags extends ActionBarActivity {
                 AirDeskContext.getContext().removeSubscribedTag(tag);
 
                 adapter.notifyDataSetChanged();
-                Util.toast_warning(getApplicationContext(), getString(R.string.tag_removed) + ": " + tag);
+                Util.toast(getApplicationContext(), getString(R.string.tag_removed) + ": " + tag);
                 return true;
             default:
                 return super.onContextItemSelected(item);

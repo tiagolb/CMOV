@@ -85,7 +85,7 @@ public class WorkspaceClientList extends ActionBarActivity {
                 String client = (String) adapter.getItem(info.position);
                 workspace.removeClient(client);
                 adapter.notifyDataSetChanged();
-                Util.toast_warning(getApplicationContext(), "Removed client " + client);
+                Util.toast(getApplicationContext(), "Removed client " + client);
                 return true;
             default:
                 return super.onContextItemSelected(item);

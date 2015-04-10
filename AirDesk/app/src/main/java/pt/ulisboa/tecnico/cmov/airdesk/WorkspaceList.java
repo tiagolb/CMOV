@@ -140,7 +140,7 @@ public class WorkspaceList extends ActionBarActivity {
 
                 AirDeskContext.getContext().removeWorkspace(workspace.getName());
                 adapter.notifyDataSetChanged();
-                Util.toast_warning(getApplicationContext(), getString(R.string.workspace_deleted) +
+                Util.toast(getApplicationContext(), getString(R.string.workspace_deleted) +
                         ": " + workspace.getName());
 
                 return true;

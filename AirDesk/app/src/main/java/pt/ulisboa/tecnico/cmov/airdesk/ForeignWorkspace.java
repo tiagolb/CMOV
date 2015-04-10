@@ -119,13 +119,13 @@ public class ForeignWorkspace extends ActionBarActivity {
                 String value = input.getText().toString().trim();
 
                 if (value.equals("")) {
-                    Util.toast_warning(getApplicationContext(), "You have to enter a filename.");
+                    Util.toast(getApplicationContext(), "You have to enter a filename.");
                 } else if (workspace.hasFile(value)) {
-                    Util.toast_warning(getApplicationContext(), "That file already exists.");
+                    Util.toast(getApplicationContext(), "That file already exists.");
                 } else {
                     dialog.dismiss();
                     workspace.addFile(value);
-                    Util.toast_warning(getApplicationContext(), "File " + value + " created");
+                    Util.toast(getApplicationContext(), "File " + value + " created");
                 }
             }
         });

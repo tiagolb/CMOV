@@ -173,15 +173,15 @@ public class OwnedWorkspace extends ActionBarActivity {
                 String value = input.getText().toString().trim();
 
                 if (value.equals("")) {
-                    Util.toast_warning(getApplicationContext(),
+                    Util.toast(getApplicationContext(),
                             getString(R.string.must_enter_filename));
                 } else if (workspace.hasFile(value)) {
-                    Util.toast_warning(getApplicationContext(),
+                    Util.toast(getApplicationContext(),
                             getString(R.string.file_already_exists));
                 } else {
                     dialog.dismiss();
                     workspace.addFile(value);
-                    Util.toast_warning(getApplicationContext(), getString(R.string.file) + " " +
+                    Util.toast(getApplicationContext(), getString(R.string.file) + " " +
                             value + " " + getString(R.string.created));
                 }
             }
@@ -223,17 +223,17 @@ public class OwnedWorkspace extends ActionBarActivity {
                 try {
                     int quota = Integer.parseInt(value); //quota is stored in bytes
                     if (quota < workspace.getQuotaUsed()) {
-                        Util.toast_warning(getApplicationContext(),
+                        Util.toast(getApplicationContext(),
                                 getString(R.string.cannot_set_lower_quota) +
                                         workspace.getQuotaUsed() + " " + getString(R.string.bytes));
                     } else {
                         dialog.dismiss();
                         workspace.setQuota(quota);
-                        Util.toast_warning(getApplicationContext(),
+                        Util.toast(getApplicationContext(),
                                 getString(R.string.new_quota_set));
                     }
                 } catch (NumberFormatException e) {
-                    Util.toast_warning(getApplicationContext(),
+                    Util.toast(getApplicationContext(),
                             getString(R.string.must_enter_a_number));
                 }
             }
@@ -256,7 +256,7 @@ public class OwnedWorkspace extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
                 workspace.setTags(value);
-                Util.toast_warning(getApplicationContext(), getString(R.string.tags_saved));
+                Util.toast(getApplicationContext(), getString(R.string.tags_saved));
             }
         });
 

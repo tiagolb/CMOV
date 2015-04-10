@@ -29,7 +29,7 @@ public class EditFileOwned extends ActionBarActivity {
             file = workspace.getFile(bundle.getString("file"));
 
             if (!file.editLock()) {
-                Util.toast_warning(getApplicationContext(), "Cannot edit file, another client is already editing it.");
+                Util.toast(getApplicationContext(), "Cannot edit file, another client is already editing it.");
                 finish();
             } else {
                 //set action-bar's title
@@ -58,9 +58,9 @@ public class EditFileOwned extends ActionBarActivity {
                 try {
                     String newContent = ((EditText) findViewById(R.id.edit_file_owned_text)).getText().toString();
                     file.setContent(getApplicationContext(), newContent);
-                    Util.toast_warning(getApplicationContext(), "File saved");
+                    Util.toast(getApplicationContext(), "File saved");
                 } catch (QuotaExceededException e) {
-                    Util.toast_warning(getApplicationContext(), "Cannot save file, quota exceeded.");
+                    Util.toast(getApplicationContext(), "Cannot save file, quota exceeded.");
                 }
                 return true;
             default:

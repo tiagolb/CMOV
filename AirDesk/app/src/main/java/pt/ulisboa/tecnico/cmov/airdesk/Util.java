@@ -18,12 +18,12 @@ import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceFileCore;
 
 public class Util {
 
-    public static void toast_warning(Context context, String warning) {
+    public static void toast(Context context, String warning) {
         Toast.makeText(context, warning, Toast.LENGTH_SHORT).show();
     }
 
     public static void toast(String text) {
-        Toast.makeText(AirDeskContext.getContext(), text, Toast.LENGTH_SHORT).show();
+        Util.toast(AirDeskContext.getContext(), text);
     }
 
     public static void launchOwnedWorkspace(Context context, Class<?> cls, WorkspaceCore workspace) {
@@ -90,16 +90,16 @@ public class Util {
                 AirDeskContext airDesk = AirDeskContext.getContext();
                 String tag = editText.getText().toString().trim();
                 if (tag.equals("")) {
-                    Util.toast_warning(context, activity.getString(R.string.must_enter_tag));
+                    Util.toast(context, activity.getString(R.string.must_enter_tag));
                 } else if (airDesk.getSubscribedTags().contains(tag)) {
-                    Util.toast_warning(context, activity.getString(R.string.tag_already_subscribed));
+                    Util.toast(context, activity.getString(R.string.tag_already_subscribed));
                 } else {
                     dialog.dismiss();
                     airDesk.addTagToSubscriptionTags(tag);
                     List<WorkspaceCore> workspacesWithTag = airDesk.getWorkspacesWithTag(tag);
                     for (WorkspaceCore workspace : workspacesWithTag)
                         airDesk.addMountedWorkspace(workspace);
-                    Util.toast_warning(context, context.getString(R.string.tag_subscribed_success) +
+                    Util.toast(context, context.getString(R.string.tag_subscribed_success) +
                             ": " + tag);
                 }
             }
@@ -121,15 +121,15 @@ public class Util {
                 String value = editText.getText().toString().trim();
 
                 if (value.equals("")) {
-                    Util.toast_warning(context,
+                    Util.toast(context,
                             activity.getString(R.string.must_enter_email));
                 } else if (workspace.hasClient(value)) {
-                    Util.toast_warning(context,
+                    Util.toast(context,
                             activity.getString(R.string.client_already_in_workspace));
                 } else {
                     dialog.dismiss();
                     workspace.addClient(value);
-                    Util.toast_warning(context,
+                    Util.toast(context,
                             activity.getString(R.string.client_added) + ": " + value);
                 }
             }
@@ -139,7 +139,7 @@ public class Util {
     public static void removeFile(Context context, WorkspaceCore workspace, WorkspaceFileCore file) {
         workspace.removeFile(file.getName());
         file.removeFile(context);
-        Util.toast_warning(context, context.getString(R.string.file_removed));
+        Util.toast(context, context.getString(R.string.file_removed));
     }
 
 

@@ -23,15 +23,15 @@ public class WorkspaceSetup extends ActionBarActivity {
         String privacy = ((Spinner) findViewById(R.id.sp_privacy)).getSelectedItem().toString();
 
         if (workspaceName.equals("")) {
-            Util.toast_warning(getApplicationContext(), "Enter a workspace name.");
+            Util.toast(getApplicationContext(), "Enter a workspace name.");
         } else if (quotaString.equals("")) {
-            Util.toast_warning(getApplicationContext(), "Enter the quota value.");
+            Util.toast(getApplicationContext(), "Enter the quota value.");
         } else {
             int quota;
             try {
                 quota = Integer.parseInt(quotaString); //quota is stored in bytes
             } catch (Exception NumberFormatException) {
-                Util.toast_warning(getApplicationContext(), "Quota must be a number");
+                Util.toast(getApplicationContext(), "Quota must be a number");
                 return;
             }
 
