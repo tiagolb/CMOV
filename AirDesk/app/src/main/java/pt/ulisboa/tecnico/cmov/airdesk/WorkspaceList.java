@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import pt.ulisboa.tecnico.cmov.airdesk.adapters.WorkspaceAdapter;
+import pt.ulisboa.tecnico.cmov.airdesk.core.OwnedWorkspaceCore;
 import pt.ulisboa.tecnico.cmov.airdesk.core.WorkspaceCore;
 
 public class WorkspaceList extends ActionBarActivity {
@@ -27,6 +28,11 @@ public class WorkspaceList extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        updateView();
+
+    }
+
+    private void updateView() {
         //update view
         ListView ownedList = (ListView) findViewById(R.id.owned_workspace_list);
         ArrayAdapter<String> ownedAdapter = (ArrayAdapter<String>) ownedList.getAdapter();
@@ -120,8 +126,79 @@ public class WorkspaceList extends ActionBarActivity {
             case R.id.action_manage_subscriptions:
                 manageTags(null);
                 return true;
+            case R.id.action_populate:
+                populateDB();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void populateDB() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        // This is to allow only one populate
+        if(prefs.getBoolean("populateAlreadyCalled", false)) {
+            return;
+        }
+        String ownerEmail = prefs.getString("email", "");
+
+        AirDeskContext airDesk = AirDeskContext.getContext();
+
+        String workspace1_name = "Populated Workspace 1";
+        int workspace1_quota = 1024;
+        String workspace1_tags = "workspace1_tag";
+        boolean workspace1_privacy = true;
+        WorkspaceCore workspace1 = new OwnedWorkspaceCore(workspace1_name,
+                workspace1_quota, workspace1_tags, ownerEmail, workspace1_privacy);
+        airDesk.addWorkspace(workspace1);
+
+        String workspace2_name = "Populated Workspace 2";
+        int workspace2_quota = 32;
+        String workspace2_tags = "workspace2_tag";
+        boolean workspace2_privacy = true;
+        WorkspaceCore workspace2 = new OwnedWorkspaceCore(workspace2_name,
+                workspace2_quota, workspace2_tags, ownerEmail, workspace2_privacy);
+        airDesk.addWorkspace(workspace2);
+
+        String workspace3_name = "Populated Workspace 3";
+        int workspace3_quota = 1024;
+        String workspace3_tags = "workspace2_tag";
+        boolean workspace3_privacy = false;
+        WorkspaceCore workspace3 = new OwnedWorkspaceCore(workspace3_name,
+                workspace3_quota, workspace3_tags, ownerEmail, workspace3_privacy);
+        airDesk.addWorkspace(workspace3);
+
+        String workspace4_name = "Populated Workspace 4";
+        int workspace4_quota = 1024;
+        String workspace4_tags = "workspace4_tag";
+        boolean workspace4_privacy = true;
+        WorkspaceCore workspace4 = new OwnedWorkspaceCore(workspace4_name,
+                workspace4_quota, workspace4_tags, ownerEmail, workspace4_privacy);
+        airDesk.addWorkspace(workspace4);
+
+        workspace1.addClient(ownerEmail);
+        airDesk.addTagToSubscribedTags(workspace2_tags, ownerEmail);
+
+        String filename1 = "file1.txt";
+        workspace1.addFile(filename1);
+
+        String filename2 = "file2.txt";
+        workspace1.addFile(filename2);
+
+        String filename3 = "file3.txt";
+        workspace2.addFile(filename3);
+
+        String filename4 = "file4.txt";
+        workspace3.addFile(filename4);
+
+        String filename5 = "file5.txt";
+        workspace4.addFile(filename5);
+
+        // This is to allow only one populate
+        prefs.edit().putBoolean("populateAlreadyCalled", true).apply();
+
+        airDesk.initContext(ownerEmail, false);
+        populateWorkspaceLists();
     }
 
     @Override

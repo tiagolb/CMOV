@@ -80,5 +80,6 @@
     <string name="update_it_to">Update it to</string>
     <string name="workspace_pricacy_set_public">Workspace was set to Public.</string>
     <string name="workspace_pricacy_set_private">Workspace was set to Private.</string>
+    <string name="populate_db">Populate DB</string>
 
 </resources>

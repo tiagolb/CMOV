@@ -45,6 +45,12 @@ public class AirDeskContext extends Application {
     public void addTagToSubscribedTags(String tag, String ownerEmail) {
         subscribedTags.add(tag);
         dbHelper.addTagToSubscribedTags(tag, ownerEmail);
+        List<WorkspaceCore> workspacesWithTag = context.getWorkspacesWithTag(tag);
+        for (WorkspaceCore workspace : workspacesWithTag) {
+            if(context.isWorkspaceNotMounted(workspace.getName())) {
+                context.addMountedWorkspace(workspace);
+            }
+        }
     }
 
     public void setWorkspaceTags(WorkspaceCore workspace, String tags) {
